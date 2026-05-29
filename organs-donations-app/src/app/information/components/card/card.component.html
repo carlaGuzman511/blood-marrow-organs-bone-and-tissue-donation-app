@@ -1,0 +1,41 @@
+<div class="carousel-single">
+  <button mat-icon-button (click)="prev()">
+    <mat-icon>chevron_left</mat-icon>
+  </button>
+  <mat-card class="card" *ngIf="items.length">
+    <mat-card-header>
+      <mat-card-title>{{ items[currentIndex].name }}</mat-card-title>
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="editItem(items[currentIndex])">
+          <mat-icon>edit</mat-icon>
+          <span>Editar</span>
+        </button>
+        <button mat-menu-item (click)="removeItem(items[currentIndex])">
+          <mat-icon>delete</mat-icon>
+          <span>Eliminar</span>
+        </button>
+      </mat-menu>  
+      </mat-card-header>
+      <mat-card-content>
+        <label>Descripcion</label>
+        <p>{{ items[currentIndex].description }}</p>
+        <label>Requerimientos</label>
+        <p>{{ items[currentIndex].requirements }}</p>
+        <label>Proceso</label>
+        <p>{{ items[currentIndex].process }}</p>
+        <label>Importancia</label>
+        <p>{{ items[currentIndex].importance }}</p>
+        <label>Beneficios</label>
+        <p>{{ items[currentIndex].benefits }}</p>
+        <label>Efectos Secundarios</label>
+        <p>{{ items[currentIndex].secondaryEffects }}</p>
+      </mat-card-content>
+      <img mat-card-image [src]="items[currentIndex].image || 'https://via.placeholder.com/600x300?text=Sin+Imagen'" alt="Donation image">
+    </mat-card>
+    <button mat-icon-button (click)="next()">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>

@@ -1,0 +1,22 @@
+ <ng-container *ngFor="let item of items">
+  <mat-card class="card" appearance="outlined">
+    <mat-card-header>
+      <div mat-card-avatar>
+        <img mat-card-image [src]="item.image" alt="User image" class="avatar-img">
+      </div>
+      <mat-card-title>{{ item.email }}</mat-card-title>
+      <mat-card-title>{{ item.fullname }}</mat-card-title>
+      <mat-card-subtitle>{{ item.address }}</mat-card-subtitle>
+      <mat-card-subtitle>{{ item.dateOfBirth }}</mat-card-subtitle>
+      <mat-card-subtitle>Tipo de Sangre: {{ item.bloodTypeId }}</mat-card-subtitle>
+      <mat-card-subtitle>{{ item.phoneNumber }}</mat-card-subtitle>
+      <mat-card-subtitle>{{ item.latitude }}</mat-card-subtitle>
+      <mat-card-subtitle>{{ item.longitude }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <p>{{ item.description }}</p>
+    </mat-card-content>
+        
+  </mat-card>
+ </ng-container>

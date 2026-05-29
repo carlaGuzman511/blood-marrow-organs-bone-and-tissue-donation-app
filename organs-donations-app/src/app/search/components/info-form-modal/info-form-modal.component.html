@@ -1,0 +1,64 @@
+<!-- <script
+  src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"
+  defer
+></script> -->
+
+<h2>Crear Solicitud</h2>
+<form [formGroup]="donationForm" (ngSubmit)="submit()" mat-dialog-content>
+
+    <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Tipo de Sangre</mat-label>
+        <mat-select formControlName="bloodTypeId" required>
+            <mat-option *ngFor="let bloodType of bloodTypes" [value]="bloodType.id">
+                {{ bloodType.name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Centro de Donacion</mat-label>
+        <mat-select formControlName="donationCenterId" required>
+            <mat-option *ngFor="let donationCenter of donationCenters" [value]="donationCenter.id">
+                {{ donationCenter.name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Tipo de Donacion</mat-label>
+        <mat-select formControlName="donationTypeId" required>
+            <mat-option *ngFor="let donationType of donationTypes" [value]="donationType.id">
+                {{ donationType.name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Notas</mat-label>
+        <textarea matInput formControlName="description"></textarea>
+    </mat-form-field>
+
+    <div class="w-full my-4">
+        <mat-label>Seleccione una imagen</mat-label>
+        <input type="file" (change)="onFileSelected($event)" />
+    </div>
+    
+    <div class="my-4">
+        <h4>Seleccione la ubicacion</h4>
+        <!-- <google-map
+            height="300px"
+            width="100%"
+            [options]="mapOptions"
+            (mapClick)="onMapClick($event)"
+        >
+            <map-marker [position]="markerPosition"></map-marker>
+        </google-map> -->
+    </div>
+
+    <div mat-dialog-actions class="justify-end">
+        <button mat-button (click)="close()">Cancel</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="donationForm.invalid">
+            Submit
+        </button>
+    </div>
+</form>

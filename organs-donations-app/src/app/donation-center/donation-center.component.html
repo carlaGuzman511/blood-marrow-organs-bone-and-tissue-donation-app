@@ -1,0 +1,13 @@
+<button mat-button (click)="openDonationCenterForm()">Agregar Centro de Donacion</button>
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<app-card 
+    [items]="donationCenters"
+    (removeItemEvent)="removeItem($event)"
+    (editItemEvent)="editItem($event)">
+</app-card>
+<app-pagination
+  [totalItems]="items.length"
+  [pageSize]="pageSize"
+  [currentPage]="currentPage"
+  (pageChange)="onPageChange($event)">
+</app-pagination>

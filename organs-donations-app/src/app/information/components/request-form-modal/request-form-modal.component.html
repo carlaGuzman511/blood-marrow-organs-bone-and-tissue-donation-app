@@ -1,0 +1,51 @@
+<h3 class="text-2xl font-semibold mb-4 text-center">{{ title }}</h3>
+
+<form [formGroup]="donationForm" (ngSubmit)="submit()" mat-dialog-content class="space-y-6">
+
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Name</mat-label>
+    <textarea matInput formControlName="name" rows="3" placeholder="Name..."></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Descripcion</mat-label>
+    <textarea matInput formControlName="description" rows="3" placeholder="Description..."></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Requerimientos</mat-label>
+    <textarea matInput formControlName="requirements" rows="3" placeholder="Requerimientos..."></textarea>
+  </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Proceso</mat-label>
+    <textarea matInput formControlName="process" rows="3" placeholder="Proceso..."></textarea>
+  </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Beneficios</mat-label>
+    <textarea matInput formControlName="benefits" rows="3" placeholder="Beneficios..."></textarea>
+  </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Importancia</mat-label>
+    <textarea matInput formControlName="importance" rows="3" placeholder="Importancia..."></textarea>
+  </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Efectos Secundarios</mat-label>
+    <textarea matInput formControlName="secondaryEffects" rows="3" placeholder="Efectos Secundarios..."></textarea>
+  </mat-form-field>
+
+  <div class="w-full">
+    <mat-label class="block mb-2 font-medium">Seleccione una imagen</mat-label>
+    <input type="file" (change)="onFileSelected($event)" class="border p-2 rounded w-full" />
+  </div>
+
+  <div mat-dialog-actions class="flex justify-end space-x-3 pt-4">
+    <button mat-stroked-button color="warn" (click)="close()">Cancelar</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="donationForm.invalid">
+      Enviar
+    </button>
+  </div>
+</form>

@@ -1,0 +1,7 @@
+<button mat-button (click)="openDonationForm()">Agregar Solicitud</button>
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<app-card 
+    [items]="donationPosts" 
+    (removeItemEvent)="removeItem($event)" 
+    (editItemEvent)="editItem($event)">
+</app-card>

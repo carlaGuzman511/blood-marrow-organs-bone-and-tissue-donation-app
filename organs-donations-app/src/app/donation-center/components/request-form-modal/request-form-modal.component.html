@@ -1,0 +1,46 @@
+<h3 class="text-2xl font-semibold mb-4 text-center">{{ title }}</h3>
+
+<form [formGroup]="donationCenterForm" (ngSubmit)="submit()" mat-dialog-content class="space-y-6">
+
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Nombre</mat-label>
+    <textarea matInput formControlName="name" rows="3" placeholder="Nombre..."></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Direccion</mat-label>
+    <textarea matInput formControlName="address" rows="3" placeholder="Direccion..."></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Ciudad</mat-label>
+    <textarea matInput formControlName="city" rows="3" placeholder="Ciudad..."></textarea>
+  </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Latitud</mat-label>
+    <textarea matInput formControlName="latitude" rows="3" placeholder="Latitud..."></textarea>
+  </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Longitud</mat-label>
+    <textarea matInput formControlName="longitude" rows="3" placeholder="Longitud..."></textarea>
+  </mat-form-field>
+
+    <!-- <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Tipos de Donacion</mat-label>
+    <textarea matInput formControlName="donationTypes" rows="3" placeholder="Tipos de Donacion..."></textarea>
+  </mat-form-field> -->
+
+  <div class="w-full">
+    <mat-label class="block mb-2 font-medium">Seleccione una imagen</mat-label>
+    <input type="file" (change)="onFileSelected($event)" class="border p-2 rounded w-full" />
+  </div>
+
+  <div mat-dialog-actions class="flex justify-end space-x-3 pt-4">
+    <button mat-stroked-button color="warn" (click)="close()">Cancelar</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="donationCenterForm.invalid">
+      Enviar
+    </button>
+  </div>
+</form>

@@ -1,0 +1,71 @@
+<!-- <script
+  src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"
+  defer
+></script> -->
+
+<h3 class="text-2xl font-semibold mb-4 text-center">{{ title }}</h3>
+
+<form [formGroup]="donationForm" (ngSubmit)="submit()" mat-dialog-content class="space-y-6">
+
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Tipo de Sangre</mat-label>
+    <mat-select formControlName="bloodTypeId" required>
+      <mat-option *ngFor="let bloodType of bloodTypes" [value]="bloodType.id">
+        {{ bloodType.name }}
+      </mat-option>
+    </mat-select>
+    <mat-hint>Selecciona el tipo de sangre requerido</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Centro de Donación</mat-label>
+    <mat-select formControlName="donationCenterId" required>
+      <mat-option *ngFor="let donationCenter of donationCenters" [value]="donationCenter.id">
+        {{ donationCenter.name }}
+      </mat-option>
+    </mat-select>
+    <mat-hint>Elija el centro de donacion</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Tipo de Donación</mat-label>
+    <mat-select formControlName="donationTypeId" required>
+      <mat-option *ngFor="let donationType of donationTypes" [value]="donationType.id">
+        {{ donationType.name }}
+      </mat-option>
+    </mat-select>
+    <mat-hint>Ej. Sangre, Médula Osea, Higado, etc..</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Notas</mat-label>
+    <textarea matInput formControlName="description" rows="3" placeholder="Agrega información adicional..."></textarea>
+  </mat-form-field>
+
+  <div class="w-full">
+    <mat-label class="block mb-2 font-medium">Seleccione una imagen</mat-label>
+    <input type="file" (change)="onFileSelected($event)" class="border p-2 rounded w-full" />
+  </div>
+
+  <div>
+    <h4 class="text-lg font-medium mb-2">Seleccione la ubicación</h4>
+    <div class="border rounded-md h-48 flex items-center justify-center text-gray-500 italic">
+      <!-- <google-map
+            height="300px"
+            width="100%"
+            [options]="mapOptions"
+            (mapClick)="onMapClick($event)"
+        >
+            <map-marker [position]="markerPosition"></map-marker>
+        </google-map> -->
+      <span>Mapa pendiente...</span>
+    </div>
+  </div>
+
+  <div mat-dialog-actions class="flex justify-end space-x-3 pt-4">
+    <button mat-stroked-button color="warn" (click)="close()">Cancelar</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="donationForm.invalid">
+      Enviar
+    </button>
+  </div>
+</form>
