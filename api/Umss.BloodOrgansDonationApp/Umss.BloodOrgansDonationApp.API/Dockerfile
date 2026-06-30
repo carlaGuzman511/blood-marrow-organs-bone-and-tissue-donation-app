@@ -5,10 +5,10 @@ WORKDIR /src
 COPY *.sln .
 
 # Copy project files
-COPY src/Umss.BloodOrgansDonationApp.API/*.csproj ./Umss.BloodOrgansDonationApp.API/
-COPY src/Umss.BloodOrgansDonationApp.Models/*.csproj ./Umss.BloodOrgansDonationApp.Models/
-COPY src/Umss.BloodOrgansDonationApp.Repository/*.csproj ./Umss.BloodOrgansDonationApp.Repository/
-COPY src/Umss.BloodOrgansDonationApp.Services/*.csproj ./Umss.BloodOrgansDonationApp.Services/
+COPY /src/Umss.BloodOrgansDonationApp.API/*.csproj ./Umss.BloodOrgansDonationApp.API/
+COPY /src/Umss.BloodOrgansDonationApp.Models/*.csproj ./Umss.BloodOrgansDonationApp.Models/
+COPY /src/Umss.BloodOrgansDonationApp.Repository/*.csproj ./Umss.BloodOrgansDonationApp.Repository/
+COPY /src/Umss.BloodOrgansDonationApp.Services/*.csproj ./Umss.BloodOrgansDonationApp.Services/
 
 # Restore dependencies
 RUN dotnet restore Umss.BloodOrgansDonationApp.API/Umss.BloodOrgansDonationApp.API.csproj
