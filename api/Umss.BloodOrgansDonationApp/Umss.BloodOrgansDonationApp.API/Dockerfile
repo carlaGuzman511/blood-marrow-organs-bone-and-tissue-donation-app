@@ -3,7 +3,8 @@ WORKDIR /src
 
 # Copy solution file
 COPY *.sln .
-
+RUN ls -la
+RUN find . -maxdepth 3
 # Copy project files
 COPY Umss.BloodOrgansDonationApp.API/*.csproj ./Umss.BloodOrgansDonationApp.API/
 COPY Umss.BloodOrgansDonationApp.Models/*.csproj ./Umss.BloodOrgansDonationApp.Models/
