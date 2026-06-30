@@ -6,7 +6,7 @@ import { BloodType, DonationCenter, DonationPost, User } from '../models/Donatio
   providedIn: 'root'
 })
 export class HomeService {
-  private apiUrl: string = "http://192.168.0.6:7140/api";
+  private apiUrl: string = "https://blood-marrow-organs-bone-and-tissue.onrender.com/api";
 
   constructor(private httpService: HttpClient) { }
 
