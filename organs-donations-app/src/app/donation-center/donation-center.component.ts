@@ -11,6 +11,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { RequestFormModalComponent } from './components/request-form-modal/request-form-modal.component';
 import { catchError, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { PaginationComponent } from './components/pagination/pagination.component';
+
 
 @Component({
   selector: 'app-donation-center',
@@ -19,6 +21,7 @@ import { of } from 'rxjs';
     CardComponent, 
     ReactiveFormsModule, 
     MatButtonModule, 
+    PaginationComponent,
     MatProgressSpinnerModule],
   templateUrl: './donation-center.component.html',
   styleUrl: './donation-center.component.css'
