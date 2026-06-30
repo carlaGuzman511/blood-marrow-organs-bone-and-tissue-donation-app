@@ -23,7 +23,7 @@ namespace Umss.BloodOrgansDonationApp.Services
             BloodTypeRequestValidator bloodTypeRequestValidator = new BloodTypeRequestValidator();
             bloodTypeRequestValidator.ValidateAndThrow(bloodTypeRequest);
 
-            var bloodType = _mapper.Map<BloodType>(bloodTypeRequest);
+            BloodType bloodType = _mapper.Map<BloodType>(bloodTypeRequest);
             bloodType.Id = Guid.NewGuid();
 
             return await _bloodTypeRepository.Create(bloodType);
@@ -31,6 +31,13 @@ namespace Umss.BloodOrgansDonationApp.Services
 
         public async Task Delete(Guid id)
         {
+            BloodType? bloodType = await _bloodTypeRepository.Get(id);
+
+            if (bloodType == null)
+            {
+                throw new EntityNotFoundException($"BloodType with ID {id} not found.");
+            }
+
             await _bloodTypeRepository.Delete(id);
         }
 
@@ -47,6 +54,7 @@ namespace Umss.BloodOrgansDonationApp.Services
         public async Task<BloodType> Update(Guid id, BloodTypeRequest bloodTypeRequest)
         {
             BloodType? bloodType = await _bloodTypeRepository.Get(id);
+
             if (bloodType == null)
             {
                 throw new EntityNotFoundException($"BloodType with ID {id} not found.");

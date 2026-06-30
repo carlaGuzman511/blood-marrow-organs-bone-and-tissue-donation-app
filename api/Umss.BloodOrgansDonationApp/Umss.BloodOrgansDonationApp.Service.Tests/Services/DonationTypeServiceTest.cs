@@ -58,7 +58,7 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
         }
         
         [Fact]
-        public async void GetAll()
+        public async Task GetAll()
         {
             this.repositoryFixture.DonationTypeRepositoryMock.Setup(x => x.GetAll()).ReturnsAsync(this.GetDonationTypes);
             IEnumerable<DonationTypeResponse> donationTypes = await this.donationTypeService.GetAll();
@@ -67,7 +67,7 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
         }
 
         [Fact]
-        public async void GetById()
+        public async Task GetById()
         {
             this.repositoryFixture.DonationTypeRepositoryMock.Setup(x => x.Get(It.IsAny<Guid>())).ReturnsAsync(this.GetDonationType);
             DonationTypeResponse donationType = await this.donationTypeService.Get(Guid.NewGuid());
@@ -76,7 +76,7 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
         }
 
         [Fact]
-        public async void Create()
+        public async Task Create()
         {
             this.repositoryFixture.DonationTypeRepositoryMock.Setup(x => x.Create(It.IsAny<DonationType>())).ReturnsAsync(this.GetDonationType());
             DonationTypeResponse donationType = await this.donationTypeService.Create(this.GetDonationTypeRequest());
@@ -85,14 +85,14 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
         }
 
         [Fact]
-        public async void Delete()
+        public async Task Delete()
         {
             this.repositoryFixture.DonationTypeRepositoryMock.Setup(x => x.Delete(It.IsAny<Guid>()));
             await this.donationTypeService.Delete(Guid.NewGuid());
         }
 
         [Fact]
-        public async void Update()
+        public async Task Update()
         {
             this.repositoryFixture.DonationTypeRepositoryMock.Setup(x => x.Get(It.IsAny<Guid>())).ReturnsAsync(this.GetDonationType());
             this.repositoryFixture.DonationTypeRepositoryMock.Setup(x => x.Update(It.IsAny<DonationType>())).ReturnsAsync(this.GetDonationType());

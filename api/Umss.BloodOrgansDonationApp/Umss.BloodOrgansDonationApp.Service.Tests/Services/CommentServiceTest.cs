@@ -1,4 +1,5 @@
 ﻿using Moq;
+using System.Threading.Tasks;
 using Umss.BloodOrgansDonationApp.Models;
 using Umss.BloodOrgansDonationApp.Models.Entities;
 using Umss.BloodOrgansDonationApp.Models.Requests;
@@ -108,7 +109,7 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
         }
 
         [Fact]
-        public async void GetAll()
+        public async Task GetAll()
         {
             this.repositoryFixture.CommentRepositoryMock.Setup(x => x.Get(It.IsAny<Guid>())).ReturnsAsync(this.GetComments());
             IEnumerable<CommentResponse> comments = await this.commentService.Get(It.IsAny<Guid>());
@@ -117,7 +118,7 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
         }
 
         [Fact]
-        public async void GetById()
+        public async Task GetById()
         {
             this.repositoryFixture.CommentRepositoryMock.Setup(x => x.Get(It.IsAny<Guid>(), It.IsAny<Guid>())).ReturnsAsync(this.GetComment());
             this.repositoryFixture.MapperMock.Setup(x => x.Map<CommentResponse>(It.IsAny<Comment>())).Returns(this.GetCommentResponse());
@@ -128,7 +129,7 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
         }
 
         [Fact]
-        public async void Create()
+        public async Task Create()
         {
             this.repositoryFixture.MapperMock.Setup(x => x.Map<Comment>(It.IsAny<CommentRequest>())).Returns(this.GetComment());
             this.repositoryFixture.CommentRepositoryMock.Setup(x => x.Create(It.IsAny<Comment>())).ReturnsAsync(this.GetComment);
@@ -140,14 +141,14 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
         }
 
         [Fact]
-        public async void Delete()
+        public async Task Delete()
         {
             this.repositoryFixture.CommentRepositoryMock.Setup(x => x.Delete(It.IsAny<Guid>(), It.IsAny<Guid>()));
             await this.commentService.Delete(Guid.NewGuid(), Guid.NewGuid());
         }
 
         [Fact]
-        public async void Update()
+        public async Task Update()
         {
             this.repositoryFixture.CommentRepositoryMock.Setup(x => x.Get(It.IsAny<Guid>(), It.IsAny<Guid>())).ReturnsAsync(this.GetComment);
             this.repositoryFixture.MapperMock.Setup(x => x.Map<Comment>(It.IsAny<CommentRequest>())).Returns(this.GetComment());
