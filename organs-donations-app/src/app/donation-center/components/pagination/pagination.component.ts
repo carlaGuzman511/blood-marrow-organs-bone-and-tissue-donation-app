@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-pagination',
   imports: [CommonModule],
+  standalone: true, 
   templateUrl: './pagination.component.html',
   styleUrl: './pagination.component.css'
 })
