@@ -35,6 +35,7 @@ namespace Umss.BloodOrgansDonationApp.Repository
             return await _appContext.DonationCenters
                 .Include(dc => dc.DonationCenterDonationTypes)
                     .ThenInclude(dcdt => dcdt.DonationType)
+                    .AsNoTracking()
                 //.Include(dc => dc.DonationPosts)
                 .FirstOrDefaultAsync(dc => dc.Id == id);
         }
@@ -44,6 +45,7 @@ namespace Umss.BloodOrgansDonationApp.Repository
             return await _appContext.DonationCenters
                 .Include(dc => dc.DonationCenterDonationTypes)
                     .ThenInclude(dcdt => dcdt.DonationType)
+                    .AsNoTracking()
                 //.Include(dc => dc.DonationPosts)
                 .ToListAsync();
         }

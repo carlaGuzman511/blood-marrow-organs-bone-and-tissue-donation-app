@@ -1,48 +1,34 @@
 import { View } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useMemo } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { FlatList } from 'react-native-gesture-handler';
 import Header from '@/components/Header';
 import SearcherBar from '@/components/SearcherBar';
 import UserCard from '@/components/UserCard';
 import { User } from '@/models/App.types';
-import axios from "axios";
+import { useUsers } from '@/hooks/useUsers';
 
 const SearchUsers = () => {
-    const USERS_API_URL = 'http://192.168.0.5:7140/api/users';
     const [search, setSearch] = useState('');
-    const [users, setUsers] = useState<User[]>([]);
-    const [filteredUsers, setFilteredUsers] = useState(users);
-    
-    const handleSearchUsersByName = (data: string) => {
-        setSearch(data);
-        const filteredData = users.filter((user: User) => {
-            return user.fullName.toLowerCase().includes(data.toLowerCase());
-        })
-        setFilteredUsers(filteredData);
+    const handleSearch = (text: string) => {
+        setSearch(text);
     }
 
-    const handleSearchUsersByAddress = (data: string) => {
-        setSearch(data);
-        const filteredData = users.filter((user: User) => {
-            return user.address.toLowerCase().includes(data.toLowerCase());
-        })
-        setFilteredUsers(filteredData);
-    }
+    const {
+        data: users = [],
+        isLoading,
+        error,
+    } = useUsers();
 
-    useEffect(() => {
-        fetchUsers();
-    }, []);
+    const filteredUsers = useMemo(() => {
 
-    const fetchUsers = async () => {
-        try {
-            const response = await axios.get(USERS_API_URL);
-            setUsers(response.data);
-        }
-        catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    };
+        return users.filter(u =>
+            u.fullName
+            .toLowerCase()
+            .includes(search.toLowerCase())
+        );
+
+    }, [users, search]);
 
     const renderUsersList = () => {
         return(

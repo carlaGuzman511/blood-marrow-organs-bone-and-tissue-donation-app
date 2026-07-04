@@ -1,47 +1,42 @@
 import { View } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useMemo } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { FlatList } from 'react-native-gesture-handler';
 import Header from '@/components/Header';
 import SearcherBar from '@/components/SearcherBar';
-import { DonationCenter, User } from '@/models/App.types';
-import axios from "axios";
+import { DonationCenter } from '@/models/App.types';
 import DonationCenterCard from '@/components/DonationCenterCard';
 import { useSearchContext } from '@/app/search/context';
+import { useDonationCenters } from '@/hooks/useDonationCenters';
 
 const SearchDonationCenters = () => {
-    const DONATION_CENTERS_API_URL = 'http://192.168.0.5:7140/api/donation-centers';
     const [search, setSearch] = useState('');
     const [state, actions] = useSearchContext();
 
-    const handleSearchDonationCentersByName = (data: string) => {
-        setSearch(data);
-        actions.onFilterDonationCentersByName(data);
+    const handleSearch = (text: string) => {
+        setSearch(text);
     }
 
-    const handleSearchDonationCentersByAddress = (data: string) => {
-        setSearch(data);
-        actions.onFilterDonationCentersByAddress(data);
-    }
+    const {
+        data: donationCenters = [],
+        isLoading,
+        error,
+    } = useDonationCenters();
 
-    useEffect(() => {
-        fetchDonationCenters();
-    }, []);
+    const filteredDonationCenters = useMemo(() => {
 
-    const fetchDonationCenters = async () => {
-        try {
-            const response = await axios.get(DONATION_CENTERS_API_URL);
-            actions.onGetDonationCenters({donationCenters: response.data});
-        }
-        catch (error) {
-            console.error('Error fetching donation centers:', error);
-        }
-    };
+        return donationCenters.filter(dc =>
+            dc.name
+            .toLowerCase()
+            .includes(search.toLowerCase())
+        );
+
+    }, [donationCenters, search]);
 
     const renderDonationCentersList = () => {
         return(
             <FlatList
-                data={state.filteredDonationCenters}
+                data={filteredDonationCenters}
                 renderItem={(item: any) => (<DonationCenterCard item={item.item}/>)}
                 keyExtractor={(item: DonationCenter) => item.id?.toString()}
                 contentContainerStyle={{
@@ -71,7 +66,7 @@ const SearchDonationCenters = () => {
                     name='Search'
                     onPress={onPressHeader}
                 />
-                {<SearcherBar search={search} handleSearch={handleSearchDonationCentersByName}/>}
+                {<SearcherBar search={search} handleSearch={handleSearch}/>}
                 {renderDonationCentersList()}
             </View>
         </SafeAreaView>

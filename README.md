@@ -10,11 +10,11 @@ blood, marrow, organs, bone, and tissue donation app
 
 # Web App Deploy
 
--
+- https://blood-marrow-organs-bone-an-git-2d7ac4-carlaguzman511s-projects.vercel.app/home
 
 # Mobile App Deploy 
 
--
+- https://expo.dev/artifacts/eas/KumDFOmXZl-26zJYC1q136ffokv0vObKRaKI75_vPi0.aab
 
 # Swagger 
 https://blood-marrow-organs-bone-and-tissue.onrender.com/swagger/index.html
@@ -28,4 +28,4 @@ TODO:
 - FIX CREATE POST ERROR 500
 - FIX UPDATE DONATION CENTER CARD
 - Fix Create donation center card
-- 
+- USE USEQUERY REFACTOR API AND HOOKS MOBILE APP, improve API CALLS

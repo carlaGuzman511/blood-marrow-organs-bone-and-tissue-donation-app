@@ -47,7 +47,7 @@ namespace Umss.BloodOrgansDonationApp.Repository
 
         public async Task<IEnumerable<User>> GetAll()
         {
-            return await _appContext.Users.ToListAsync();
+            return await _appContext.Users.AsNoTracking().ToListAsync();
         }
 
         public async Task<User?> GetByEmailAsync(string email)

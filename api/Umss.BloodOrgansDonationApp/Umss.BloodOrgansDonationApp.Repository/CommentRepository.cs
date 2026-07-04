@@ -32,11 +32,11 @@ namespace Umss.BloodOrgansDonationApp.Repository
 
         public async Task<Comment?> Get(Guid donationPostId, Guid commentId)
         {
-            return await _appContext.Comments.Where(x => x.DonationPostId == donationPostId && x.Id == commentId).FirstOrDefaultAsync();
+            return await _appContext.Comments.AsNoTracking().Where(x => x.DonationPostId == donationPostId && x.Id == commentId).FirstOrDefaultAsync();
         }
         public async Task<IEnumerable<Comment>> Get(Guid donationPostId)
         {
-            return await _appContext.Comments.Where(x => x.DonationPostId == donationPostId).ToListAsync();
+            return await _appContext.Comments.AsNoTracking().Where(x => x.DonationPostId == donationPostId).ToListAsync();
         }
 
         public async Task<Comment> Update(Comment element)

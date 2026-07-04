@@ -39,7 +39,7 @@ namespace Umss.BloodOrgansDonationApp.Repository
 
         public async Task<IEnumerable<BloodType>> GetAll()
         {
-            return await _donationAppContext.BloodTypes.ToListAsync();
+            return await _donationAppContext.BloodTypes.AsNoTracking().ToListAsync();
         }
         public async Task<BloodType> Update(BloodType element)
         {

@@ -47,6 +47,7 @@ namespace Umss.BloodOrgansDonationApp.Repository
                 .Include(dp => dp.DonationCenter)
                 .Include(dp => dp.Comments)
                 .ThenInclude(c => c.User)
+                .AsNoTracking()
                 .OrderByDescending(dp => dp.CreatedAt)
                 .FirstOrDefaultAsync();
         }
@@ -60,6 +61,7 @@ namespace Umss.BloodOrgansDonationApp.Repository
                 .Include(dp => dp.DonationCenter)
                 .Include(dp => dp.Comments)
                 .ThenInclude(c => c.User)
+                .AsNoTracking()
                 .OrderByDescending(dp => dp.CreatedAt)
                 .ToListAsync();
         }
@@ -73,6 +75,7 @@ namespace Umss.BloodOrgansDonationApp.Repository
                 .Include(dp => dp.DonationCenter)
                 .Include(dp => dp.Comments)
                 .ThenInclude(c => c.User)
+                .AsNoTracking()
                 .OrderByDescending(dp => dp.CreatedAt)
                 .FirstOrDefaultAsync();
         }
@@ -86,6 +89,7 @@ namespace Umss.BloodOrgansDonationApp.Repository
                 .Include(dp => dp.User)
                 .Include(dp => dp.Comments)
                 .ThenInclude(c => c.User)
+                .AsNoTracking()
                 .OrderByDescending(dp => dp.CreatedAt)
                 .ToListAsync();
         }
@@ -99,6 +103,7 @@ namespace Umss.BloodOrgansDonationApp.Repository
                 .Include(dp => dp.User)
                 .Include(dp => dp.Comments)
                 .ThenInclude(c => c.User)
+                .AsNoTracking()
                 .OrderByDescending(dp => dp.CreatedAt)
                 .ToListAsync();
         }

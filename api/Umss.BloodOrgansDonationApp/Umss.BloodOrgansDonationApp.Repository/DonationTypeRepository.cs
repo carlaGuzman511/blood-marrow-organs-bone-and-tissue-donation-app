@@ -38,12 +38,12 @@ namespace Umss.BloodOrgansDonationApp.Repository
 
         public async Task<IEnumerable<DonationType>> GetAll()
         {
-            return await _appContext.DonationTypes.ToListAsync();
+            return await _appContext.DonationTypes.AsNoTracking().ToListAsync();
         }
 
         public async Task<IEnumerable<DonationType>> GetByIds(IEnumerable<Guid> donationTypeIds)
         {
-            return await _appContext.DonationTypes.Where(x => donationTypeIds.Contains(x.Id)).ToListAsync();
+            return await _appContext.DonationTypes.AsNoTracking().Where(x => donationTypeIds.Contains(x.Id)).ToListAsync();
         }
 
         public async Task<DonationType> Update(DonationType element)

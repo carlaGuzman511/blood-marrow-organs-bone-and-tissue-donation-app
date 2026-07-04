@@ -15,7 +15,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.carlaguzman.BloodMarrowOrgansBoneAndTissueDonationApp"
     },
     "web": {
       "bundler": "metro",
@@ -36,6 +37,15 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "API_URL": "https://blood-marrow-organs-bone-and-tissue.onrender.com",
+      "eas": {
+        "projectId": "952277a0-44c2-4b63-8b90-b6ce6f4b9075"
+      }
     }
   }
 }
