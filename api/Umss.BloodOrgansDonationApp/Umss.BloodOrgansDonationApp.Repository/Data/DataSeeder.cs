@@ -816,6 +816,7 @@ namespace Umss.BloodOrgansDonationApp.Repository.Data
             var post1 = new DonationPost
             {
                 Id = Guid.Parse("81605e7d-85c0-4dbe-9c08-8fc7cba44588"),
+                Title = "Donación de sangre de emergencia",
                 BloodTypeId = Guid.Parse("16F3B6E5-2D0D-46D4-9359-43E1F8DCBFD5"),
                 DonationTypeId = Guid.Parse("94088D4A-B1D8-4C33-A629-1681D21B01BA"),
                 DonationCenterId = Guid.Parse("98AE90A1-BDD1-4A0A-BB18-DDEE9A110EFD"),
@@ -826,6 +827,7 @@ namespace Umss.BloodOrgansDonationApp.Repository.Data
             var post2 = new DonationPost
             {
                 Id = Guid.Parse("8302408c-5ecd-4fbc-9e21-d5ebf56fa339"),
+                Title = "Donación de sangre de emergencia",
                 BloodTypeId = Guid.Parse("1ECFBB48-D680-4663-8764-88E2C13B5FBD"),
                 DonationTypeId = Guid.Parse("94088D4A-B1D8-4C33-A629-1681D21B01BA"),
                 DonationCenterId = Guid.Parse("78DD884F-0435-456E-93CD-AFAA6BAE666E"),
@@ -836,6 +838,7 @@ namespace Umss.BloodOrgansDonationApp.Repository.Data
             var post3 = new DonationPost
             {
                 Id = Guid.Parse("f10a7ab4-cdbf-4744-9c93-355d6b09b47b"),
+                Title = "Se necesita donante de medula osea",
                 BloodTypeId = Guid.Parse("1ECFBB48-D680-4663-8764-88E2C13B5FBD"),
                 DonationTypeId = Guid.Parse("5FBD9AF3-9A3E-4F24-B916-CB792C9CB404"),
                 UserId = Guid.Parse("18491A8C-B5C2-4B94-8D9A-3F0D789A14CB"),
@@ -846,6 +849,7 @@ namespace Umss.BloodOrgansDonationApp.Repository.Data
             var post4 = new DonationPost
             {
                 Id = Guid.Parse("9854c325-914c-47d3-9c4f-95a2079e0aab"),
+                Title = "Se necesita donante de rinones",
                 BloodTypeId = Guid.Parse("44971D3A-1538-47DB-8A8D-C56D520163CD"),
                 DonationTypeId = Guid.Parse("8A1D9E25-7E02-42E9-BC0C-D4724F2F61E9"),
                 UserId = Guid.Parse("CBE0C098-0F29-4E2A-9AA4-5F189C9117A7"),
@@ -856,6 +860,7 @@ namespace Umss.BloodOrgansDonationApp.Repository.Data
             var post5 = new DonationPost
             {
                 Id = Guid.Parse("557d5df3-e472-4039-8f78-e6fcd2b1e9d8"),
+                Title = "Donación de sangre de emergencia",
                 BloodTypeId = Guid.Parse("16F3B6E5-2D0D-46D4-9359-43E1F8DCBFD5"),
                 DonationTypeId = Guid.Parse("94088D4A-B1D8-4C33-A629-1681D21B01BA"),
                 UserId = Guid.Parse("22C812A3-2A20-4F36-A47E-F7C0AB517DE2"),
@@ -866,6 +871,7 @@ namespace Umss.BloodOrgansDonationApp.Repository.Data
             var post6 = new DonationPost
             {
                 Id = Guid.Parse("a9591fbb-0edc-456d-a80c-b01c72f739d9"),
+                Title = "Donación de sangre de emergencia",
                 BloodTypeId = Guid.Parse("16F3B6E5-2D0D-46D4-9359-43E1F8DCBFD5"),
                 DonationTypeId = Guid.Parse("94088D4A-B1D8-4C33-A629-1681D21B01BA"),
                 UserId = Guid.Parse("45EF9CE5-1C83-4A1A-B6BB-E2C5A5E7C2F1"),
@@ -876,6 +882,7 @@ namespace Umss.BloodOrgansDonationApp.Repository.Data
             var post7 = new DonationPost
             {
                 Id = Guid.Parse("bd0c5b99-6040-4264-9694-e694c788d1fd"),
+                Title = "Donación de sangre de emergencia",
                 BloodTypeId = Guid.Parse("2BE27D6C-C9B6-4E3B-9ED2-E2C5B9D85A71"),
                 DonationTypeId = Guid.Parse("94088D4A-B1D8-4C33-A629-1681D21B01BA"),
                 UserId = Guid.Parse("FA8B01DE-79D1-487A-AABD-90B79ED2769C"),
@@ -886,6 +893,7 @@ namespace Umss.BloodOrgansDonationApp.Repository.Data
             var post8 = new DonationPost
             {
                 Id = Guid.Parse("5e4ad426-6f06-4f18-a81d-3c7c6f1eb281"),
+                Title = "Se necesita donante de riñón",
                 BloodTypeId = Guid.Parse("2BE27D6C-C9B6-4E3B-9ED2-E2C5B9D85A71"),
                 DonationTypeId = Guid.Parse("8A1D9E25-7E02-42E9-BC0C-D4724F2F61E9"),
                 UserId = Guid.Parse("D7E59A84-B9F5-4B7D-A50E-6C4D87A1DCFB"),
@@ -896,6 +904,7 @@ namespace Umss.BloodOrgansDonationApp.Repository.Data
             var post9 = new DonationPost
             {
                 Id = Guid.Parse("834a06c9-3058-4e73-8a0e-7a5e3cfa0fe3"),
+                Title = "Se necesita donante de higado",
                 BloodTypeId = Guid.Parse("67B4FCFE-B098-4787-8E3B-82DB9E576F3C"),
                 DonationTypeId = Guid.Parse("A4C39E91-B960-4F31-850C-1AD3D9BC6DCB"),
                 DonationCenterId = Guid.Parse("D7765EB2-49CA-49F3-87F8-08C21615E0EB"),
@@ -906,6 +915,7 @@ namespace Umss.BloodOrgansDonationApp.Repository.Data
             var post10 = new DonationPost
             {
                 Id = Guid.Parse("26834f68-d7ab-46f6-a6a5-68a2f54a9bbb"),
+                Title = "Donación de sangre de emergencia",
                 BloodTypeId = Guid.Parse("67B4FCFE-B098-4787-8E3B-82DB9E576F3C"),
                 DonationTypeId = Guid.Parse("94088D4A-B1D8-4C33-A629-1681D21B01BA"),
                 DonationCenterId = Guid.Parse("0F2C1ED3-9A6D-4C17-9AC7-0A08D6E0BA1D"),
@@ -916,6 +926,7 @@ namespace Umss.BloodOrgansDonationApp.Repository.Data
             var post11 = new DonationPost
             {
                 Id = Guid.Parse("a5a7dde6-3224-4cfc-900c-693cac5961fc"),
+                Title = "Donación de sangre de emergencia",
                 BloodTypeId = Guid.Parse("2BE27D6C-C9B6-4E3B-9ED2-E2C5B9D85A71"),
                 DonationTypeId = Guid.Parse("94088D4A-B1D8-4C33-A629-1681D21B01BA"),
                 DonationCenterId = Guid.Parse("0D70390F-7F9A-436C-AF23-1F167DEB29D3"),
@@ -926,6 +937,7 @@ namespace Umss.BloodOrgansDonationApp.Repository.Data
             var post12 = new DonationPost
             {
                 Id = Guid.Parse("cca06ed3-5caa-4a0f-8090-0660c546850e"),
+                Title = "Donación de sangre de emergencia",
                 BloodTypeId = Guid.Parse("16F3B6E5-2D0D-46D4-9359-43E1F8DCBFD5"),
                 DonationTypeId = Guid.Parse("94088D4A-B1D8-4C33-A629-1681D21B01BA"),
                 DonationCenterId = Guid.Parse("3EBF53AE-51A6-439D-9837-35638ACDE1FB"),
@@ -936,6 +948,7 @@ namespace Umss.BloodOrgansDonationApp.Repository.Data
             var post13 = new DonationPost
             {
                 Id = Guid.Parse("894b791e-e1d9-4e38-a574-fe64c7a2a8e2"),
+                Title = "Se necesita donante de medula osea",
                 BloodTypeId = Guid.Parse("3B2C65F7-EAA0-40EF-89D9-9A9B21769B89"),
                 DonationTypeId = Guid.Parse("5FBD9AF3-9A3E-4F24-B916-CB792C9CB404"),
                 DonationCenterId = Guid.Parse("A15228F3-E35C-4F61-9B4C-96E2BB5E8226"),
@@ -946,6 +959,7 @@ namespace Umss.BloodOrgansDonationApp.Repository.Data
             var post14 = new DonationPost
             {
                 Id = Guid.Parse("3b35b51e-6264-483d-96e7-38a471781023"),
+                Title = "Donación de sangre de emergencia",
                 BloodTypeId = Guid.Parse("3B2C65F7-EAA0-40EF-89D9-9A9B21769B89"),
                 DonationTypeId = Guid.Parse("94088D4A-B1D8-4C33-A629-1681D21B01BA"),
                 DonationCenterId = Guid.Parse("D995D15B-1A8D-4CCC-80E2-4558D8EC7582"),
@@ -956,6 +970,7 @@ namespace Umss.BloodOrgansDonationApp.Repository.Data
             var post15 = new DonationPost
             {
                 Id = Guid.Parse("a25f2e3e-bced-43e0-8db5-5e49b6472814"),
+                Title = "Donación de sangre de emergencia",
                 BloodTypeId = Guid.Parse("16F3B6E5-2D0D-46D4-9359-43E1F8DCBFD5"),
                 DonationTypeId = Guid.Parse("94088D4A-B1D8-4C33-A629-1681D21B01BA"),
                 DonationCenterId = Guid.Parse("D995D15B-1A8D-4CCC-80E2-4558D8EC7582"),
@@ -966,6 +981,7 @@ namespace Umss.BloodOrgansDonationApp.Repository.Data
             var post16 = new DonationPost
             {
                 Id = Guid.Parse("09ab6948-c52f-4d43-aa11-0292dc7937eb"),
+                Title = "Se necesita donante de medula osea",
                 BloodTypeId = Guid.Parse("67B4FCFE-B098-4787-8E3B-82DB9E576F3C"),
                 DonationTypeId = Guid.Parse("5FBD9AF3-9A3E-4F24-B916-CB792C9CB404"),
                 DonationCenterId = Guid.Parse("A15228F3-E35C-4F61-9B4C-96E2BB5E8226"),
@@ -976,6 +992,7 @@ namespace Umss.BloodOrgansDonationApp.Repository.Data
             var post17 = new DonationPost
             {
                 Id = Guid.Parse("99a4f041-d681-4976-b51f-850793c7199f"),
+                Title = "Se necesita donante de pulmon",
                 BloodTypeId = Guid.Parse("CFD5A4ED-2C2E-4DBB-8C27-6512BFB1B717"),
                 DonationTypeId = Guid.Parse("B72DBD13-04AA-42E1-8825-4E52DFBAEBCD"),
                 UserId = Guid.Parse("2F10A9E5-FBD3-4307-9CB5-2D21675567F4"),
@@ -985,6 +1002,7 @@ namespace Umss.BloodOrgansDonationApp.Repository.Data
             var post18 = new DonationPost
             {
                 Id = Guid.Parse("969c356b-c4a6-4603-9c36-b8272e12a37b"),
+                Title = "Donación de sangre de emergencia",
                 BloodTypeId = Guid.Parse("67B4FCFE-B098-4787-8E3B-82DB9E576F3C"),
                 DonationTypeId = Guid.Parse("6A2D6F1A-B6F6-4D8E-B0C5-3B3C71E7EAB3"),
                 UserId = Guid.Parse("AB5C994F-BB77-40C1-83DC-01320DC430EC"),
@@ -995,6 +1013,7 @@ namespace Umss.BloodOrgansDonationApp.Repository.Data
             var post19 = new DonationPost
             {
                 Id = Guid.Parse("a01bc461-6650-4d18-acc8-9aaf4448d50e"),
+                Title = "Donación de sangre de emergencia",
                 BloodTypeId = Guid.Parse("44971D3A-1538-47DB-8A8D-C56D520163CD"),
                 DonationTypeId = Guid.Parse("94088D4A-B1D8-4C33-A629-1681D21B01BA"),
                 DonationCenterId = Guid.Parse("0D47ED29-FB5D-41AC-B43A-916CD11ECC61"),
@@ -1005,6 +1024,7 @@ namespace Umss.BloodOrgansDonationApp.Repository.Data
             var post20 = new DonationPost
             {
                 Id = Guid.Parse("c56a4180-65aa-42ec-a945-5fd21dec0538"),
+                Title = "Se necesita donante de riñón",
                 BloodTypeId = Guid.Parse("67B4FCFE-B098-4787-8E3B-82DB9E576F3C"),
                 DonationTypeId = Guid.Parse("8A1D9E25-7E02-42E9-BC0C-D4724F2F61E9"),
                 UserId = Guid.Parse("A4E2F725-5142-40C6-9E2F-3B62BC5FDC45"),

@@ -18,10 +18,12 @@ import { useDonationTypes } from "@/hooks/useDonationTypes";
 const Home = () => {
   const router = useRouter();
   const {
-    data: donations = [],
+    data,
     isLoading,
     error,
   } = useDonationTypes();
+
+  const donations = data ?? [];
 
   const renderItem: ListRenderItem<Donation> = ({ item }) => (
     <TouchableOpacity

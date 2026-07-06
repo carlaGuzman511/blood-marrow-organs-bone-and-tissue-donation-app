@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   View,
   FlatList,
   ListRenderItem,
 } from "react-native";
-import DonationCard from "@/components/DonationCard";
+import DonationCard from "@/components/DonationCard/DonationCard";
 import { DonationPost } from "@/models/App.types";
 import { useHomeContext } from "@/app/home/context";
 import { useDonationPosts } from "@/hooks/useDonationPosts";
