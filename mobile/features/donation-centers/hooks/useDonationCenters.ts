@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getDonationCenters } from "@/services/donationCenterService";
+import { getDonationCenters } from "@/features/donation-centers/services/donationCenter.service";
 
 export function useDonationCenters() {
   return useQuery({

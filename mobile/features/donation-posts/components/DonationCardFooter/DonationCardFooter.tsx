@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
-import PrimaryButton from "../Buttons/PrimaryButton";
-import styles from "./DonationCard.styles";
+import PrimaryButton from "../../../../components/Buttons/PrimaryButton";
+import styles from "./DonationCardFooter.styles";
 
 type Props = {
     onPress: () => void;

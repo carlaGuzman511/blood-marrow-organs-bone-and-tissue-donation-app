@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import { Image } from "react-native";
-import styles from "../DonationCard/DonationCard.styles";
+import styles from "./userAvatar.styles";
 
 type Props = {
     image: string | undefined;

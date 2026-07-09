@@ -3,9 +3,9 @@ import { View } from "react-native";
 
 import { DonationPost } from "@/models/App.types";
 
-import Header from "./DonationCardHeader";
-import Body from "./DonationCardBody";
-import Footer from "./DonationCardFooter";
+import Header from "../DonationCardHeader";
+import Body from "../DonationCardBody";
+import Footer from "../DonationCardFooter";
 
 import styles from "./DonationCard.styles";
 

@@ -4,7 +4,7 @@ import {
   FlatList,
   ListRenderItem,
 } from "react-native";
-import DonationCard from "@/components/DonationCard/DonationCard";
+import DonationCard from "@/features/donation-posts/components/DonationCard/DonationCard";
 import { DonationPost } from "@/models/App.types";
 import { useHomeContext } from "@/app/home/context";
 import { useDonationPosts } from "@/hooks/useDonationPosts";

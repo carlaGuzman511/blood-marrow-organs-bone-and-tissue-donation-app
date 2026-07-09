@@ -12,6 +12,19 @@ export const COLORS = {
     gray: '#F8F8F8',
     secondaryGray: '#808080',
     green: "green",
+    //   primary: "#FF3B6B",
+    primaryDark: "#E91E63",
+    error: "#E91E63",
+    //   secondary: "#2563EB",
+    success: "#22C55E",
+    warning: "#F59E0B",
+    danger: "#EF4444",
+    background: "#F7F8FA",
+    surface: "#FFFFFF",
+    border: "#ECECEC",
+    text: "#1F2937",
+    textSecondary: "#6B7280",
+    disabled: "#CFCFCF",
 }
 
 export const SIZES = {

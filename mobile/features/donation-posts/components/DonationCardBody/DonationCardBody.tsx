@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text } from "react-native";
-import UserAvatar from "../Avatar/UserAvatar";
-import styles from "./DonationCard.styles";
+import UserAvatar from "../../../../components/Avatar/UserAvatar";
+import styles from "./DonationCardBody.styles";
 import { DonationPost } from "@/models/App.types";
 
 type Props = {

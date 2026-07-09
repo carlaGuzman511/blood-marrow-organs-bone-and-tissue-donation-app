@@ -3,9 +3,9 @@ import { View, Text } from "react-native";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
-import BloodTypeBadge from "../Badge/BloodTypeBadge";
+import BloodTypeBadge from "../../../../components/Badge/BloodTypeBadge";
 
-import styles from "./DonationCard.styles";
+import styles from "./DonationCardHeader.styles";
 import { DonationPost } from "@/models/App.types";
 
 dayjs.extend(relativeTime);
