@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import AppText from "@/components/ui/AppText";
-import styles from "./styles/DonationCenterCardInfo.styles";
+import styles from "./DonationCenterCardInfo.styles";
 
 type Props = {
     address: string;

@@ -1,5 +1,6 @@
 import { View } from "react-native";
 import Home from '@/screens/Home';
+import DonationRequest from '@/screens/DonationRequest';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { HomeContextProvider } from "./context";
 
@@ -12,7 +13,8 @@ export default function Index() {
             flex: 1,
           }}
         >
-          <Home />
+          <DonationRequest />
+          {/* <Home /> */}
         </View>
       </HomeContextProvider>
     </GestureHandlerRootView>

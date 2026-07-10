@@ -4,10 +4,10 @@ import { useRouter } from "expo-router";
 
 import AppCard from "@/components/ui/AppCard";
 
-import DonationCenterCardHeader from "./DonationCenterCardHeader";
-import DonationCenterCardInfo from "./DonationCenterCardInfo";
-import DonationCenterCardServices from "./DonationCenterCardServices";
-import DonationCenterCardFooter from "../DonationCenterCardFooter/DonationCenterCardFooter";
+import DonationCenterCardHeader from "../DonationCenterCardHeader";
+import DonationCenterCardInfo from "../DonationCenterCardInfo";
+import DonationCenterCardServices from "../DonationCenterCardServices";
+import DonationCenterCardFooter from "../DonationCenterCardFooter";
 
 import { DonationCenter } from "@/models/App.types";
 

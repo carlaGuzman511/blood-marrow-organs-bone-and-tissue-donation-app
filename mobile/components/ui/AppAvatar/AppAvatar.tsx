@@ -24,11 +24,7 @@ function AppAvatar({
             <View
                 style={[
                     styles.placeholder,
-                    {
-                        width: size,
-                        height: size,
-                        borderRadius: size / 2,
-                    },
+                    styles.avatar
                 ]}
             >
                 <AppText
@@ -43,11 +39,7 @@ function AppAvatar({
     return (
         <Image
             source={{ uri }}
-            style={{
-                width: size,
-                height: size,
-                borderRadius: size / 2,
-            }}
+            style={styles.avatar}
         />
     );
 }

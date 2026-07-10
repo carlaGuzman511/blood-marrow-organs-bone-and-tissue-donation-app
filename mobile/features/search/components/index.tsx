@@ -6,10 +6,10 @@ import { DonationCenter } from "@/models/App.types";
 
 import AppCard from "@/components/ui/AppCard";
 
-import DonationCenterCardHeader from "../../donation-centers/components/DonationCenterCard/DonationCenterCardHeader";
-import DonationCenterCardInfo from "../../donation-centers/components/DonationCenterCard/DonationCenterCardInfo";
-import DonationCenterCardServices from "../../donation-centers/components/DonationCenterCard/DonationCenterCardServices";
-import DonationCenterCardFooter from "../../donation-centers/components/DonationCenterCardFooter/DonationCenterCardFooter";
+import DonationCenterCardHeader from "../../donation-centers/components/DonationCenterCardHeader";
+import DonationCenterCardInfo from "../../donation-centers/components/DonationCenterCardInfo";
+import DonationCenterCardServices from "../../donation-centers/components/DonationCenterCardServices";
+import DonationCenterCardFooter from "../../donation-centers/components/DonationCenterCardFooter";
 
 type Props = {
     item: DonationCenter;
@@ -54,7 +54,7 @@ function DonationCenterCard({ item }: Props) {
                 <DonationCenterCardServices
                     //TODO
                     //services={item.services}
-                    services={["Blood Donation", "Plasma Donation", "Platelet Donation"]}
+                    services={[{id: 1, name: "Blood Donation"}, {id: 2, name: "Plasma Donation"}, {id: 3, name: "Platelet Donation"}]}
                 />
                 <DonationCenterCardFooter
                     //TODO

@@ -5,13 +5,11 @@ import { FlatList } from 'react-native-gesture-handler';
 import Header from '@/components/Header';
 import SearcherBar from '@/components/SearcherBar';
 import { DonationCenter } from '@/models/App.types';
-import DonationCenterCard from '@/components/DonationCenterCard';
-import { useSearchContext } from '@/app/search/context';
+import DonationCenterCard from '@/features/donation-centers/components/DonationCenterCard';
 import { useDonationCenters } from '@/features/donation-centers/hooks/useDonationCenters';
 
 const SearchDonationCenters = () => {
     const [search, setSearch] = useState('');
-    const [state, actions] = useSearchContext();
 
     const handleSearch = (text: string) => {
         setSearch(text);

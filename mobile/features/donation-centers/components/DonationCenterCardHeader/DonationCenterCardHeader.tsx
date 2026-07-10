@@ -5,7 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import AppText from "@/components/ui/AppText";
 import StatusBadge from "@/components/ui/StatusBadge";
 
-import styles from "./styles/DonationCenterCardHeader.styles";
+import styles from "./DonationCenterCardHeader.styles";
 
 type Props = {
     name: string;

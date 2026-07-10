@@ -6,12 +6,9 @@ import {
 } from "react-native";
 import DonationCard from "@/features/donation-posts/components/DonationCard/DonationCard";
 import { DonationPost } from "@/models/App.types";
-import { useHomeContext } from "@/app/home/context";
 import { useDonationPosts } from "@/hooks/useDonationPosts";
 
 const DonationRequest = () => {
-    const [state, actions] = useHomeContext();
-
     const {
       data: donationPosts = [],
       isLoading,
@@ -29,7 +26,6 @@ const DonationRequest = () => {
         <View style={{ flex: 1, paddingHorizontal: 22 }}>
             <FlatList
               data={donationPosts}
-              // keyExtractor={(item: DonationPost) => item.id?.toString()}
               renderItem={renderItem}
               showsVerticalScrollIndicator={false}
               onEndReachedThreshold={0.2}

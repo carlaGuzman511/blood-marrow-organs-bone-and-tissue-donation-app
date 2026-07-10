@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import { View } from "react-native";
 
 import ServiceChip from "@/components/ui/ServiceChip";
-import styles from "./styles/DonationCenterCardServices.styles";
+import styles from "./DonationCenterCardServices.styles";
 
 export interface DonationService {
     id: number;
@@ -10,7 +10,7 @@ export interface DonationService {
 }
 
 type Props = {
-    services: string[];
+    services: DonationService[];
 };
 
 function DonationCenterCardServices({
@@ -25,9 +25,8 @@ function DonationCenterCardServices({
             {services.map(service => (
                 <ServiceChip
                     // TODO
-                    // key={service.id}
-                    // key={service.name}
-                    label={service}
+                    key={service.id}
+                    label={service.name}
                 />
             ))}
         </View>
