@@ -5,7 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import AppText from "@/components/ui/AppText";
 import StatusBadge from "@/components/ui/StatusBadge";
 
-import styles from "./DonationCenterCardHeader.styles";
+import styles from "./CardHeader.styles";
 
 type Props = {
     name: string;
@@ -14,7 +14,7 @@ type Props = {
     isOpen?: boolean;
 };
 
-function DonationCenterCardHeader({
+function CardHeader({
     name,
     city,
     image,
@@ -58,4 +58,4 @@ function DonationCenterCardHeader({
     );
 }
 
-export default memo(DonationCenterCardHeader);
+export default memo(CardHeader);

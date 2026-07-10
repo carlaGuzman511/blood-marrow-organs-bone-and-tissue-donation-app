@@ -10,13 +10,11 @@ import styles from "./AppAvatar.styles";
 
 type Props = {
     uri?: string;
-    size?: number;
     fallbackText?: string;
 };
 
 function AppAvatar({
     uri,
-    size = 64,
     fallbackText,
 }: Props) {
     if (!uri) {

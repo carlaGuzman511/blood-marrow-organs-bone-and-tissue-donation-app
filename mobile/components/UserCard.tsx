@@ -1,6 +1,6 @@
-import React, {useState}from 'react'
+import React from 'react'
 import { User } from '@/models/App.types';
-import UserCardDetails from './UserCardDetails';
+import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { View, Text, TouchableOpacity, Image } from 'react-native'
 import { COLORS, FONTS } from '@/constants';
@@ -11,12 +11,21 @@ type Props = {
 }
 
 const UserCard = ({item}: Props) => {
-    const [modalVisible, setModalVisible] = useState(false);
+    const router = useRouter();
+
+    const handlePress = () => {
+        router.push({
+            pathname: '/search/donor-details',
+            params: {
+                id: item.id?.toString(),
+            },
+        });
+    }
 
     return(
         <SafeAreaView>
             <TouchableOpacity
-                onPress={() => setModalVisible(true)}
+                onPress={handlePress}
                 key={item.id?.toString()}
                 style={{
                     flexDirection:'row',
@@ -24,7 +33,9 @@ const UserCard = ({item}: Props) => {
                     borderRadius: 10,
                     borderWidth:1,
                     borderColor: COLORS.secondaryWhite,
-                    height: 110
+                    height: 110,
+                    marginBottom: 16,
+                    paddingHorizontal: 12,
                 }}
             >   
                 <Image
@@ -35,7 +46,6 @@ const UserCard = ({item}: Props) => {
                         height:85,
                         borderRadius:50,
                         marginRight:16,
-                        marginLeft:4,
                         backgroundColor: COLORS.black,
                     }}
                 />
@@ -43,7 +53,6 @@ const UserCard = ({item}: Props) => {
                     style={{
                         flexDirection:'column',
                         alignItems:'flex-start',
-
                     }}
                 >
                     <Text
@@ -59,7 +68,8 @@ const UserCard = ({item}: Props) => {
                     <View
                         style={{
                             flexDirection:'row',
-                            justifyContent:'center'
+                            justifyContent:'center',
+                            alignItems:'center'
                         }}
                     >
                         <MaterialCommunityIcons
@@ -69,18 +79,19 @@ const UserCard = ({item}: Props) => {
                         />
                         <Text
                             style={{
-                                // marginLeft:8,
-                                ...FONTS.body4
+                                ...FONTS.body4,
+                                marginLeft:8,
                             }}
                         >
                             {item.bloodTypeId}
                         </Text>
-                        
                     </View>
                     <View
                         style={{
                             flexDirection:'row',
-                            justifyContent:'center'
+                            justifyContent:'center',
+                            alignItems:'center',
+                            marginTop: 6,
                         }}
                     >
                         <EvilIcons
@@ -90,17 +101,15 @@ const UserCard = ({item}: Props) => {
                         />
                         <Text
                             style={{
-                                // marginLeft:8,
-                                ...FONTS.body4
+                                ...FONTS.body4,
+                                marginLeft:8,
                             }}
                         >
                             {item.address}
                         </Text>
-
                     </View>
                 </View>
             </TouchableOpacity>
-            {modalVisible ? <UserCardDetails item={item} modalVisible={modalVisible} setModalVisible={setModalVisible}/> : null}
         </SafeAreaView>
     );
 };

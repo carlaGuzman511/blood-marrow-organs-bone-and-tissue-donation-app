@@ -4,7 +4,7 @@ import { useRouter } from "expo-router";
 
 import AppCard from "@/components/ui/AppCard";
 
-import DonationCenterCardHeader from "../DonationCenterCardHeader";
+import CardHeader from "@/components/ui/CardHeader";
 import DonationCenterCardInfo from "../DonationCenterCardInfo";
 import DonationCenterCardServices from "../DonationCenterCardServices";
 import DonationCenterCardFooter from "../DonationCenterCardFooter";
@@ -35,7 +35,7 @@ function DonationCenterCard({ item }: Props) {
             onPress={handlePress}
         >
             <AppCard>
-                <DonationCenterCardHeader
+                <CardHeader
                     name={item.name}
                     city={item.city}
                     image={item.image}
@@ -48,7 +48,7 @@ function DonationCenterCard({ item }: Props) {
                 <DonationCenterCardServices
                     // TODO
                     // services={item.services ?? []}
-                    services={["Kidneys", "Heart", "Liver"]}
+                    services={[{ id: 1, name: "Kidneys" }, { id: 2, name: "Heart" }, { id: 3, name: "Liver" }]}
                 />
                 <DonationCenterCardFooter
                     isOpen={true}

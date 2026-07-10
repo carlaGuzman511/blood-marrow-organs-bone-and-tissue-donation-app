@@ -2,14 +2,21 @@ import { View } from 'react-native'
 import React, { useState, useMemo } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { FlatList } from 'react-native-gesture-handler';
+import { useRouter } from 'expo-router';
 import Header from '@/components/Header';
 import SearcherBar from '@/components/SearcherBar';
 import { DonationCenter } from '@/models/App.types';
 import DonationCenterCard from '@/features/donation-centers/components/DonationCenterCard';
 import { useDonationCenters } from '@/features/donation-centers/hooks/useDonationCenters';
 
+const cityFilters = ['Dhaka', 'Chittagong', 'Mirpur', 'Lakshimpur'];
+const serviceFilters = ['Blood Donation', 'Plasma Donation', 'Platelet Donation'];
+
 const SearchDonationCenters = () => {
+    const router = useRouter();
     const [search, setSearch] = useState('');
+    const [cityFilter, setCityFilter] = useState('');
+    const [serviceFilter, setServiceFilter] = useState('');
 
     const handleSearch = (text: string) => {
         setSearch(text);
@@ -17,19 +24,20 @@ const SearchDonationCenters = () => {
 
     const {
         data: donationCenters = [],
-        isLoading,
-        error,
     } = useDonationCenters();
 
     const filteredDonationCenters = useMemo(() => {
-
-        return donationCenters.filter(dc =>
-            dc.name
-            .toLowerCase()
-            .includes(search.toLowerCase())
-        );
-
-    }, [donationCenters, search]);
+        return donationCenters.filter((dc) => {
+            const byName = dc.name.toLowerCase().includes(search.toLowerCase());
+            const byCity = cityFilter ? dc.city.toLowerCase().includes(cityFilter.toLowerCase()) : true;
+            const byService = serviceFilter ?
+                dc.donationTypes?.some((type) => type.name.toLowerCase() === serviceFilter.toLowerCase()) ||
+                dc.name.toLowerCase().includes(serviceFilter.toLowerCase()) ||
+                dc.address.toLowerCase().includes(serviceFilter.toLowerCase())
+                : true;
+            return byName && byCity && byService;
+        });
+    }, [donationCenters, search, cityFilter, serviceFilter]);
 
     const renderDonationCentersList = () => {
         return(
@@ -45,7 +53,7 @@ const SearchDonationCenters = () => {
     }
 
     const onPressHeader = () => {
-        // navigation.navigate('Home');
+        router.back();
     }
 
     return (
@@ -61,10 +69,27 @@ const SearchDonationCenters = () => {
                 }}
             >
                 <Header
-                    name='Search'
+                    name='Search Centers'
                     onPress={onPressHeader}
                 />
-                {<SearcherBar search={search} handleSearch={handleSearch}/>}
+                <SearcherBar
+                    search={search}
+                    handleSearch={handleSearch}
+                    filterGroups={[
+                        {
+                            title: 'City',
+                            options: cityFilters,
+                            selected: cityFilter,
+                            onSelect: setCityFilter,
+                        },
+                        {
+                            title: 'Service',
+                            options: serviceFilters,
+                            selected: serviceFilter,
+                            onSelect: setServiceFilter,
+                        },
+                    ]}
+                />
                 {renderDonationCentersList()}
             </View>
         </SafeAreaView>

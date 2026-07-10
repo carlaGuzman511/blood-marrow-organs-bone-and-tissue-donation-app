@@ -15,8 +15,8 @@ function StatusBadge({
         return (
             <Badge
                 label="Open"
-                backgroundColor="#DCFCE7"
-                textColor="#166534"
+                backgroundColor={COLORS.lightGreen}
+                textColor={COLORS.green}
             />
         );
     }
@@ -24,8 +24,8 @@ function StatusBadge({
     return (
         <Badge
             label="Closed"
-            backgroundColor="#FEE2E2"
-            textColor="#991B1B"
+            backgroundColor={COLORS.lightRed}
+            textColor={COLORS.danger}
         />
     );
 }

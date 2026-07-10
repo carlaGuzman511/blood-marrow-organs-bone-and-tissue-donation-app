@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text } from "react-native";
-import UserAvatar from "../../../../components/Avatar/UserAvatar";
+import CardHeader from "@/components/ui/CardHeader";
 import styles from "./DonationCardBody.styles";
 import { DonationPost } from "@/models/App.types";
 
@@ -12,7 +12,12 @@ export default function DonationCardBody({ item }: Props) {
 
     return (
         <View style={styles.body}>
-            <UserAvatar image={item.user?.image} />
+            <CardHeader
+                name={item.user?.fullName || item.donationCenter?.name || ""}
+                city={item.user?.address || item.donationCenter?.address || ""}
+                image={item.user?.image || item.donationCenter?.image || ""}
+                isOpen={false}
+            />
             <View style={styles.info}>
                 <Text
                     numberOfLines={1}

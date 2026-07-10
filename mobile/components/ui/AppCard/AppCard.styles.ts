@@ -13,7 +13,7 @@ export default StyleSheet.create({
         marginVertical: 8,
         borderWidth: 1,
         borderColor: COLORS.secondaryWhite,
-        shadowColor: "#000",
+        shadowColor: COLORS.black,
         shadowOpacity: 0.08,
         shadowRadius: 8,
         shadowOffset: {

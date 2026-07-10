@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import PrimaryButton from "../../../../components/Buttons/PrimaryButton";
+import PrimaryButton from "../../../../components/ui/PrimaryButton/PrimaryButton";
 import styles from "./DonationCardFooter.styles";
 
 type Props = {

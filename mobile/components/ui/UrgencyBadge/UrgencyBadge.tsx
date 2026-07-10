@@ -1,14 +1,16 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text } from "react-native";
+import styles from "./UrgencyBadge.styles";
+import { COLORS } from "@/theme/colors";
 
 type Props = {
     urgency: "Critical" | "High" | "Normal";
 };
 
 const colors = {
-    Critical: "#D62828",
-    High: "#F77F00",
-    Normal: "#2A9D8F"
+    Critical: COLORS.danger,
+    High: COLORS.warning,
+    Normal: COLORS.success,
 };
 
 export default function UrgencyBadge({ urgency }: Props) {
@@ -27,16 +29,3 @@ export default function UrgencyBadge({ urgency }: Props) {
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        paddingHorizontal: 12,
-        paddingVertical: 5,
-        borderRadius: 20,
-    },
-    text: {
-        color: "white",
-        fontWeight: "700",
-        fontSize: 12,
-    },
-});

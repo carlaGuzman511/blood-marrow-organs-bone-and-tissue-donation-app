@@ -11,7 +11,7 @@ export const COLORS = {
     secondaryBlack: '#595959',
     gray: '#F8F8F8',
     secondaryGray: '#808080',
-    green: "green",
+    green: "#166534",
     //   primary: "#FF3B6B",
     primaryDark: "#E91E63",
     error: "#E91E63",
@@ -25,6 +25,8 @@ export const COLORS = {
     text: "#1F2937",
     textSecondary: "#6B7280",
     disabled: "#CFCFCF",
+    lightGreen: "#DCFCE7",
+    lightRed:"#FEE2E2"
 }
 
 export const SIZES = {

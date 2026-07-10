@@ -6,7 +6,7 @@ import { DonationCenter } from "@/models/App.types";
 
 import AppCard from "@/components/ui/AppCard";
 
-import DonationCenterCardHeader from "../../donation-centers/components/DonationCenterCardHeader";
+import CardHeader from "@/components/ui/CardHeader";
 import DonationCenterCardInfo from "../../donation-centers/components/DonationCenterCardInfo";
 import DonationCenterCardServices from "../../donation-centers/components/DonationCenterCardServices";
 import DonationCenterCardFooter from "../../donation-centers/components/DonationCenterCardFooter";
@@ -33,7 +33,7 @@ function DonationCenterCard({ item }: Props) {
             onPress={handlePress}
         >
             <AppCard>
-                <DonationCenterCardHeader
+                <CardHeader
                     name={item.name}
                     city={item.city}
                     image={item.image}
