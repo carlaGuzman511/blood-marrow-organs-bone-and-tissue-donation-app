@@ -1,10 +1,12 @@
 import React from 'react'
 import { User } from '@/models/App.types';
 import { useRouter } from 'expo-router';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { View, Text, TouchableOpacity, Image } from 'react-native'
-import { COLORS, FONTS } from '@/constants';
-import { MaterialCommunityIcons,EvilIcons } from '@expo/vector-icons';
+import { View, TouchableOpacity } from 'react-native'
+import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
+import AppCard from '@/components/ui/AppCard';
+import CardHeader from '@/components/ui/CardHeader';
+import AppText from '@/components/ui/AppText';
+import styles from './UserCard.styles';
 
 type Props = {
     item: User
@@ -23,94 +25,30 @@ const UserCard = ({item}: Props) => {
     }
 
     return(
-        <SafeAreaView>
-            <TouchableOpacity
-                onPress={handlePress}
-                key={item.id?.toString()}
-                style={{
-                    flexDirection:'row',
-                    alignItems:'center',
-                    borderRadius: 10,
-                    borderWidth:1,
-                    borderColor: COLORS.secondaryWhite,
-                    height: 110,
-                    marginBottom: 16,
-                    paddingHorizontal: 12,
-                }}
-            >   
-                <Image
-                    source={{uri: item.image}}
-                    resizeMode='contain'
-                    style={{
-                        width:85,
-                        height:85,
-                        borderRadius:50,
-                        marginRight:16,
-                        backgroundColor: COLORS.black,
-                    }}
+        <TouchableOpacity onPress={handlePress} key={item.id?.toString()} style={styles.touchable} activeOpacity={0.9}>
+            <AppCard style={styles.card}>
+                <CardHeader
+                    name={item.fullName}
+                    city={item.address || 'Unknown location'}
+                    image={item.image || ''}
+                    isOpen={true}
                 />
-                <View
-                    style={{
-                        flexDirection:'column',
-                        alignItems:'flex-start',
-                    }}
-                >
-                    <Text
-                        style={{
-                            ...FONTS.body4,
-                            fontWeight:'bold',
-                            marginLeft:4,
-                            marginBottom:6
-                        }}
-                    >
-                        {item.fullName}
-                    </Text>
-                    <View
-                        style={{
-                            flexDirection:'row',
-                            justifyContent:'center',
-                            alignItems:'center'
-                        }}
-                    >
-                        <MaterialCommunityIcons
-                            name='blood-bag'
-                            size={24}
-                            color={COLORS.primary}
-                        />
-                        <Text
-                            style={{
-                                ...FONTS.body4,
-                                marginLeft:8,
-                            }}
-                        >
+                <View style={styles.infoSection}>
+                    <View style={styles.infoRow}>
+                        <MaterialCommunityIcons name='blood-bag' size={18} color='#2563EB' />
+                        <AppText variant='body' style={styles.infoText}>
                             {item.bloodTypeId}
-                        </Text>
+                        </AppText>
                     </View>
-                    <View
-                        style={{
-                            flexDirection:'row',
-                            justifyContent:'center',
-                            alignItems:'center',
-                            marginTop: 6,
-                        }}
-                    >
-                        <EvilIcons
-                            name='location'
-                            size={24}
-                            color={COLORS.primary}
-                        />
-                        <Text
-                            style={{
-                                ...FONTS.body4,
-                                marginLeft:8,
-                            }}
-                        >
-                            {item.address}
-                        </Text>
+                    <View style={styles.infoRow}>
+                        <Ionicons name='call-outline' size={18} color='#2563EB' />
+                        <AppText variant='body' style={styles.infoText}>
+                            {item.phoneNumber || 'Not provided'}
+                        </AppText>
                     </View>
                 </View>
-            </TouchableOpacity>
-        </SafeAreaView>
+            </AppCard>
+        </TouchableOpacity>
     );
 };
 

@@ -2,7 +2,8 @@
 import { View, TouchableOpacity, TextInput, Text } from 'react-native'
 import React from 'react'
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { COLORS, FONTS, SIZES } from '@/constants';
+import { COLORS } from '@/constants';
+import styles from './SearcherBar.styles';
 
 type FilterGroup = {
     title: string,
@@ -24,96 +25,26 @@ const SearcherBar = ({search, handleSearch, filterGroups}: Props) => {
 
     return(
         <View>
-            <View
-                style={{
-                    flexDirection: 'row',
-                    alignItems:'center',
-                    backgroundColor:COLORS.secondaryWhite,
-                    height:48,
-                    marginVertical:22,
-                    paddingHorizontal:22,
-                    borderRadius:4
-                }}
-            >
-                <Ionicons
-                    name="search-outline"
-                    size={24}
-                    color={COLORS.black}
-                />
-                <TextInput
-                    style={{
-                        height:'100%',
-                        marginHorizontal:12,
-                        width:SIZES.width - 144
-                    }}
-                    placeholder='Search'
-                    value={search}
-                    onChangeText={handleSearch}
-                />
-                <TouchableOpacity
-                    style={{
-                        height:48,
-                        width:48,
-                        borderRadius:8,
-                        alignItems:'center',
-                        justifyContent:'center',
-                        backgroundColor:COLORS.primary
-                    }}
-                    onPress={handleClear}
-                >
-                    <MaterialCommunityIcons
-                        name="close"
-                        size={24}
-                        color={COLORS.white}
-                    />
+            <View style={styles.searchBar}>
+                <Ionicons name="search-outline" size={24} color={COLORS.black} />
+                <TextInput style={styles.input} placeholder='Search' value={search} onChangeText={handleSearch} />
+                <TouchableOpacity style={styles.clearButton} onPress={handleClear}>
+                    <MaterialCommunityIcons name="close" size={24} color={COLORS.white} />
                 </TouchableOpacity>
             </View>
             {filterGroups?.map((group) => (
-                <View
-                    key={group.title}
-                    style={{
-                        marginBottom: 12,
-                    }}
-                >
-                    <Text
-                        style={{
-                            ...FONTS.body4,
-                            color: COLORS.gray,
-                            marginBottom: 8,
-                        }}
-                    >
-                        {group.title}
-                    </Text>
-                    <View
-                        style={{
-                            flexDirection:'row',
-                            flexWrap:'wrap',
-                            gap:8,
-                        }}
-                    >
+                <View key={group.title} style={styles.container}>
+                    <Text style={styles.filterLabel}>{group.title}</Text>
+                    <View style={styles.filtersRow}>
                         {group.options.map((option) => {
                             const isSelected = group.selected === option;
                             return (
                                 <TouchableOpacity
                                     key={`${group.title}-${option}`}
                                     onPress={() => group.onSelect(isSelected ? '' : option)}
-                                    style={{
-                                        paddingVertical: 8,
-                                        paddingHorizontal: 14,
-                                        borderRadius: 24,
-                                        backgroundColor: isSelected ? COLORS.primary : COLORS.secondaryWhite,
-                                        borderWidth: 1,
-                                        borderColor: isSelected ? COLORS.primary : COLORS.border,
-                                    }}
+                                    style={[styles.filterOption, isSelected && styles.filterOptionSelected]}
                                 >
-                                    <Text
-                                        style={{
-                                            ...FONTS.body4,
-                                            color: isSelected ? COLORS.white : COLORS.black,
-                                        }}
-                                    >
-                                        {option}
-                                    </Text>
+                                    <Text style={[styles.filterOptionText, isSelected && styles.filterOptionTextSelected]}>{option}</Text>
                                 </TouchableOpacity>
                             );
                         })}

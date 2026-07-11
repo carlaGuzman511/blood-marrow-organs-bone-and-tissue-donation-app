@@ -8,6 +8,7 @@ import SearcherBar from '@/components/SearcherBar';
 import UserCard from '@/components/UserCard';
 import { User } from '@/models/App.types';
 import { useUsers } from '@/hooks/useUsers';
+import styles from './SearchUsers.styles';
 
 const bloodTypes = ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'];
 const locationFilters = ['Cochabamba', 'Santa Cruz', 'Tarija', 'La Paz', 'Oruro', 'Potosi', 'Beni', 'Pando'];
@@ -24,16 +25,13 @@ const SearchUsers = () => {
 
     const {
         data: users = [],
-        isLoading,
-        error,
     } = useUsers();
 
     const filteredUsers = useMemo(() => {
-    return users.filter((user: User) => {
-            const byName = user.fullName.toLowerCase().includes(search.toLowerCase());
-            const byBloodType = bloodTypeFilter ? user.bloodTypeId === bloodTypeFilter : true;
-            const byLocation = locationFilter ? user.address.toLowerCase().includes(locationFilter.toLowerCase()) : true;
-            
+        return users.filter((u) => {
+            const byName = u.fullName.toLowerCase().includes(search.toLowerCase());
+            const byBloodType = bloodTypeFilter ? u.bloodTypeId === bloodTypeFilter : true;
+            const byLocation = locationFilter ? u.address.toLowerCase().includes(locationFilter.toLowerCase()) : true;
             return byName && byBloodType && byLocation;
         });
     }, [users, search, bloodTypeFilter, locationFilter]);
@@ -44,9 +42,7 @@ const SearchUsers = () => {
                 data={filteredUsers}
                 renderItem={(item: any) => (<UserCard item={item.item}/>)}
                 keyExtractor={(item: User) => item.id?.toString()}
-                contentContainerStyle={{
-                    flexGrow: 1,
-                }}
+                contentContainerStyle={styles.listContent}
                 onEndReached={() => {}}
                 onEndReachedThreshold={0.2}
                 showsVerticalScrollIndicator={false}
@@ -59,17 +55,8 @@ const SearchUsers = () => {
     }
 
     return (
-        <SafeAreaView
-            style={{
-                flex:1
-            }}
-        >
-            <View
-                style={{
-                    marginHorizontal:22,
-                    flex:1,
-                }}
-            >
+        <SafeAreaView style={styles.container}>
+            <View style={styles.content}>
                 <Header
                     name='Search Donors'
                     onPress={onPressHeader}

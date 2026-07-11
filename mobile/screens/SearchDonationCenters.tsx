@@ -8,6 +8,7 @@ import SearcherBar from '@/components/SearcherBar';
 import { DonationCenter } from '@/models/App.types';
 import DonationCenterCard from '@/features/donation-centers/components/DonationCenterCard';
 import { useDonationCenters } from '@/features/donation-centers/hooks/useDonationCenters';
+import styles from './SearchDonationCenters.styles';
 
 const cityFilters = ['Dhaka', 'Chittagong', 'Mirpur', 'Lakshimpur'];
 const serviceFilters = ['Blood Donation', 'Plasma Donation', 'Platelet Donation'];
@@ -45,9 +46,7 @@ const SearchDonationCenters = () => {
                 data={filteredDonationCenters}
                 renderItem={(item: any) => (<DonationCenterCard item={item.item}/>)}
                 keyExtractor={(item: DonationCenter) => item.id?.toString()}
-                contentContainerStyle={{
-                    flexGrow: 1,
-                }}
+                contentContainerStyle={styles.listContent}
             />
         );
     }
@@ -57,21 +56,9 @@ const SearchDonationCenters = () => {
     }
 
     return (
-        <SafeAreaView
-            style={{
-                flex:1
-            }}
-        >
-            <View
-                style={{
-                    marginHorizontal:22,
-                    flex:1,
-                }}
-            >
-                <Header
-                    name='Search Centers'
-                    onPress={onPressHeader}
-                />
+        <SafeAreaView style={styles.container}>
+            <View style={styles.content}>
+                <Header name='Search Centers' onPress={onPressHeader} />
                 <SearcherBar
                     search={search}
                     handleSearch={handleSearch}
