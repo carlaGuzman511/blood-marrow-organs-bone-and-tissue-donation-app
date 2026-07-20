@@ -1,11 +1,11 @@
 import Slider from "@/components/Slider";
-import {images} from "@/constants";
+import { images } from "@/constants";
 import { useLocalSearchParams } from 'expo-router';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
+// Keep GestureHandlerRootView at the app root; avoid re-wrapping per screen.
 export default function Details() {
   const { name, description, requirements, process, importance, benefits, secondaryEffects } = useLocalSearchParams();
-  const data: any[]= [
+  const data: any[] = [
     {
       name: name,
       image: images.a,
@@ -37,10 +37,6 @@ export default function Details() {
       description: secondaryEffects,
     }
   ];
-  
-  return (
-    <GestureHandlerRootView>
-      <Slider data={data} />
-    </GestureHandlerRootView>
-  );
+
+  return <Slider data={data} />;
 }

@@ -1,4 +1,7 @@
-const styles = StyleSheet.create({
+import { COLORS } from "@/constants";
+import { StyleSheet } from "react-native";
+
+export default StyleSheet.create({
     button: {
         flex: 1,
         backgroundColor: COLORS.primary,

@@ -14,7 +14,7 @@ export default function Index() {
           }}
         >
           <DonationRequest />
-          {/* <Home /> */}
+          <Home />
         </View>
       </HomeContextProvider>
     </GestureHandlerRootView>

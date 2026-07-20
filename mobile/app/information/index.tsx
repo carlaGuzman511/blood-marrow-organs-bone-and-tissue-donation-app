@@ -1,13 +1,6 @@
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import Home from '@/screens/Home';
-import { InformationContextProvider } from './context';
+import React from 'react';
+import InformationScreen from '@/features/information/screens/InformationScreen';
 
 export default function Information() {
-  return (
-    <GestureHandlerRootView>
-      <InformationContextProvider>
-        <Home />
-      </InformationContextProvider>
-    </GestureHandlerRootView>
-  );
+  return <InformationScreen />;
 }

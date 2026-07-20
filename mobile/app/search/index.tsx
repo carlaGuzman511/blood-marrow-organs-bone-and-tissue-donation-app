@@ -1,8 +1,9 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import React, { useState } from 'react';
-import SearchDonationCenters from "@/screens/SearchDonationCenters";
-import SearchUsers from "@/screens/SearchUsers";
+
+import SearchDonationCenters from '@/features/search/components/SearchDonationCenters';
+import SearchUsers from '@/features/search/components/SearchDonors';
 import { COLORS, FONTS } from '@/constants';
 
 export default function SearchScreen() {
