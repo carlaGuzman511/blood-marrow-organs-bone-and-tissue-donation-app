@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { COLORS } from "@/constants";
 
 export default StyleSheet.create({
     container: {
@@ -8,7 +9,7 @@ export default StyleSheet.create({
         borderRadius: 30,
     },
     text: {
-        color: "#D62828",
+        color: COLORS.red,
         fontWeight: "700",
     },
 });

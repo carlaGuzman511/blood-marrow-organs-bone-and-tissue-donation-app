@@ -1,11 +1,10 @@
 import React, { useMemo } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { useRouter } from 'expo-router';
 
 import DonationCenterCard from '@/features/donation-centers/components/DonationCenterCard';
 import { useDonationCenters } from '@/features/donation-centers/hooks/useDonationCenters';
-import { COLORS, FONTS } from '@/constants';
 import { useSearchFilters } from '../../hooks/useSearchFilters';
 import { useFilteredData } from '../../hooks/useFilteredData';
 import SearchLayout from '../../../../components/ui/layout/SearchLayout';
@@ -14,6 +13,7 @@ import ActiveFilters from '../ActiveFilters';
 import SearchResultCount from '../SearchResultCount';
 import type { DonationCenter } from '@/models/App.types';
 import type { SearchFilters } from '../../types/Search.types';
+import styles from './SearchDonationCenters.styles';
 
 const CITY_OPTIONS = [
   { id: 'Cochabamba', label: 'Cochabamba' },
@@ -60,7 +60,7 @@ function filterCenters(item: DonationCenter, filters: SearchFilters) {
 
 export default function SearchDonationCenters() {
   const router = useRouter();
-  const { filters, setSearch, setFilter, clearFilter } = useSearchFilters();
+  const { filters, setSearch, setFilter, removeFilter } = useSearchFilters();
   const { data: donationCenters = [] } = useDonationCenters();
 
   const filteredCenters = useFilteredData({
@@ -80,7 +80,7 @@ export default function SearchDonationCenters() {
         onFilterChange={setFilter}
       />
 
-      <ActiveFilters filters={filters.values} filterGroups={CENTER_FILTERS} onRemove={clearFilter} />
+      <ActiveFilters filters={filters.values} filterGroups={CENTER_FILTERS} onRemove={removeFilter} />
       <SearchResultCount count={filteredCenters.length} />
 
       <FlatList
@@ -98,20 +98,3 @@ export default function SearchDonationCenters() {
     </SearchLayout>
   );
 }
-
-const styles = StyleSheet.create({
-  list: {
-    paddingBottom: 24,
-    gap: 12,
-  },
-  emptyState: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 24,
-  },
-  emptyText: {
-    color: COLORS.black,
-    fontSize: 14,
-    fontFamily: FONTS.body4.fontFamily,
-  },
-});

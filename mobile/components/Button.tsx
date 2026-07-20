@@ -1,7 +1,7 @@
-import { TouchableOpacity, Text, StyleSheet } from 'react-native'
+import { TouchableOpacity, Text } from 'react-native'
 import React from 'react'
-import { SIZES, COLORS, FONTS } from '@/constants'
-
+import { COLORS, FONTS } from '@/constants'
+import styles from './Button.styles';
 type Props = {
     onPress: () => void,
     style: any,
@@ -35,16 +35,3 @@ export default function Button({onPress, style, title, color, filled}: Props) {
         </TouchableOpacity>
     )
 }
-
-const styles = StyleSheet.create({
-    btn: {
-        paddingHorizontal: SIZES.padding,
-        paddingVertical: SIZES.padding2,
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: SIZES.padding,
-        color: COLORS.white,
-        borderColor: COLORS.green,
-        borderWidth: 2,
-    }
-})

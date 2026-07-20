@@ -1,8 +1,9 @@
-import { View, Text , StyleSheet} from 'react-native'
+import { View, Text } from 'react-native'
 import React from 'react'
 import { TextInput } from 'react-native-gesture-handler'
-import { COLORS, SIZES } from '@/constants';
+import { COLORS } from '@/constants';
 import { MaterialIcons } from '@expo/vector-icons';
+import styles from './Input.styles';
 
 type Props = {
     id: string,
@@ -66,38 +67,3 @@ export default function Input(props: Props) {
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-  },
-  inputContainer: {
-    width: '100%',
-    // backgoundColor: COLORS.gray,
-    paddingVertical: SIZES.padding,
-    paddingHorizontal: SIZES.padding,
-    borderRadius: 12,
-    borderColor: COLORS.secondaryGray,
-    borderWidth: 1,
-    flexDirection: 'row',
-    marginVertical: 5,
-  },
-  input: {
-    color: COLORS.secondaryGray,
-    flex: 1,
-    fontFamily: 'sans-serif-light',
-    paddingTop: 0,
-    fontSize: 16,
-  },
-  icon: {
-    marginRight: 10,
-    color: COLORS.secondaryGray,
-  },
-  errorContainer: {
-    marginVertical: 2,
-  },
-  errorText:{
-    color: "red",
-    fontSize: 12,
-  }
-})

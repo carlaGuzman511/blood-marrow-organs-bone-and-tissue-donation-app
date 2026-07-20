@@ -1,8 +1,8 @@
 import React, { useMemo, useState } from 'react';
-import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Pressable, Text, TextInput, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-
-import { COLORS, FONTS } from '@/constants';
+import styles from './SearchBar.styles';
+import { COLORS } from '@/constants';
 import FilterButton from '../FilterButton';
 import FilterBottomSheet from '../FilterBottomSheet';
 import type { FilterGroup, SearchFilters } from '../../types/Search.types';
@@ -93,35 +93,3 @@ export default function SearchBar({
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    gap: 12,
-    marginBottom: 16,
-  },
-  searchRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: COLORS.secondaryWhite,
-    borderRadius: 14,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    gap: 10,
-  },
-  input: {
-    flex: 1,
-    color: COLORS.black,
-    fontSize: 15,
-    fontFamily: FONTS.body4.fontFamily,
-  },
-  filterRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-  },
-  filterHint: {
-    color: COLORS.primary,
-    fontSize: 12,
-    fontFamily: FONTS.body4.fontFamily,
-  },
-});

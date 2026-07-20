@@ -1,7 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-
-import { COLORS, FONTS } from '@/constants';
+import { Text, View } from 'react-native';
+import styles from './SearchResultCount.styles';
 
 type Props = {
   count: number;
@@ -17,14 +16,3 @@ export default function SearchResultCount({ count, label = 'results' }: Props) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    marginBottom: 12,
-  },
-  text: {
-    color: COLORS.black,
-    fontSize: 13,
-    fontFamily: FONTS.body4.fontFamily,
-  },
-});

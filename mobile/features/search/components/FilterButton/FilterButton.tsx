@@ -1,7 +1,6 @@
 import React from 'react';
-import { Pressable, StyleSheet, Text } from 'react-native';
-
-import { COLORS, FONTS } from '@/constants';
+import { Pressable, Text } from 'react-native';
+import styles from './FilterButton.styles';
 
 type Props = {
   label: string;
@@ -19,23 +18,3 @@ export default function FilterButton({ label, active = false, onPress }: Props) 
     </Pressable>
   );
 }
-
-const styles = StyleSheet.create({
-  button: {
-    borderRadius: 999,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    backgroundColor: COLORS.secondaryWhite,
-  },
-  activeButton: {
-    backgroundColor: COLORS.primary,
-  },
-  label: {
-    color: COLORS.black,
-    fontSize: 12,
-    fontFamily: FONTS.body4.fontFamily,
-  },
-  activeLabel: {
-    color: COLORS.white,
-  },
-});

@@ -26,7 +26,8 @@ export const COLORS = {
     textSecondary: "#6B7280",
     disabled: "#CFCFCF",
     lightGreen: "#DCFCE7",
-    lightRed:"#FEE2E2"
+    lightRed:"#FEE2E2",
+    red: "#D62828",
 }
 
 export const SIZES = {

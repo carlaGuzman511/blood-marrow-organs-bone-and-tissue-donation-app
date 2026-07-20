@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { Donation } from '@/models/App.types';
+import styles from './HeroCard.styles';
 
 type Props = {
   item: Donation;
@@ -17,18 +18,3 @@ export default function HeroCard({ item }: Props) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    padding: 12,
-    backgroundColor: 'white',
-    borderRadius: 8,
-    marginVertical: 8,
-    alignItems: 'center',
-  },
-  image: { width: 80, height: 80, borderRadius: 8, marginRight: 12 },
-  content: { flex: 1 },
-  title: { fontSize: 18, fontWeight: '700' },
-  summary: { marginTop: 6, color: '#444' },
-});

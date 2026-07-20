@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text } from 'react-native';
+import styles from './SectionCard.styles';
 
 type Props = {
   title: string;
@@ -14,14 +15,3 @@ export default function SectionCard({ title, children }: Props) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  card: {
-    backgroundColor: 'white',
-    borderRadius: 8,
-    padding: 12,
-    marginVertical: 8,
-  },
-  title: { fontSize: 16, fontWeight: '700', marginBottom: 8 },
-  body: {},
-});
