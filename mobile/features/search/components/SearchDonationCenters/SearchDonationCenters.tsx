@@ -14,35 +14,7 @@ import SearchResultCount from '../SearchResultCount';
 import type { DonationCenter } from '@/models/App.types';
 import type { SearchFilters } from '../../types/Search.types';
 import styles from './SearchDonationCenters.styles';
-
-const CITY_OPTIONS = [
-  { id: 'Cochabamba', label: 'Cochabamba' },
-  { id: 'Santa Cruz', label: 'Santa Cruz' },
-  { id: 'Tarija', label: 'Tarija' },
-  { id: 'La Paz', label: 'La Paz' },
-  { id: 'Oruro', label: 'Oruro' },
-];
-
-const SERVICE_OPTIONS = [
-  { id: 'Blood Donation', label: 'Blood Donation' },
-  { id: 'Plasma Donation', label: 'Plasma Donation' },
-  { id: 'Platelet Donation', label: 'Platelet Donation' },
-  { id: 'Heart Donation', label: 'Heart Donation' },
-  { id: 'Liver Donation', label: 'Liver Donation' },
-];
-
-export const CENTER_FILTERS = [
-  {
-    key: 'city',
-    title: 'City',
-    options: CITY_OPTIONS,
-  },
-  {
-    key: 'service',
-    title: 'Service',
-    options: SERVICE_OPTIONS,
-  },
-];
+import { DONATION_CENTER_FILTERS } from '@/config/filters/donationCenterFilters';
 
 function filterCenters(item: DonationCenter, filters: SearchFilters) {
   const query = filters.search.trim().toLowerCase();
@@ -75,12 +47,12 @@ export default function SearchDonationCenters() {
         search={filters.search}
         onSearch={setSearch}
         placeholder="Search centers"
-        filterGroups={CENTER_FILTERS}
+        filterGroups={DONATION_CENTER_FILTERS}
         filters={filters.values}
         onFilterChange={setFilter}
       />
 
-      <ActiveFilters filters={filters.values} filterGroups={CENTER_FILTERS} onRemove={removeFilter} />
+      <ActiveFilters filters={filters.values} filterGroups={DONATION_CENTER_FILTERS} onRemove={removeFilter} />
       <SearchResultCount count={filteredCenters.length} />
 
       <FlatList

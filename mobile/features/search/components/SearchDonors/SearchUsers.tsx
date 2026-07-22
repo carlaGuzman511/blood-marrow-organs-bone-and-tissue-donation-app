@@ -13,42 +13,9 @@ import ActiveFilters from '../ActiveFilters';
 import SearchResultCount from '../SearchResultCount';
 import type { SearchFilters } from '../../types/Search.types';
 import type { User } from '@/models/App.types';
+import { USER_FILTERS } from '@/config/filters/userFilters';
 import styles from './SearchUsers.styles';
 
-const BLOOD_TYPES = [
-  { id: 'A+', label: 'A+' },
-  { id: 'A-', label: 'A-' },
-  { id: 'B+', label: 'B+' },
-  { id: 'B-', label: 'B-' },
-  { id: 'O+', label: 'O+' },
-  { id: 'O-', label: 'O-' },
-  { id: 'AB+', label: 'AB+' },
-  { id: 'AB-', label: 'AB-' },
-];
-
-const LOCATIONS = [
-  { id: 'Cochabamba', label: 'Cochabamba' },
-  { id: 'Santa Cruz', label: 'Santa Cruz' },
-  { id: 'Tarija', label: 'Tarija' },
-  { id: 'La Paz', label: 'La Paz' },
-  { id: 'Oruro', label: 'Oruro' },
-  { id: 'Potosi', label: 'Potosi' },
-  { id: 'Beni', label: 'Beni' },
-  { id: 'Pando', label: 'Pando' },
-];
-
-export const USER_FILTERS = [
-  {
-    key: 'bloodType',
-    title: 'Blood Type',
-    options: BLOOD_TYPES,
-  },
-  {
-    key: 'location',
-    title: 'Location',
-    options: LOCATIONS,
-  },
-];
 
 function filterUsers(item: User, filters: SearchFilters) {
   const query = filters.search.trim().toLowerCase();
