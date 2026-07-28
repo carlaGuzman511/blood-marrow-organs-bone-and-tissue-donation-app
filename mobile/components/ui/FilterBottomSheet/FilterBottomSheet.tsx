@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import type { FilterOption } from '../../types/Search.types';
+import styles from './FilterBottomSheet.styles';
 
 type Props = {
   visible: boolean;

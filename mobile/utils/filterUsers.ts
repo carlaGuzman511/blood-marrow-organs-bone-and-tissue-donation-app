@@ -1,4 +1,4 @@
-import type { SearchFilters } from '../types/Search.types';
+import type { SearchFilters } from '../models/Search.types';
 import type { User } from '@/models/App.types';
 import { normalize } from "@/utils/normalize";
 

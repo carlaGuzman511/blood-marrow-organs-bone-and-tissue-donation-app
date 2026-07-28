@@ -1,5 +1,5 @@
 import { createFilterGroup } from "@/config/filters/createFilterGroup";
-import { FilterGroup } from "@/features/search/types/Search.types";
+import { FilterGroup } from "@/models/Search.types";
 import { SERVICE_OPTIONS } from "@/constants/services";
 
 export const SERVICE_FILTER: FilterGroup =

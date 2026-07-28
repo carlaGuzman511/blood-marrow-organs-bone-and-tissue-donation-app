@@ -1,10 +1,10 @@
 import { createFilterGroup } from "@/config/filters/createFilterGroup";
-import { CITY_OPTIONS } from "@/constants/cities";
-import { FilterGroup } from "@/features/search/types/Search.types";
+import { LOCATION_OPTIONS } from "@/constants/locations";
+import { FilterGroup } from "@/models/Search.types";
 
-export const CITY_FILTER: FilterGroup =
+export const LOCATION_FILTER: FilterGroup =
     createFilterGroup(
         "location",
         "Location",
-        CITY_OPTIONS
+        LOCATION_OPTIONS
     );

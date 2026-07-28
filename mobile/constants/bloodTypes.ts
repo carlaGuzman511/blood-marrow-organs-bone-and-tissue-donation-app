@@ -1,4 +1,4 @@
-import { FilterOption } from "@/features/search/types/Search.types";
+import { FilterOption } from "@/models/Search.types";
 
 export const BLOOD_TYPE_OPTIONS: FilterOption[] = [
   { id: 'A+', label: 'A+' },

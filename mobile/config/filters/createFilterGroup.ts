@@ -1,4 +1,4 @@
-import { FilterGroup, FilterOption } from "@/features/search/types/Search.types";
+import { FilterGroup, FilterOption } from "@/models/Search.types";
 
 export function createFilterGroup(
     key: string,

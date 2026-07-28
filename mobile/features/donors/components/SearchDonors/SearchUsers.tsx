@@ -5,29 +5,16 @@ import { useRouter } from 'expo-router';
 
 import UserCard from '@/components/UserCard';
 import { useUsers } from '@/hooks/useUsers';
-import { useSearchFilters } from '../../hooks/useSearchFilters';
-import { useFilteredData } from '../../hooks/useFilteredData';
+import { useSearchFilters } from '@/hooks/useSearchFilters';
+import { useFilteredData } from '@/hooks/useFilteredData';
 import SearchLayout from '@/components/ui/layout/SearchLayout';
-import SearchBar from '../SearchBar';
-import ActiveFilters from '../ActiveFilters';
-import SearchResultCount from '../SearchResultCount';
-import type { SearchFilters } from '../../types/Search.types';
-import type { User } from '@/models/App.types';
+import SearchBar from '../../../../components/ui/SearchBar';
+import SearchFilterControls from '../../../../components/ui/SearchFilterControls';
+import ActiveFilters from '../../../../components/ui/ActiveFilters';
+import SearchResultCount from '../../../../components/ui/SearchResultCount';
 import { USER_FILTERS } from '@/config/filters/userFilters';
+import { filterUsers } from '@/utils/filterUsers';
 import styles from './SearchUsers.styles';
-
-
-function filterUsers(item: User, filters: SearchFilters) {
-  const query = filters.search.trim().toLowerCase();
-  const bloodType = filters.values.bloodType?.trim().toLowerCase() ?? '';
-  const location = filters.values.location?.trim().toLowerCase() ?? '';
-
-  const matchesQuery = !query || item.fullName.toLowerCase().includes(query);
-  const matchesBloodType = !bloodType || item.bloodTypeId?.toLowerCase() === bloodType;
-  const matchesLocation = !location || item.address.toLowerCase().includes(location);
-
-  return matchesQuery && matchesBloodType && matchesLocation;
-}
 
 export default function SearchUsers() {
   const router = useRouter();
@@ -43,13 +30,11 @@ export default function SearchUsers() {
   return (
     <SearchLayout title="Search Donors" onBack={() => router.back()}>
       <SearchBar
-        search={filters.search}
-        onSearch={setSearch}
+        value={filters.search}
+        onChangeText={setSearch}
         placeholder="Search donors"
-        filterGroups={USER_FILTERS}
-        filters={filters.values}
-        onFilterChange={setFilter}
       />
+      <SearchFilterControls groups={USER_FILTERS} values={filters.values} onChange={setFilter} />
 
       <ActiveFilters filters={filters.values} filterGroups={USER_FILTERS} onRemove={removeFilter} />
       <SearchResultCount count={filteredUsers.length} />

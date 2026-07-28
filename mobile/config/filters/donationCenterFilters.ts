@@ -1,7 +1,7 @@
-import { CITY_FILTER } from "./cityFilter";
+import { LOCATION_FILTER } from "./cityFilter";
 import { SERVICE_FILTER } from "./servicesFilter";
 
 export const DONATION_CENTER_FILTERS = [
-  CITY_FILTER,
+  LOCATION_FILTER,
   SERVICE_FILTER,
 ];

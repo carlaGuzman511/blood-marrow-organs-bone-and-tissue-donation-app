@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { SearchFilters } from "../types/Search.types";
+import { SearchFilters } from "../models/Search.types";
 
 const INITIAL_FILTERS: SearchFilters = {
     search: "",

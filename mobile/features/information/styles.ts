@@ -6,6 +6,9 @@ export const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: '#f2f3f5'
   },
+  searchContainer: {
+    marginBottom: 16,
+  },
   sectionHeader: {
     backgroundColor: '#f7f7f7',
     padding: 8,
@@ -20,5 +23,10 @@ export const styles = StyleSheet.create({
     marginVertical: 8,
   },
   title: { fontSize: 20, fontWeight: 'bold' },
-  description: { marginTop: 8, color: '#444' }
+  description: { marginTop: 8, color: '#444' },
+  emptyText: {
+    padding: 24,
+    textAlign: 'center',
+    color: '#444',
+  },
 });

@@ -1,6 +1,6 @@
-import { FilterOption } from "@/features/search/types/Search.types";
+import { FilterOption } from "@/models/Search.types";
 
-export const CITY_OPTIONS: FilterOption[] = [
+export const LOCATION_OPTIONS: FilterOption[] = [
   { id: 'Cochabamba', label: 'Cochabamba' },
   { id: 'Santa Cruz', label: 'Santa Cruz' },
   { id: 'Tarija', label: 'Tarija' },

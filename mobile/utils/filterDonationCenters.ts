@@ -1,5 +1,5 @@
 import { DonationCenter } from "@/models/App.types";
-import { SearchFilters } from "../types/Search.types";
+import { SearchFilters } from "../models/Search.types";
 import { normalize } from "@/utils/normalize";
 
 export function filterDonationCenters(
@@ -18,18 +18,19 @@ export function filterDonationCenters(
 
     const bySearch =
         !search ||
-        normalize(center.name).includes(search);
+        normalize(center.name).includes(search) ||
+        normalize(center.address).includes(search);
 
     const byCity =
         !city ||
         normalize(center.city).includes(city);
 
     const byService =
-        (!service ||
+        !service ||
         center.donationTypes?.some(type =>
-            normalize(type.name) === service
-        )) ??
-        false;
+            normalize(type.name).includes(service)
+        ) ||
+        normalize(center.name).includes(service);
 
     return (
         bySearch &&

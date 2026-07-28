@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { SearchFilters } from "../types/Search.types";
+import { SearchFilters } from "../models/Search.types";
 
 interface Props<T> {
     data: T[];
