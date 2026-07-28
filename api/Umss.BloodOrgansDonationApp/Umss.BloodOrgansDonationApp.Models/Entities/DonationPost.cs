@@ -22,7 +22,7 @@ namespace Umss.BloodOrgansDonationApp.Models
 
         public Guid? DonationCenterId { get; set; }
 
-        public required string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
 
         public required string Description { get; set; }
 

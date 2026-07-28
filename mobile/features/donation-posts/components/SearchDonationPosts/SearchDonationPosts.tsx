@@ -17,10 +17,11 @@ import SearchResultCount from '../../../../components/ui/SearchResultCount';
 import styles from './SearchDonationPosts.styles';
 
 export function DonationPostSearchContent() {
-  const { data: posts = [] } = useDonationPosts();
+  const { data: posts = [], isLoading, error } = useDonationPosts();
+
   const { filters, setSearch, setFilter, removeFilter } = useSearchFilters();
   const filteredPosts = useFilteredData({ data: posts, filters, predicate: filterDonationPosts });
-
+  
   return (
     <>
       <SearchBar 
@@ -34,9 +35,10 @@ export function DonationPostSearchContent() {
         data={filteredPosts}
         keyExtractor={(item, index) => item.id ?? String(index)}
         renderItem={({ item }) => <DonationCard item={item} onPress={() => undefined} />}
+        contentContainerStyle={styles.list}
         ListEmptyComponent={
-          <View>
-            <Text>No donation requests match your search.</Text>
+          <View style={styles.emptyContainer}>
+            <Text style={styles.emptyText}>No donation requests match your search.</Text>
           </View>
         }
         showsVerticalScrollIndicator={false}

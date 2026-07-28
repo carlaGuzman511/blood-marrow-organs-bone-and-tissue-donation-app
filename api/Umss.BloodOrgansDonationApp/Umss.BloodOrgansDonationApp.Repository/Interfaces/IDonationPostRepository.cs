@@ -1,17 +1,20 @@
-﻿using Umss.BloodOrgansDonationApp.Models;
+using Umss.BloodOrgansDonationApp.Models;
+using Umss.BloodOrgansDonationApp.Models.Responses;
 
 namespace Umss.BloodOrgansDonationApp.Repository.Interfaces
 {
     public interface IDonationPostRepository
     {
-        public Task<IEnumerable<DonationPost>> GetByDonationCenter(Guid donationCenterId);
-        public Task<DonationPost?> GetByDonationCenter(Guid donationCenterId, Guid DonationPostId);
-        public Task<IEnumerable<DonationPost>> GetByUser(Guid userId);
-        public Task<IEnumerable<DonationPost>> Get();
-        public Task<DonationPost?> GetByUser(Guid userId, Guid DonationPostId);
-        public Task DeleteByDonationCenter(Guid donationCenterId, Guid DonationPostId);
-        public Task DeleteByUser(Guid userId, Guid DonationPostId);
-        public Task<DonationPost> Create(DonationPost donationPost);
-        public Task<DonationPost> Update(DonationPost donationPost);
+        Task<IEnumerable<DonationPostResponse>> GetByDonationCenter(Guid donationCenterId);
+        Task<DonationPostResponse?> GetByDonationCenter(Guid donationCenterId, Guid donationPostId);
+        Task<IEnumerable<DonationPostResponse>> GetByUser(Guid userId);
+        Task<IEnumerable<DonationPostResponse>> Get();
+        Task<DonationPostResponse?> GetByUser(Guid userId, Guid donationPostId);
+        Task<DonationPost?> FindByDonationCenter(Guid donationCenterId, Guid donationPostId);
+        Task<DonationPost?> FindByUser(Guid userId, Guid donationPostId);
+        Task DeleteByDonationCenter(Guid donationCenterId, Guid donationPostId);
+        Task DeleteByUser(Guid userId, Guid donationPostId);
+        Task<DonationPost> Create(DonationPost donationPost);
+        Task<DonationPost> Update(DonationPost donationPost);
     }
 }

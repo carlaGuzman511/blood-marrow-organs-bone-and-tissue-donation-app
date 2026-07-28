@@ -19,6 +19,10 @@ namespace Umss.BloodOrgansDonationApp.Services.Validators
                 .NotEmpty()
                 .WithMessage("La descripcion de la publicacion es requerido");
 
+            RuleFor(x => x.Title)
+                .NotEmpty()
+                .WithMessage("El titulo de la publicacion es requerido");
+
             RuleFor(x => x.DonationTypeId)
                 .NotEmpty()
                 .WithMessage("El id del tipo de donacion es requerido");

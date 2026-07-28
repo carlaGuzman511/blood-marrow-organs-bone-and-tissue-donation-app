@@ -1,4 +1,4 @@
-﻿namespace Umss.BloodOrgansDonationApp.Models.Responses
+namespace Umss.BloodOrgansDonationApp.Models.Responses
 {
     public class DonationPostResponse
     {
@@ -7,6 +7,7 @@
         public DonationTypeResponse DonationType { get; set; }
         public UserResponse? User { get; set; }
         public DonationCenterResponse? DonationCenter { get; set; }
+        public string Title { get; set; } = string.Empty;
         public required string Description { get; set; }
         public required string Image { get; set; }
         public DateTime CreatedAt { get; set; }
