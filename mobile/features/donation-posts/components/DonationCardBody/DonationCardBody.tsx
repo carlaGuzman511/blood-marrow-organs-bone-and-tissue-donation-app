@@ -23,8 +23,7 @@ export default function DonationCardBody({ item }: Props) {
                     numberOfLines={1}
                     style={styles.title}
                 >
-                    TODO: TITLE
-                    {/* {item.title} */}
+                    {item.title}
                 </Text>
                 <Text
                     style={styles.subtitle}

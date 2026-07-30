@@ -35,10 +35,10 @@ function CardHeader({
                     >
                         {name}
                     </AppText>
-                    <StatusBadge
-                        label={isOpen ? "Open" : "Closed"}
+                    {/* <StatusBadge
+                        label={isOpen ? "Available" : "Not Available"}
                         variant={isOpen ? "success" : "danger"}
-                    />
+                    /> */}
                 </View>
                 <View style={styles.locationContainer}>
                     <Ionicons

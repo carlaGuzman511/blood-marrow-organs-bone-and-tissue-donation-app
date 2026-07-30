@@ -20,6 +20,7 @@ export type Donation = {
 
 export type DonationPost = {
     id?: string,
+    title: string,
     description: string,    
     bloodTypeId?: string,
     bloodType?: BloodType,
@@ -39,7 +40,7 @@ export type User = {
     id: number,
     fullName: string,
     email: string,
-    bloodTypeId: string,
+    bloodType: BloodType,
     password: string,
     address: string,
     phoneNumber: string,
