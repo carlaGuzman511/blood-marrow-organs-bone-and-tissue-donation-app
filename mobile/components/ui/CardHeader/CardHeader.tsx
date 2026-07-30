@@ -6,6 +6,7 @@ import AppText from "@/components/ui/AppText";
 import StatusBadge from "@/components/ui/StatusBadge";
 
 import styles from "./CardHeader.styles";
+import { COLORS } from "@/constants";
 
 type Props = {
     name: string;
@@ -29,25 +30,25 @@ function CardHeader({
             <View style={styles.content}>
                 <View style={styles.topRow}>
                     <AppText
-                        variant="title"
+                        preset="h4"
                         numberOfLines={1}
                         style={styles.name}
                     >
                         {name}
                     </AppText>
-                    {/* <StatusBadge
+                    <StatusBadge
                         label={isOpen ? "Available" : "Not Available"}
-                        variant={isOpen ? "success" : "danger"}
-                    /> */}
+                        isOpen={isOpen}
+                    />
                 </View>
                 <View style={styles.locationContainer}>
                     <Ionicons
                         name="location-outline"
                         size={16}
-                        color="#6B7280"
+                        color={COLORS.primary}
                     />
                     <AppText
-                        variant="caption"
+                        preset="body4"
                         style={styles.city}
                     >
                         {city}

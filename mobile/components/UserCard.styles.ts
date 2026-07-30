@@ -1,22 +1,33 @@
 import { StyleSheet } from 'react-native';
+import { COLORS, SIZES } from "@/constants";
 
 const styles = StyleSheet.create({
   touchable: {
-    marginBottom: 16,
+    marginBottom: SIZES.margin,
   },
   card: {
-    paddingVertical: 12,
+    paddingBottom: SIZES.padding,
   },
   infoSection: {
-    marginTop: 12,
-    gap: 8,
+    marginTop: SIZES.base,
+    paddingTop: SIZES.base,
+    borderTopWidth: 1,
+    borderTopColor: COLORS.border,
+    flexDirection: "row",
+    justifyContent: "space-around",
   },
   infoRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: COLORS.secondaryWhite,
+    paddingVertical: 6,
+    paddingHorizontal: 14,
+    borderRadius: 20,
   },
   infoText: {
     marginLeft: 8,
+    color: COLORS.black,
+    fontWeight: "500",
   },
 });
 

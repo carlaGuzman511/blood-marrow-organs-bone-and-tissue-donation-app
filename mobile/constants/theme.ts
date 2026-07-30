@@ -6,7 +6,7 @@ export const COLORS = {
     primary: 'navy',
     secondary: '#689593',
     white: '#FFFFFF',
-    secondaryWhite: '#F7F7FC',
+    secondaryWhite: '#F7F7FC', 
     black: '#000000',
     secondaryBlack: '#595959',
     gray: '#F8F8F8',
@@ -21,7 +21,7 @@ export const COLORS = {
     danger: "#EF4444",
     background: "#F7F8FA",
     surface: "#FFFFFF",
-    border: "#ECECEC",
+    border: "#ECECEC", 
     text: "#1F2937",
     textSecondary: "#6B7280",
     disabled: "#CFCFCF",
@@ -34,7 +34,7 @@ export const SIZES = {
     //global sizes
     base: 8,
     font: 14,
-    radius: 30,
+    radius: 16,
     padding: 10,
     padding2: 12,
     padding3: 16,
@@ -52,6 +52,7 @@ export const SIZES = {
     //app dimensions
     height,
     width,
+    margin: 16,
 }
 
 export const FONTS = {

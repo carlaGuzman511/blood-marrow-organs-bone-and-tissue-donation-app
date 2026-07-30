@@ -21,7 +21,7 @@ export function filterUsers(
 
     const byBloodType =
         !bloodType ||
-        normalize(user.bloodTypeId) === bloodType;
+        normalize(user.bloodType.name) === bloodType;
 
     const byLocation =
         !location ||

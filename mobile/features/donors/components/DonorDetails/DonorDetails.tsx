@@ -67,7 +67,7 @@ export default function DonorDetails() {
             <View style={styles.row}>
               <View style={styles.infoItem}>
                 <Text style={styles.labelText}>Blood Type</Text>
-                <Text style={styles.valueText}>{user.bloodTypeId}</Text>
+                <Text style={styles.valueText}>{user.bloodType.name}</Text>
               </View>
               <View style={styles.infoItem}>
                 <Text style={styles.labelText}>Phone</Text>

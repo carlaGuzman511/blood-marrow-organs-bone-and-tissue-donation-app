@@ -1,20 +1,20 @@
 import React, { memo } from "react";
-
 import Badge from "../Badge";
-
 import { COLORS } from "@/constants";
 
 type Props = {
+    label: string;
     isOpen: boolean;
 };
 
 function StatusBadge({
+    label,
     isOpen,
 }: Props) {
     if (isOpen) {
         return (
             <Badge
-                label="Open"
+                label={label}
                 backgroundColor={COLORS.lightGreen}
                 textColor={COLORS.green}
             />
@@ -23,7 +23,7 @@ function StatusBadge({
 
     return (
         <Badge
-            label="Closed"
+            label={label}
             backgroundColor={COLORS.lightRed}
             textColor={COLORS.danger}
         />

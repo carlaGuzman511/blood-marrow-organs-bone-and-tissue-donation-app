@@ -7,6 +7,7 @@ import AppCard from '@/components/ui/AppCard';
 import CardHeader from '@/components/ui/CardHeader';
 import AppText from '@/components/ui/AppText';
 import styles from './UserCard.styles';
+import { COLORS } from '@/constants';
 
 type Props = {
     item: User
@@ -25,7 +26,12 @@ const UserCard = ({item}: Props) => {
     }
 
     return(
-        <TouchableOpacity onPress={handlePress} key={item.id?.toString()} style={styles.touchable} activeOpacity={0.9}>
+        <TouchableOpacity 
+            onPress={handlePress} 
+            key={item.id?.toString()} 
+            style={styles.touchable} 
+            activeOpacity={0.9}
+            >
             <AppCard style={styles.card}>
                 <CardHeader
                     name={item.fullName}
@@ -35,14 +41,22 @@ const UserCard = ({item}: Props) => {
                 />
                 <View style={styles.infoSection}>
                     <View style={styles.infoRow}>
-                        <MaterialCommunityIcons name='blood-bag' size={18} color='#2563EB' />
-                        <AppText variant='body' style={styles.infoText}>
-                            {item.bloodTypeId}
+                        <MaterialCommunityIcons 
+                            name='blood-bag' 
+                            size={18} 
+                            color={COLORS.primary}
+                        />
+                        <AppText preset="body4" style={styles.infoText}>
+                            {item.bloodType.name}
                         </AppText>
                     </View>
                     <View style={styles.infoRow}>
-                        <Ionicons name='call-outline' size={18} color='#2563EB' />
-                        <AppText variant='body' style={styles.infoText}>
+                        <Ionicons 
+                            name='call-outline' 
+                            size={18} 
+                            color={COLORS.primary}
+                        />
+                        <AppText preset="body4" style={styles.infoText}>
                             {item.phoneNumber || 'Not provided'}
                         </AppText>
                     </View>
