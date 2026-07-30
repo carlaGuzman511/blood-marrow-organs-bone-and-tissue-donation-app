@@ -1,7 +1,11 @@
 import { StyleSheet } from "react-native";
+import { COLORS, SIZES } from "@/constants";
 
 export default StyleSheet.create({
-    container: {
-        marginBottom: 16,
-    },
+  container: {
+    marginBottom: SIZES.margin,
+  },
+  card: {
+    paddingBottom: SIZES.padding, 
+  },
 });

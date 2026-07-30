@@ -15,6 +15,18 @@ namespace Umss.BloodOrgansDonationApp.Services.Validators
                 .NotEmpty()
                 .WithMessage("La ubicacion del centro medico es requerido");
 
+            RuleFor(x => x.OpeningHours)
+                .NotEmpty()
+                .WithMessage("Los horarios de apertura del centro medico es requerido");
+
+            RuleFor(x => x.Email)
+                .NotEmpty()
+                .WithMessage("El correo electronico del centro medico es requerido");
+
+            RuleFor(x => x.Phone)
+                .NotEmpty()
+                .WithMessage("El numero telefonico del centro medico es requerido");
+
             RuleFor(x => x.Latitude)
                 .NotEmpty()
                 .WithMessage("La latitud del centro medico es requerido");

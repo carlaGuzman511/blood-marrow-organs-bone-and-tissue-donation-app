@@ -35,7 +35,7 @@ function DonationCenterCardFooter({
                         ]}
                     />
                     <AppText
-                        variant="body"
+                        preset="body4"
                         style={[
                             styles.statusText,
                             {
@@ -50,7 +50,7 @@ function DonationCenterCardFooter({
                 </View>
                 {!!openingHours && (
                     <AppText
-                        variant="caption"
+                        preset="body4"
                         style={styles.hours}
                     >
                         {openingHours}
@@ -66,7 +66,7 @@ function DonationCenterCardFooter({
                             color={COLORS.secondaryBlack}
                         />
                         <AppText
-                            variant="caption"
+                            preset="body4"
                             style={styles.distance}
                         >
                             {distance}
@@ -79,7 +79,7 @@ function DonationCenterCardFooter({
                     style={styles.button}
                 >
                     <AppText
-                        variant="body"
+                        preset="body4"
                         style={styles.buttonText}
                     >
                         View Details

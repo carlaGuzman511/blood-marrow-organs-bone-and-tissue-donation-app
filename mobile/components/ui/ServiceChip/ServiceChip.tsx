@@ -27,7 +27,7 @@ function ServiceChip({
             ]}
         >
             <AppText
-                variant="caption"
+                preset="body4"
                 style={[
                     styles.label,
                     selected && styles.selectedLabel,

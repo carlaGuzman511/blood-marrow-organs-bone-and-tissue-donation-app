@@ -185,6 +185,10 @@ namespace Umss.BloodOrgansDonationApp.Repository.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Image")
                         .IsRequired()
                         .HasColumnType("text");
@@ -196,6 +200,14 @@ namespace Umss.BloodOrgansDonationApp.Repository.Migrations
                         .HasColumnType("double precision");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("OpeningHours")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("text");
 

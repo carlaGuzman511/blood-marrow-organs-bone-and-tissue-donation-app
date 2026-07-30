@@ -34,16 +34,18 @@ function DonationCenterCard({ item }: Props) {
             style={styles.container}
             onPress={handlePress}
         >
-            <AppCard>
+            <AppCard style={styles.card}>
                 <CardHeader
                     name={item.name}
                     city={item.city}
                     image={item.image}
+                    isOpen={true}
                 />
                 <DonationCenterCardInfo
                     address={item.address}
-                    // TODO
-                    // phone={item.phone}
+                    phone={item.phone}
+                    email={item.email}
+                    openingHours={item.openingHours}
                 />
                 <DonationCenterCardServices
                     // TODO
@@ -55,6 +57,7 @@ function DonationCenterCard({ item }: Props) {
                     // TODO
                     // distance={item.distance}
                     distance="2.3 km"
+                    onPress={handlePress}
                 />
             </AppCard>
         </TouchableOpacity>

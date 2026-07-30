@@ -59,7 +59,7 @@ const InfoRow = memo(({ icon, value }: InfoRowProps) => (
             style={styles.icon}
         />
         <AppText
-            variant="body"
+            preset="body4"
             numberOfLines={2}
             style={styles.value}
         >

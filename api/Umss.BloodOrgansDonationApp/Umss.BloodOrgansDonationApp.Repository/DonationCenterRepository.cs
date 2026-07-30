@@ -36,7 +36,7 @@ namespace Umss.BloodOrgansDonationApp.Repository
                 .Include(dc => dc.DonationCenterDonationTypes)
                     .ThenInclude(dcdt => dcdt.DonationType)
                     .AsNoTracking()
-                //.Include(dc => dc.DonationPosts)
+                .Include(dc => dc.DonationPosts)
                 .FirstOrDefaultAsync(dc => dc.Id == id);
         }
 

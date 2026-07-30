@@ -5,7 +5,6 @@ using Umss.BloodOrgansDonationApp.Models.Entities;
 using Umss.BloodOrgansDonationApp.Models.Exceptions;
 using Umss.BloodOrgansDonationApp.Models.Requests;
 using Umss.BloodOrgansDonationApp.Models.Responses;
-using Umss.BloodOrgansDonationApp.Repository;
 using Umss.BloodOrgansDonationApp.Repository.Interfaces;
 using Umss.BloodOrgansDonationApp.Services.Interfaces;
 using Umss.BloodOrgansDonationApp.Services.Validators;
