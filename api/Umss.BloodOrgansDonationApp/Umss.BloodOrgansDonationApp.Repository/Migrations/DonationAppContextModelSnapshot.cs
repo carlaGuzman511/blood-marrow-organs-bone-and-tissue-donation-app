@@ -242,6 +242,9 @@ namespace Umss.BloodOrgansDonationApp.Repository.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<bool>("Priority")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("text");
