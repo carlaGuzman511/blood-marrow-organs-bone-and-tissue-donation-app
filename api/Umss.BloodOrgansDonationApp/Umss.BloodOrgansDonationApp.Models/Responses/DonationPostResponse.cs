@@ -5,6 +5,8 @@ namespace Umss.BloodOrgansDonationApp.Models.Responses
         public Guid Id { get; set; }
         public BloodType BloodType { get; set; }
         public DonationTypeResponse DonationType { get; set; }
+
+        public bool Priority { get; set; }
         public UserResponse? User { get; set; }
         public DonationCenterResponse? DonationCenter { get; set; }
         public string Title { get; set; } = string.Empty;

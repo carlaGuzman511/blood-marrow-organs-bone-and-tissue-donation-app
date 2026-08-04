@@ -20,6 +20,7 @@ export type Donation = {
 
 export type DonationPost = {
     id?: string,
+    urgent: boolean,
     title: string,
     description: string,    
     bloodTypeId?: string,

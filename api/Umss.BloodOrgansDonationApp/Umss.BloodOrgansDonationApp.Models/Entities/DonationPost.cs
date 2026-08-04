@@ -10,6 +10,8 @@ namespace Umss.BloodOrgansDonationApp.Models
 
         public Guid BloodTypeId { get; set; }
 
+        public bool Priority { get; set; }
+
         public DonationType DonationType { get; set; }
 
         public Guid DonationTypeId { get; set; }

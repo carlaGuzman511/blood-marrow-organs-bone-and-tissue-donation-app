@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import { View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-
+import { COLORS } from "@/constants";
 import AppText from "@/components/ui/AppText";
 import styles from "./DonationCenterCardInfo.styles";
 
@@ -20,52 +20,34 @@ function DonationCenterCardInfo({
 }: Props) {
     return (
         <View style={styles.container}>
-            <InfoRow
-                icon="location-outline"
-                value={address}
-            />
+            <View style={styles.row}>
+                <Ionicons name="location-outline" size={18} color={COLORS.primary} style={styles.icon} />
+                <AppText preset="body4" style={styles.text} numberOfLines={1}>
+                {address}
+                </AppText>
+            </View>
+
             {phone && (
-                <InfoRow
-                    icon="call-outline"
-                    value={phone}
-                />
+                <View style={styles.row}>
+                <Ionicons name="call-outline" size={18} color={COLORS.primary} style={styles.icon} />
+                <AppText preset="body4" style={styles.text}>{phone}</AppText>
+                </View>
             )}
+
             {email && (
-                <InfoRow
-                    icon="mail-outline"
-                    value={email}
-                />
+                <View style={styles.row}>
+                <Ionicons name="mail-outline" size={18} color={COLORS.primary} style={styles.icon} />
+                <AppText preset="body4" style={styles.text}>{email}</AppText>
+                </View>
             )}
+
             {openingHours && (
-                <InfoRow
-                    icon="time-outline"
-                    value={openingHours}
-                />
+                <View style={styles.row}>
+                <Ionicons name="time-outline" size={18} color={COLORS.primary} style={styles.icon} />
+                <AppText preset="body4" style={styles.text}>{openingHours}</AppText>
+                </View>
             )}
         </View>
-    );
-}
-
-type InfoRowProps = {
-    icon: keyof typeof Ionicons.glyphMap;
-    value: string;
-};
-
-const InfoRow = memo(({ icon, value }: InfoRowProps) => (
-    <View style={styles.row}>
-        <Ionicons
-            name={icon}
-            size={18}
-            style={styles.icon}
-        />
-        <AppText
-            preset="body4"
-            numberOfLines={2}
-            style={styles.value}
-        >
-            {value}
-        </AppText>
-    </View>
-));
+)};
 
 export default memo(DonationCenterCardInfo);

@@ -3,51 +3,41 @@ import { StyleSheet } from "react-native";
 import { COLORS, SIZES } from "@/constants";
 
 export default StyleSheet.create({
-    container: {
-        marginTop: SIZES.padding,
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-    },
-    leftContainer: {
-        flex: 1,
-    },
-    statusRow: {
-        flexDirection: "row",
-        alignItems: "center",
-    },
-    statusDot: {
-        width: 10,
-        height: 10,
-        borderRadius: 5,
-        marginRight: 8,
-    },
-    statusText: {
-        fontWeight: "600",
-    },
-    hours: {
-        marginTop: 4,
-        color: COLORS.secondaryBlack,
-    },
-    rightContainer: {
-        alignItems: "flex-end",
-    },
-    distanceContainer: {
-        flexDirection: "row",
-        alignItems: "center",
-        marginBottom: 6,
-    },
-    distance: {
-        marginLeft: 4,
-        color: COLORS.secondaryBlack,
-    },
-    button: {
-        flexDirection: "row",
-        alignItems: "center",
-    },
-    buttonText: {
-        color: COLORS.primary,
-        fontWeight: "600",
-        marginRight: 2,
-    },
+  container: {
+    marginTop: SIZES.base,
+    paddingTop: SIZES.base,
+    borderTopWidth: 1,
+    borderTopColor: COLORS.border,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  statusRow: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  statusDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginRight: 6,
+  },
+  open: {
+    backgroundColor: COLORS.success,
+  },
+  closed: {
+    backgroundColor: COLORS.danger,
+  },
+  statusText: {
+    fontSize: 14,
+    fontWeight: "500",
+  },
+  distanceRow: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  distanceText: {
+    fontSize: 14,
+    color: COLORS.textSecondary,
+  },
 });

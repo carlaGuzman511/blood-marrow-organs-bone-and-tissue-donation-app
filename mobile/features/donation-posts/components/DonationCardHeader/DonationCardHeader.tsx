@@ -15,13 +15,15 @@ type Props = {
 };
 
 export default function DonationCardHeader({ item }: Props) {
+  const isUrgent = item.urgent || false; 
 
-    return (
-        <View style={styles.header}>
-            <BloodTypeBadge bloodType={item.bloodType} />
-            <Text style={styles.time}>
-                {dayjs(item.createdAt).fromNow()}
-            </Text>
-        </View>
-    );
+  return (
+    <View style={styles.header}>
+      <View style={styles.leftGroup}>
+        <BloodTypeBadge bloodType={item.bloodType} />
+        {isUrgent && <View style={styles.urgencyDot} />}
+      </View>
+      <Text style={styles.time}>{dayjs(item.createdAt).fromNow()}</Text>
+    </View>
+  );
 }

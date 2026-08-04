@@ -1,47 +1,47 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import CardHeader from "@/components/ui/CardHeader";
+import AppText from "@/components/ui/AppText";
+import { COLORS } from "@/constants";
 import styles from "./DonationCardBody.styles";
 import { DonationPost } from "@/models/App.types";
 
 type Props = {
-    item: DonationPost;
+  item: DonationPost;
 };
 
 export default function DonationCardBody({ item }: Props) {
+  const user = item.user;
+  const center = item.donationCenter;
 
-    return (
-        <View style={styles.body}>
-            <CardHeader
-                name={item.user?.fullName || item.donationCenter?.name || ""}
-                city={item.user?.address || item.donationCenter?.address || ""}
-                image={item.user?.image || item.donationCenter?.image || ""}
-                isOpen={false}
-            />
-            <View style={styles.info}>
-                <Text
-                    numberOfLines={1}
-                    style={styles.title}
-                >
-                    {item.title}
-                </Text>
-                <Text
-                    style={styles.subtitle}
-                >
-                    {item.user?.fullName}
-                </Text>
-                <Text
-                    style={styles.location}
-                >
-                    📍 {item.donationCenter?.address}
-                </Text>
-                <Text
-                    numberOfLines={2}
-                    style={styles.description}
-                >
-                    {item.description}
-                </Text>
-            </View>
+  return (
+    <View style={styles.body}>
+      <CardHeader
+        name={user?.fullName || center?.name || ""}
+        city={user?.address || center?.address || ""}
+        image={user?.image || center?.image || ""}
+        isOpen={false} 
+      />
+      <AppText preset="h4" style={styles.title} numberOfLines={2}>
+        {item.title}
+      </AppText>
+      <AppText preset="body4" style={styles.description} numberOfLines={3}>
+        {item.description}
+      </AppText>
+      {center?.address && (
+        <View style={styles.locationRow}>
+          <Ionicons
+            name="location-outline"
+            size={18}
+            color={COLORS.primary}
+            style={styles.locationIcon}
+          />
+          <AppText preset="body4" style={styles.locationText} numberOfLines={1}>
+            {center.address}
+          </AppText>
         </View>
-    );
+      )}
+    </View>
+  );
 }
