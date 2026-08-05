@@ -33,31 +33,51 @@ export default function RootLayout() {
             ),
           }}  
         />
-        <Tabs.Screen 
-          name="search"  
-          options={{
-            href: null,
-          }}
-        />
         <Tabs.Screen
-          name="donors"
+          name="donors/index"
           options={{
             title: 'Donors',
-            headerShown: false,
+            href:"/donors",
             tabBarLabel: 'Donors',
-            tabBarIcon: ({ color }: { color: string }) => (
-              <MaterialCommunityIcons name="account-heart-outline" size={24} color={color} />
+            tabBarIcon: ({ color, focused }: { color: string, focused: any }) => (
+              <MaterialCommunityIcons 
+                name="account-heart-outline" 
+                size={24} 
+                color={color} 
+                  
+                />
             ),
           }}
         />
         <Tabs.Screen
-          name="donation-centers"
+          name="donation-centers/index"
           options={{
-            title: 'Centers',
-            headerShown: false,
-            tabBarLabel: 'Centers',
-            tabBarIcon: ({ color }: { color: string }) => (
-              <MaterialCommunityIcons name="hospital-building" size={24} color={color} />
+            title: 'Donation Centers',
+            href:"/donation-centers",
+            tabBarLabel: 'Donation Centers',
+            tabBarIcon: ({ color, focused }: { color: string, focused: any }) => (
+              <MaterialCommunityIcons 
+                name="hospital-building" 
+                size={24} 
+                color={color}
+                focused={focused}  
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="donation-posts/index"
+          options={{
+            title: 'Donation Posts',
+            href:"/donation-posts",
+            tabBarLabel: 'Donation Posts',
+            tabBarIcon: ({ color, focused }: { color: string, focused: any }) => (
+              <MaterialCommunityIcons 
+                name="hospital-building" 
+                size={24} 
+                color={color}
+                focused={focused}  
+              />
             ),
           }}
         />
