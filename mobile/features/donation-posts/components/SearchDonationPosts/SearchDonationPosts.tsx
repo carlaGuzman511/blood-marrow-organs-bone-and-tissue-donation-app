@@ -1,7 +1,9 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { useRouter } from 'expo-router';
+
+import { Ionicons } from '@expo/vector-icons';
 
 import SearchLayout from '@/components/ui/layout/SearchLayout';
 import DonationCard from '@/features/donation-posts/components/DonationCard';
@@ -17,19 +19,29 @@ import SearchResultCount from '../../../../components/ui/SearchResultCount';
 import styles from './SearchDonationPosts.styles';
 
 export function DonationPostSearchContent() {
+  const router = useRouter();
   const { data: posts = [], isLoading, error } = useDonationPosts();
 
   const { filters, setSearch, setFilter, removeFilter } = useSearchFilters();
   const filteredPosts = useFilteredData({ data: posts, filters, predicate: filterDonationPosts });
   
-  return (
-    <>
-      <SearchBar 
-        value={filters.search} 
-        onChangeText={setSearch} 
-        placeholder="Search donation requests" />
-      <SearchFilterControls groups={DONATION_POST_FILTERS} values={filters.values} onChange={setFilter} />
-      <ActiveFilters filters={filters.values} filterGroups={DONATION_POST_FILTERS} onRemove={removeFilter} />
+    return (
+    <View style={{ flex: 1 }}>
+      <SearchBar
+        value={filters.search}
+        onChangeText={setSearch}
+        placeholder="Search donation requests"
+      />
+      <SearchFilterControls
+        groups={DONATION_POST_FILTERS}
+        values={filters.values}
+        onChange={setFilter}
+      />
+      <ActiveFilters
+        filters={filters.values}
+        filterGroups={DONATION_POST_FILTERS}
+        onRemove={removeFilter}
+      />
       <SearchResultCount count={filteredPosts.length} />
       <FlatList
         data={filteredPosts}
@@ -43,7 +55,16 @@ export function DonationPostSearchContent() {
         }
         showsVerticalScrollIndicator={false}
       />
-    </>
+      <View style={styles.fabContainer}>
+        <TouchableOpacity
+          style={styles.fab}
+          activeOpacity={0.8}
+          onPress={() => router.push('/donation-posts/create')}
+        >
+          <Ionicons name="add" size={32} color="#FFFFFF" />
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 }
 

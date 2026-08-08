@@ -18,4 +18,4 @@ export default StyleSheet.create({
     fontSize: 18,
     fontWeight: "700",
   },
-};
+});

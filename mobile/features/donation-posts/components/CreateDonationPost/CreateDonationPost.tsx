@@ -12,6 +12,8 @@ import { BLOOD_TYPE_OPTIONS } from "@/constants/bloodTypes";
 import styles from "./CreateDonationPost.styles";
 
 const BLOOD_TYPES = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
+const DONATION_TYPES = ["Blood", "Bone Marrow", "Heart", "liver", "Kidney", "Lung", "Tissue"];
+const CITIES = ["Santa Cruz", "Cochabamba", "La Paz", "Oruro", "Potosi", "Sucre", "Tarija", "Trinidad", "Cobija", "Riberalta", "Yacuiba"];
 
 export default function CreateDonationPost() {
   const router = useRouter();
@@ -21,11 +23,13 @@ export default function CreateDonationPost() {
     resolver: zodResolver(donationPostSchema),
     mode: "onChange",
     defaultValues: {
+      title: "",
       city: "",
       hospital: "",
-      bloodType: "",
+      bloodTypeId: "",
+      donationTypeId: "",
       mobile: "",
-      note: "",
+      description: "",
     },
   });
 
@@ -33,7 +37,6 @@ export default function CreateDonationPost() {
     mutate(data);
   };
 
-  // Handle success / error side effects
   useEffect(() => {
     if (isSuccess) {
       Alert.alert("Success", "Your donation request has been posted!", [
@@ -63,16 +66,27 @@ export default function CreateDonationPost() {
             Create a Request
           </Text>
           <Text style={{ fontSize: 14, color: COLORS.secondaryGray, marginTop: 4 }}>
-            Fill in the details to request blood donation.
+            Fill in the details to request donation.
           </Text>
         </View>
-
-        <FormInput control={control} name="city" label="City *" placeholder="Enter city" />
+        <FormInput 
+          control={control} 
+          name="title" 
+          label="Title *" 
+          placeholder="Enter a title..."
+        />
+        <FormPicker 
+          control={control} 
+          name="donationTypeId" 
+          label="Donation Type *" 
+          options={DONATION_TYPES} 
+          placeholder="Select donation type" 
+        />
+        <FormPicker control={control} name="bloodTypeId" label="Blood Type *" options={BLOOD_TYPES} placeholder="Select blood type" />
+        <FormPicker control={control} name="city" label="City *" options={CITIES} placeholder="Select city" />
         <FormInput control={control} name="hospital" label="Hospital / Center *" placeholder="Enter hospital or center" />
-        <FormPicker control={control} name="bloodType" label="Blood Type *" options={BLOOD_TYPES} placeholder="Select blood type" />
         <FormInput control={control} name="mobile" label="Mobile Number *" placeholder="Enter mobile number" keyboardType="phone-pad" />
-        <FormInput control={control} name="note" label="Add a note (optional)" placeholder="Additional information..." multiline numberOfLines={4} />
-
+        <FormInput control={control} name="description" label="Add a note (optional)" placeholder="Additional information..." multiline numberOfLines={4} />
         <TouchableOpacity
           style={[
             styles.submitButton,
