@@ -2,7 +2,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
+using System.Security.Claims;
+using System.Text.Json;
 using Umss.BloodOrgansDonationApp.API.Middlewares;
 using Umss.BloodOrgansDonationApp.Models;
 using Umss.BloodOrgansDonationApp.Models.AutoMapper;
@@ -39,15 +40,44 @@ builder.Services.AddAuthentication(options => {
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
 .AddJwtBearer(options => {
+    // Tokens are issued by Keycloak; signing keys are fetched from its
+    // /.well-known/openid-configuration + JWKS endpoint via Authority, not configured statically.
+    options.Authority = builder.Configuration["Keycloak:Authority"];
+    options.Audience = builder.Configuration["Keycloak:Audience"];
+    options.RequireHttpsMetadata = builder.Configuration.GetValue<bool>("Keycloak:RequireHttpsMetadata", true);
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidAudience = builder.Configuration["Jwt:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+    };
+    options.Events = new JwtBearerEvents
+    {
+        // Keycloak puts realm roles under the "realm_access.roles" claim rather than
+        // the standard role claim type, so [Authorize(Roles = "...")] would never match
+        // without projecting them onto ClaimTypes.Role here.
+        OnTokenValidated = context =>
+        {
+            var realmAccess = context.Principal?.FindFirst("realm_access")?.Value;
+            if (!string.IsNullOrEmpty(realmAccess) && context.Principal?.Identity is ClaimsIdentity identity)
+            {
+                using var doc = JsonDocument.Parse(realmAccess);
+                if (doc.RootElement.TryGetProperty("roles", out var roles))
+                {
+                    foreach (var role in roles.EnumerateArray())
+                    {
+                        var roleName = role.GetString();
+                        if (!string.IsNullOrEmpty(roleName))
+                        {
+                            identity.AddClaim(new Claim(ClaimTypes.Role, roleName));
+                        }
+                    }
+                }
+            }
+
+            return Task.CompletedTask;
+        }
     };
 });
 
@@ -133,8 +163,8 @@ using (var scope = app.Services.CreateScope())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
-//app.UseAuthentication();
 
 app.MapControllers();
 

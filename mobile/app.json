@@ -33,7 +33,8 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      "expo-secure-store"
     ],
     "experiments": {
       "typedRoutes": true
@@ -43,6 +44,9 @@
         "origin": false
       },
       "API_URL": "https://blood-marrow-organs-bone-and-tissue.onrender.com",
+      "KEYCLOAK_URL": "https://auth-server-b24f.onrender.com",
+      "KEYCLOAK_REALM": "organ-donation-prod",
+      "KEYCLOAK_CLIENT_ID": "organ-donation-mobile",
       "eas": {
         "projectId": "952277a0-44c2-4b63-8b90-b6ce6f4b9075"
       }

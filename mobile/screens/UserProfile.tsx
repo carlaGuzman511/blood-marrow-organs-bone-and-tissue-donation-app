@@ -6,8 +6,11 @@ import MapView, { Marker, Polyline }from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "@/components/Header";
+import { useAuth } from "@/features/auth";
 
 const UserProfile = () => {
+    const { logout } = useAuth();
+
     const [origin, setOrigin] = useState<any>({
         latitude: -17.38524,
         longitude: -66.14841,
@@ -337,7 +340,7 @@ const UserProfile = () => {
                         alignItems:"center",
                         marginVertical:12
                     }}
-                    onPress={()=>{}}
+                    onPress={logout}
                 >
                     <AntDesign
                         name="logout"

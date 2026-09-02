@@ -18,10 +18,11 @@ type Props = {
 };
 
 function DonationCenterCard({ item }: Props) {
+    console.log("DonationCenterCard rendered with item:", item);
     const router = useRouter();
     const handlePress = useCallback(() => {
         router.push({
-            pathname: "/search/donation-center-details",
+            pathname: "/donation-centers/details",
             params: {
                 id: item.id?.toString(),
             },

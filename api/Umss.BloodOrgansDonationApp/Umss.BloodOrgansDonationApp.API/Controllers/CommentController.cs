@@ -18,7 +18,7 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
             _commentService = commentService;
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet("{donationPostId}/comments/{commentId}")]
         public async Task<ActionResult<CommentResponse>> Get(Guid donationPostId, Guid commentId)
         {
@@ -42,7 +42,7 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
             }
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet("{donationPostId}/comments")]
         public async Task<ActionResult<IEnumerable<CommentResponse>>> Get(Guid donationPostId)
         {
@@ -61,7 +61,7 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
             }
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpDelete("{donationPostId}/comments/{commentId}")]
         public async Task<ActionResult> Delete(Guid donationPostId, Guid commentId)
         {
@@ -86,7 +86,7 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
             }
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPut("{donationPostId}/comments/{commentId}")]
         public async Task<ActionResult<CommentResponse>> Update(Guid donationPostId, Guid commentId, [FromBody] CommentRequest commentRequest)
         {
@@ -109,7 +109,7 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
             }
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPost("{donationPostId}/comments")]
         public async Task<ActionResult<CommentResponse>> Create(Guid donationPostId, [FromBody] CommentRequest commentRequest)
         {

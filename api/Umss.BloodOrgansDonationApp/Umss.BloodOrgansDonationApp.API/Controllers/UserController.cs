@@ -19,7 +19,7 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
             this._userService = userService;
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<UserResponse>> Get(Guid id)
         {
@@ -42,7 +42,7 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
             }
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserResponse>>> Get()
         {
@@ -62,7 +62,7 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
         }
 
         //TODO: implement a soft delete
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(Guid id)
         {
@@ -105,7 +105,7 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
             }
         }
         
-        //[Authorize]
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult<UserResponse>> Update(Guid id, [FromBody] UserRequest userRequest)
         {

@@ -20,7 +20,7 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
             _bloodTypeService = bloodTypeService;
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<Response<BloodType>>> Get(Guid id)
         {
@@ -45,7 +45,7 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
         }
 
         //TODO: Implement a soft delete
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(Guid id)
         {
@@ -70,7 +70,7 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
             }
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<Response<IEnumerable<BloodType>>>> Get()
         {
@@ -89,7 +89,7 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
             }
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<BloodType>> Create([FromBody] BloodTypeRequest bloodTypeRequest)
         {
@@ -108,7 +108,7 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
             }
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<ActionResult<BloodType>> Update(Guid id, [FromBody] BloodTypeRequest bloodTypeRequest)
         {

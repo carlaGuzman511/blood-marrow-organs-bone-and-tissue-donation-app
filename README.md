@@ -19,6 +19,9 @@ blood, marrow, organs, bone, and tissue donation app
 # Swagger 
 https://blood-marrow-organs-bone-and-tissue.onrender.com/swagger/index.html
 
+# Auth Service
+
+https://auth-server-b24f.onrender.com/
 
 TODO:
 - ADD UNIT TESTS

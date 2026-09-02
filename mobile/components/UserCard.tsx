@@ -18,7 +18,7 @@ const UserCard = ({item}: Props) => {
 
     const handlePress = () => {
         router.push({
-            pathname: '/search/donor-details',
+            pathname: '/donors/details',
             params: {
                 id: item.id?.toString(),
             },

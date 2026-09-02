@@ -1,1 +1,11 @@
+<mat-toolbar color="primary" class="app-toolbar">
+  <span>Donación de Sangre, Médula, Órganos y Tejidos</span>
+  <span class="spacer"></span>
+  @if (authService.isLoggedIn()) {
+    <span class="user-name">{{ authService.userName }}</span>
+    <button mat-button (click)="logout()">Cerrar sesión</button>
+  } @else {
+    <a mat-button routerLink="/login">Iniciar sesión</a>
+  }
+</mat-toolbar>
 <router-outlet></router-outlet>

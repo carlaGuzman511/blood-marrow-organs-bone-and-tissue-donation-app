@@ -1,18 +1,44 @@
 import { Tabs } from "expo-router";
 import React from "react";
+import { View, ActivityIndicator } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { MaterialCommunityIcons, AntDesign, Entypo } from "@expo/vector-icons";
 import { COLORS } from "@/constants";
+import { AuthProvider, LoginScreen, useAuth } from "@/features/auth";
 
 const queryClient = new QueryClient();
 
 export default function RootLayout() {
   return (
     <QueryClientProvider client={queryClient}>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <StatusBar style="auto" />
+      <AuthProvider>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <StatusBar style="auto" />
+          <AppContent />
+        </GestureHandlerRootView>
+      </AuthProvider>
+    </QueryClientProvider>
+  );
+}
+
+function AppContent() {
+  const { isLoading, isAuthenticated } = useAuth();
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator color={COLORS.primary} />
+      </View>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <LoginScreen />;
+  }
+
+  return (
         <Tabs
           screenOptions={{
             tabBarActiveTintColor: COLORS.green,
@@ -129,7 +155,5 @@ export default function RootLayout() {
           }}
         />
         </Tabs>
-      </GestureHandlerRootView>
-    </QueryClientProvider>
   );
 }

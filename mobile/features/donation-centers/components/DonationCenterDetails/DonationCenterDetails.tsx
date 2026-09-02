@@ -4,11 +4,18 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useDonationCenters } from '@/features/donation-centers/hooks/useDonationCenters';
 import Header from '@/components/Header';
-import { COLORS, FONTS } from '@/constants';
+import { COLORS, SIZES } from '@/constants';
 import { EvilIcons, MaterialCommunityIcons, Ionicons, Entypo } from '@expo/vector-icons';
 import styles from './DonationCenterDetails.styles';
+import { DonationCenter } from "@/models/App.types";
 
-export default function DonationCenterDetails() {
+type Props = {
+  item: DonationCenter;
+  onBack?: () => void;
+};
+
+export default function DonationCenterDetails({ item, onBack }: Props) {
+  const donationTypes = item.donationTypes || [];
   const router = useRouter();
   const params = useLocalSearchParams<{ id?: string }>();
   const id = Number(params.id);
@@ -38,7 +45,7 @@ export default function DonationCenterDetails() {
   }
 
   const services = center.donationTypes?.map((type) => type.name) ?? ['Blood Donation', 'Plasma Donation', 'Platelet Donation'];
-
+  
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.content}>

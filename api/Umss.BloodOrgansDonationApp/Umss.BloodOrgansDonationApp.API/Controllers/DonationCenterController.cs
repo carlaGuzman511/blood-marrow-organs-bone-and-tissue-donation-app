@@ -19,7 +19,7 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
             _donationCenterService = donationCenterService;
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<DonationCenterResponse>> Get(Guid id)
         {
@@ -43,7 +43,7 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
             }
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<DonationCenterResponse>>> Get()
         {
@@ -62,7 +62,7 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
             }
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(Guid id)
         {
@@ -88,7 +88,7 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
 
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<DonationCenterResponse>> Create([FromBody] DonationCenterRequest donationCenterRequest)
         {
@@ -107,7 +107,7 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
             }
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult<DonationCenterResponse>> Update(Guid id, [FromBody] DonationCenterRequest donationCenterRequest)
         {
