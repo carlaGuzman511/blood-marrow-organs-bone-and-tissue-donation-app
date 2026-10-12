@@ -71,4 +71,6 @@ Both fixtures hold one `Mock<T>` + resolved interface instance per dependency as
 
 ### Database
 
-PostgreSQL via `Npgsql.EntityFrameworkCore.PostgreSQL`, connection string in `appsettings.json` under `ConnectionStrings:DonationAppContext` (currently points at a hosted Neon instance with credentials committed in the file — be careful not to leak this further, and prefer environment-specific overrides over editing it directly).
+PostgreSQL via `Npgsql.EntityFrameworkCore.PostgreSQL`, connection string `ConnectionStrings:DonationAppContext`. **Never commit a real connection string.** `appsettings.json` leaves it empty and the API refuses to start without one:
+- Production (Render): environment variable `ConnectionStrings__DonationAppContext`.
+- Local: `appsettings.Development.json` points at a local Postgres (`localhost:5433`, `postgres/postgres`). To use a remote DB instead, use user-secrets: `dotnet user-secrets set "ConnectionStrings:DonationAppContext" "<conn>" --project Umss.BloodOrgansDonationApp.API`.

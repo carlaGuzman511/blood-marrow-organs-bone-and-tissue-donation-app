@@ -19,7 +19,13 @@ var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
 
 builder.WebHost.UseUrls($"http://*:{port}");
 
+// Never committed: set ConnectionStrings__DonationAppContext (Render) or dotnet user-secrets (local).
 var connectionString = builder.Configuration.GetConnectionString("DonationAppContext");
+if (string.IsNullOrWhiteSpace(connectionString))
+{
+    throw new InvalidOperationException(
+        "Missing connection string 'DonationAppContext'. Set the ConnectionStrings__DonationAppContext environment variable or a dotnet user-secret.");
+}
 
 builder.Services.AddDbContext<DonationAppContext>(
     options => options.UseNpgsql(connectionString));
