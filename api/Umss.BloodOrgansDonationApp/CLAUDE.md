@@ -45,7 +45,7 @@ API (Controllers) → Services → Repository → Models
 - **Models**: entities (`Entities/`), DTOs split into `Requests/` (inbound) and `Responses/` (outbound), AutoMapper `Profile` classes (`AutoMapper/`) mapping Entity ⇄ Request/Response, and shared exception types (`Exceptions/BusinessException`, `Exceptions/EntityNotFoundException`).
 - **Repository**: one repository class + interface per entity (e.g. `DonationPostRepository` / `IDonationPostRepository`), plus `Data/DonationAppContext` (an `IdentityDbContext<User, IdentityRole<Guid>, Guid>`) and `Data/DataSeeder`. Entity relationships and delete behavior are configured in `DonationAppContext.OnModelCreating` (e.g. `DonationCenterDonationType` is a composite-key join entity; most FKs use `DeleteBehavior.Restrict`, `Comment → DonationPost` cascades).
 - **Services**: business logic layer, one service + interface per entity. Services call the repository, run FluentValidation validators inline (`new XRequestValidator().ValidateAndThrow(request)` — validators are *not* wired through DI or ASP.NET's automatic validation pipeline), map between entities and DTOs via injected `IMapper`, and throw `EntityNotFoundException`/`ValidationException` for the controller to translate into HTTP responses.
-- **API**: thin controllers, one per entity, under `api/...` routes. Controllers manually catch `ValidationException` → 400 and generic `Exception` → 500 in *every* action (this is repeated per-method rather than centralized). `Middlewares/ExceptionMiddleware` also exists as a global fallback that maps `BusinessException` → 400, anything else → 500 — most exceptions are already caught in the controllers before they'd reach it.
+- **API**: thin `[ApiController]` controllers, one per entity, under `api/...` routes. Controllers do **not** catch exceptions: `Middlewares/ExceptionMiddleware` (first in the pipeline) is the single place that turns them into RFC 7807 `application/problem+json` responses — `ValidationException` → 400 (`errors` grouped by property, same shape as ASP.NET's automatic model-binding 400), `EntityNotFoundException` → 404, `BusinessException` → 400, anything else → 500 with a generic message (logged, details never returned). Services should throw these exceptions; controllers only handle the "service returned null" → 404 case.
 
 Two generic interfaces express the common CRUD shape but are only loosely followed — most entities implement their own richer interface rather than depending on the generic ones directly:
 - `IDonationAppRepository<T>`: `GetAll / Get / Create / Update / Delete`
@@ -64,7 +64,7 @@ FluentValidation rule messages are written in Spanish (e.g. "La imagen de la pub
 ### Testing
 
 xUnit + Moq, split by layer, mirroring the architecture:
-- `Umss.BloodOrgansDonationApp.API.Tests`: controller tests, mock services via `Utilities/ServiceFixture`.
+- `Umss.BloodOrgansDonationApp.API.Tests`: controller tests, mock services via `Utilities/ServiceFixture`. `Integration/` boots the real pipeline with `Utilities/ApiFactory` (`WebApplicationFactory<Program>`, EF InMemory, a test auth scheme that authenticates every request as Admin).
 - `Umss.BloodOrgansDonationApp.Service.Tests`: service tests, mock repositories (and `IMapper`, `ITokenService`) via `Utilities/RepositoryFixture`.
 
 Both fixtures hold one `Mock<T>` + resolved interface instance per dependency as protected/internal properties — extend these fixtures rather than instantiating mocks ad hoc in individual test classes.

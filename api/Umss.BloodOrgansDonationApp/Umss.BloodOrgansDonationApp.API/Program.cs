@@ -137,10 +137,12 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
+// First so it wraps everything else: the only place exceptions become HTTP responses.
+app.UseMiddleware<ExceptionMiddleware>();
+
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.UseMiddleware<ExceptionMiddleware>();
 app.UseCors("AllowFrontend");
 
 
@@ -150,9 +152,13 @@ using (var scope = app.Services.CreateScope())
 
     try
     {
-        Console.WriteLine("Applying migrations...");
+        // Integration tests swap in a non-relational provider that cannot run migrations.
+        if (db.Database.IsRelational())
+        {
+            Console.WriteLine("Applying migrations...");
 
-        db.Database.Migrate();
+            db.Database.Migrate();
+        }
 
         Console.WriteLine("Running seed...");
 
@@ -175,3 +181,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+// Exposes the implicit Program class to WebApplicationFactory<Program> in the integration tests.
+public partial class Program { }
