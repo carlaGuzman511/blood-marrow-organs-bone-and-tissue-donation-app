@@ -25,7 +25,7 @@ namespace Umss.BloodOrgansDonationApp.Services
             donationPostRequestValidator.ValidateAndThrow(donationPostRequest);
 
             DonationPost donationPost = _mapper.Map<DonationPost>(donationPostRequest);
-            donationPost.CreatedAt = DateTime.Now;
+            donationPost.CreatedAt = DateTime.UtcNow;
             donationPost.Id = Guid.NewGuid();
             donationPost.DonationCenterId = donationCenterId;
 
@@ -39,7 +39,7 @@ namespace Umss.BloodOrgansDonationApp.Services
             donationPostRequestValidator.ValidateAndThrow(donationPostRequest);
 
             DonationPost donationPost = _mapper.Map<DonationPost>(donationPostRequest);
-            donationPost.CreatedAt = DateTime.Now;
+            donationPost.CreatedAt = DateTime.UtcNow;
             donationPost.Id = Guid.NewGuid();
             donationPost.UserId = userId;
 
@@ -116,9 +116,9 @@ namespace Umss.BloodOrgansDonationApp.Services
 
             donationPost.Id = donationPostId;
             donationPost.UserId = userId;
-            donationPost.UpdatedAt = DateTime.Now;
+            donationPost.UpdatedAt = DateTime.UtcNow;
                
-            await _donationPostRepository.Update(donationPost);
+            donationPost = await _donationPostRepository.Update(donationPost);
 
             return _mapper.Map<DonationPostResponse>(donationPost);
         }
@@ -137,9 +137,9 @@ namespace Umss.BloodOrgansDonationApp.Services
 
             donationPost.Id = donationPostId;
             donationPost.DonationCenterId = donationCenterId;
-            donationPost.UpdatedAt = DateTime.Now;
+            donationPost.UpdatedAt = DateTime.UtcNow;
 
-            await _donationPostRepository.Update(donationPost);
+            donationPost = await _donationPostRepository.Update(donationPost);
 
             return _mapper.Map<DonationPostResponse>(donationPost);
         }

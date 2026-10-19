@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Umss.BloodOrgansDonationApp.Models.Entities;
+using Umss.BloodOrgansDonationApp.Models.Exceptions;
 using Umss.BloodOrgansDonationApp.Repository.Data;
 using Umss.BloodOrgansDonationApp.Repository.Interfaces;
 
@@ -39,10 +40,19 @@ namespace Umss.BloodOrgansDonationApp.Repository
             return await _appContext.Comments.AsNoTracking().Where(x => x.DonationPostId == donationPostId).ToListAsync();
         }
 
+        /// <summary>
+        /// Persists the scalar values of <paramref name="element"/>. Get returns an untracked
+        /// entity, so the change is copied onto a tracked instance before saving.
+        /// </summary>
         public async Task<Comment> Update(Comment element)
         {
+            Comment tracked = await _appContext.Comments.FindAsync(element.Id)
+                ?? throw new EntityNotFoundException($"Comment with ID {element.Id} not found.");
+
+            _appContext.Entry(tracked).CurrentValues.SetValues(element);
             await _appContext.SaveChangesAsync();
-            return element;
+
+            return tracked;
         }
     }
 }

@@ -1,6 +1,8 @@
-﻿using Moq;
+﻿using AutoMapper;
+using Moq;
 using System.Threading.Tasks;
 using Umss.BloodOrgansDonationApp.Models;
+using Umss.BloodOrgansDonationApp.Models.AutoMapper;
 using Umss.BloodOrgansDonationApp.Models.Entities;
 using Umss.BloodOrgansDonationApp.Models.Requests;
 using Umss.BloodOrgansDonationApp.Models.Responses;
@@ -158,6 +160,33 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
             CommentResponse commentResponse = await this.commentService.Update(Guid.NewGuid(), Guid.NewGuid(), this.GetCommentRequest());
 
             Assert.NotNull(commentResponse);
+        }
+
+        [Fact(DisplayName = "Update must not reassign the comment author from the request UserId")]
+        public async Task Update_DoesNotReassignAuthor()
+        {
+            // Real mapper (same profiles as Program.cs): CommentProfile maps UserId from the request,
+            // which is exactly the behavior under test.
+            IMapper mapper = new MapperConfiguration(cfg => cfg.AddMaps(typeof(CommentProfile).Assembly)).CreateMapper();
+            CommentService service = new CommentService(this.repositoryFixture.CommentRepository, mapper);
+
+            Comment existing = this.GetComment();
+            Guid authorId = existing.UserId;
+            Comment? saved = null;
+
+            this.repositoryFixture.CommentRepositoryMock.Setup(x => x.Get(existing.DonationPostId, existing.Id)).ReturnsAsync(existing);
+            this.repositoryFixture.CommentRepositoryMock
+                .Setup(x => x.Update(It.Is<Comment>(c => c.Id == existing.Id)))
+                .Callback<Comment>(c => saved = c)
+                .ReturnsAsync((Comment c) => c);
+
+            CommentRequest request = new CommentRequest { Description = "Comentario editado", UserId = Guid.NewGuid() };
+
+            await service.Update(existing.DonationPostId, existing.Id, request);
+
+            Assert.NotNull(saved);
+            Assert.Equal(authorId, saved!.UserId);
+            Assert.Equal("Comentario editado", saved.Description);
         }
     }
 }

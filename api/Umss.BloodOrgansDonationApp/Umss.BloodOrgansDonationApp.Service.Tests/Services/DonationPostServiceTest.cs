@@ -48,8 +48,9 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
             {
                 BloodTypeId = Guid.NewGuid(),
                 DonationTypeId = Guid.NewGuid(),
+                Title = "Donantes O-",
                 Description = "Se necesita sangre tipo: O-",
-                Image = String.Empty,
+                Image = "post.png",
             };
       
             return donationPostRequest;
@@ -126,21 +127,51 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
         [Fact]
         public async Task UpdateByDonationCenterId()
         {
-            this.repositoryFixture.DonationPostRepositoryMock.Setup(x => x.GetByDonationCenter(It.IsAny<Guid>(), It.IsAny<Guid>())).ReturnsAsync(this.GetDonationPost());
-            this.repositoryFixture.DonationPostRepositoryMock.Setup(x => x.Update(It.IsAny<DonationPost>())).ReturnsAsync(this.GetDonationPost());
-            DonationPostResponse donationPost = await this.donationPostService.UpdateByDonationCenter(Guid.NewGuid(), Guid.NewGuid(), this.GetDonationPostRequest());
+            Guid donationCenterId = Guid.NewGuid();
+            DonationPost existing = this.GetDonationPost();
+            DonationPost refreshed = this.GetDonationPost();
+            DonationPost? saved = null;
+            DonationPostResponse expected = new DonationPostResponse { Id = refreshed.Id, Description = refreshed.Description, Image = refreshed.Image };
 
-            Assert.NotNull(donationPost);
+            this.repositoryFixture.DonationPostRepositoryMock.Setup(x => x.GetByDonationCenter(donationCenterId, existing.Id)).ReturnsAsync(existing);
+            this.repositoryFixture.DonationPostRepositoryMock
+                .Setup(x => x.Update(It.Is<DonationPost>(p => p.Id == existing.Id)))
+                .Callback<DonationPost>(p => saved = p)
+                .ReturnsAsync(refreshed);
+            this.repositoryFixture.MapperMock.Setup(x => x.Map<DonationPostResponse>(refreshed)).Returns(expected);
+
+            DonationPostResponse response = await this.donationPostService.UpdateByDonationCenter(donationCenterId, existing.Id, this.GetDonationPostRequest());
+
+            // The response must come from the entity the repository returned (reloaded navigations).
+            Assert.Same(expected, response);
+            Assert.NotNull(saved);
+            Assert.Equal(donationCenterId, saved!.DonationCenterId);
+            Assert.Equal(DateTimeKind.Utc, saved.UpdatedAt.Kind);
         }
 
         [Fact]
         public async Task UpdateByUserId()
         {
-            this.repositoryFixture.DonationPostRepositoryMock.Setup(x => x.GetByUser(It.IsAny<Guid>(), It.IsAny<Guid>())).ReturnsAsync(this.GetDonationPost());
-            this.repositoryFixture.DonationPostRepositoryMock.Setup(x => x.Update(It.IsAny<DonationPost>())).ReturnsAsync(this.GetDonationPost());
-            DonationPostResponse donationPost = await this.donationPostService.UpdateByUser(Guid.NewGuid(), Guid.NewGuid(), this.GetDonationPostRequest());
+            Guid userId = Guid.NewGuid();
+            DonationPost existing = this.GetDonationPost();
+            DonationPost refreshed = this.GetDonationPost();
+            DonationPost? saved = null;
+            DonationPostResponse expected = new DonationPostResponse { Id = refreshed.Id, Description = refreshed.Description, Image = refreshed.Image };
 
-            Assert.NotNull(donationPost);
+            this.repositoryFixture.DonationPostRepositoryMock.Setup(x => x.GetByUser(userId, existing.Id)).ReturnsAsync(existing);
+            this.repositoryFixture.DonationPostRepositoryMock
+                .Setup(x => x.Update(It.Is<DonationPost>(p => p.Id == existing.Id)))
+                .Callback<DonationPost>(p => saved = p)
+                .ReturnsAsync(refreshed);
+            this.repositoryFixture.MapperMock.Setup(x => x.Map<DonationPostResponse>(refreshed)).Returns(expected);
+
+            DonationPostResponse response = await this.donationPostService.UpdateByUser(userId, existing.Id, this.GetDonationPostRequest());
+
+            Assert.Same(expected, response);
+            Assert.NotNull(saved);
+            Assert.Equal(userId, saved!.UserId);
+            // Npgsql rejects DateTimeKind.Local for "timestamp with time zone" columns.
+            Assert.Equal(DateTimeKind.Utc, saved.UpdatedAt.Kind);
         }
     }
 }

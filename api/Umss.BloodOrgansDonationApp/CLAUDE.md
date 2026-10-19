@@ -28,7 +28,7 @@ dotnet ef migrations add <Name> --project Umss.BloodOrgansDonationApp.Repository
 dotnet ef database update --project Umss.BloodOrgansDonationApp.Repository --startup-project Umss.BloodOrgansDonationApp.API
 ```
 
-Note: `Umss.BloodOrgansDonationApp.Repository.Tests` exists on disk but is **not** included in the `.sln` and is a placeholder (`UnitTest1.cs`) — repository-level logic is currently exercised indirectly through the Service.Tests project, which mocks repositories.
+`Umss.BloodOrgansDonationApp.Repository.Tests` runs repositories against EF Core InMemory (`Utilities/InMemoryDatabase`, one isolated store per test; use `NewContext()` to assert through a fresh context, like a new request scope).
 
 Migrations and data seeding (`DataSeeder.SeedAsync`) run automatically on API startup (see `Program.cs`) — there's no separate seed command.
 
@@ -70,6 +70,8 @@ xUnit + Moq, split by layer, mirroring the architecture:
 Both fixtures hold one `Mock<T>` + resolved interface instance per dependency as protected/internal properties — extend these fixtures rather than instantiating mocks ad hoc in individual test classes.
 
 ### Database
+
+Repository `Get*` methods return **untracked** entities (`AsNoTracking`). `Update()` therefore loads the tracked row with `FindAsync` and copies values with `Entry(tracked).CurrentValues.SetValues(...)` — never call `SaveChangesAsync()` on an entity returned by a `Get*`. Timestamp columns are `timestamp with time zone`: always write `DateTime.UtcNow` (Npgsql rejects `DateTimeKind.Local`).
 
 PostgreSQL via `Npgsql.EntityFrameworkCore.PostgreSQL`, connection string `ConnectionStrings:DonationAppContext`. **Never commit a real connection string.** `appsettings.json` leaves it empty and the API refuses to start without one:
 - Production (Render): environment variable `ConnectionStrings__DonationAppContext`.

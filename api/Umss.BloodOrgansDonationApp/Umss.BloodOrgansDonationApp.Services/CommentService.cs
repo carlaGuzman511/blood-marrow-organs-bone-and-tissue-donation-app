@@ -70,8 +70,12 @@ namespace Umss.BloodOrgansDonationApp.Services
             CommentRequestValidator commentRequestValidator = new CommentRequestValidator();
             commentRequestValidator.ValidateAndThrow(commentRequest);
 
+            // CommentRequest carries UserId (needed on create); an edit must never reassign the author.
+            Guid authorId = comment.UserId;
+
             _mapper.Map(commentRequest, comment);
-            comment.UpdatedAt = DateTime.Now;
+            comment.UserId = authorId;
+            comment.UpdatedAt = DateTime.UtcNow;
             comment.DonationPostId = donationPostId;
             comment.Id = commentId;
 

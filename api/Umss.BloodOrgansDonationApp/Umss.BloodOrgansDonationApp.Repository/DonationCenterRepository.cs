@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Umss.BloodOrgansDonationApp.Models;
+using Umss.BloodOrgansDonationApp.Models.Exceptions;
 using Umss.BloodOrgansDonationApp.Repository.Data;
 using Umss.BloodOrgansDonationApp.Repository.Interfaces;
 
@@ -50,10 +51,20 @@ namespace Umss.BloodOrgansDonationApp.Repository
                 .ToListAsync();
         }
 
+        /// <summary>
+        /// Persists the scalar values of <paramref name="element"/>. Get returns an untracked
+        /// entity, so the change is copied onto a tracked instance before saving.
+        /// Donation types are not synced here (see US-API-32).
+        /// </summary>
         public async Task<DonationCenter> Update(DonationCenter element)
         {
+            DonationCenter tracked = await _appContext.DonationCenters.FindAsync(element.Id)
+                ?? throw new EntityNotFoundException($"Donation Center with ID {element.Id} not found.");
+
+            _appContext.Entry(tracked).CurrentValues.SetValues(element);
             await _appContext.SaveChangesAsync();
-            return element;
+
+            return (await Get(element.Id))!;
         }
     }
 }
