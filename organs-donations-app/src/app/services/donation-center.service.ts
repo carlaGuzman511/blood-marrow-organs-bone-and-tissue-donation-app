@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { DonationCenter } from '../models/DonationPost';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DonationCenterService {
-  private apiUrl: string = "https://blood-marrow-organs-bone-and-tissue.onrender.com/api";
+  private readonly apiUrl = environment.apiUrl;
 
   constructor(private httpService: HttpClient) { }
 

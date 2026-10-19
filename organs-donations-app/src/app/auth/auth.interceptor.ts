@@ -1,11 +1,11 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
+import { environment } from '../../environments/environment';
 import { AuthService } from './auth.service';
 
-const API_URL = 'https://blood-marrow-organs-bone-and-tissue.onrender.com/api';
-
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  if (!req.url.startsWith(API_URL)) {
+  // Only our API gets the bearer token; never leak it to third-party hosts (e.g. Google Maps).
+  if (!req.url.startsWith(environment.apiUrl)) {
     return next(req);
   }
 

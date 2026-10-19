@@ -9,10 +9,22 @@ This directory (`organs-donations-app`) is the Angular web frontend inside a lar
 - `../api/Umss.BloodOrgansDonationApp` — the .NET backend API
 - `../mobile` — a separate Expo/React Native mobile app (has its own `CLAUDE.md`)
 
-This app talks to the same backend API as the mobile app:
-`https://blood-marrow-organs-bone-and-tissue.onrender.com/api` (Swagger at `/swagger/index.html`).
-The API base URL is currently hardcoded as a private field in each service class (no environment
-files are used yet).
+This app talks to the same backend API as the mobile app.
+
+### Environments
+
+Per-environment config (API base URL, Keycloak url/realm/clientId) lives in `src/environments/`,
+typed by `environment.model.ts`. Always read it via
+`import { environment } from '../../environments/environment'` — never hardcode a URL in a
+service, interceptor or spec.
+
+- `environment.ts` — production (default `ng build`, deployed on Vercel):
+  API `https://blood-marrow-organs-bone-and-tissue.onrender.com/api` (Swagger at `/swagger/index.html`).
+- `environment.development.ts` — swapped in by `fileReplacements` for the `development`
+  configuration (`ng serve` / `npm start`): local API at `http://localhost:7140/api`.
+  To run the dev server against the production API instead: `ng serve --configuration production`.
+
+Everything in these files ships in the public JS bundle: public values only, never secrets.
 
 ## Commands
 

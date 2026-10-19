@@ -2,11 +2,12 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { HomeService } from './home.service';
 import { BloodType, Donation, DonationCenter, DonationPost, User } from '../models/DonationPost';
+import { environment } from '../../environments/environment';
 
 describe('HomeService', () => {
   let service: HomeService;
   let httpMock: HttpTestingController;
-  const apiUrl: string = "http://192.168.0.6:7140/api";
+  const apiUrl: string = environment.apiUrl;
 
   beforeEach(() => {
     TestBed.configureTestingModule({

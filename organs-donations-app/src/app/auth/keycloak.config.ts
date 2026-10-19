@@ -1,5 +1,7 @@
-export const KEYCLOAK_URL = 'https://auth-server-b24f.onrender.com';
-export const KEYCLOAK_REALM = 'organ-donation-prod';
-export const KEYCLOAK_CLIENT_ID = 'organ-donation-web';
+import { environment } from '../../environments/environment';
+
+export const KEYCLOAK_URL = environment.keycloak.url;
+export const KEYCLOAK_REALM = environment.keycloak.realm;
+export const KEYCLOAK_CLIENT_ID = environment.keycloak.clientId;
 
 export const KEYCLOAK_ISSUER = `${KEYCLOAK_URL}/realms/${KEYCLOAK_REALM}`;
