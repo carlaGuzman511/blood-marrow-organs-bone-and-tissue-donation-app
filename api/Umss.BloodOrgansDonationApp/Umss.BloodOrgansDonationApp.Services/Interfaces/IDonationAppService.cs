@@ -1,4 +1,4 @@
-﻿namespace Umss.BloodOrgansDonationApp.Services.Interfaces
+namespace Umss.BloodOrgansDonationApp.Services.Interfaces
 {
     public interface IDonationAppService<R, P>
     {

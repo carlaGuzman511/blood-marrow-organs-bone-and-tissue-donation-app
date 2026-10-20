@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+using FluentValidation;
 using Umss.BloodOrgansDonationApp.Models.Requests;
 
 namespace Umss.BloodOrgansDonationApp.Services.Validators
@@ -33,7 +33,7 @@ namespace Umss.BloodOrgansDonationApp.Services.Validators
 
             RuleFor(x => x.FullName)
                 .NotEmpty()
-                .WithMessage("El nombre completo del usuario es requerido");       
+                .WithMessage("El nombre completo del usuario es requerido");
 
             RuleFor(x => x.Image)
                 .NotEmpty()

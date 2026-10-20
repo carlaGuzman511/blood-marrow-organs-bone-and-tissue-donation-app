@@ -1,9 +1,9 @@
-﻿using Umss.BloodOrgansDonationApp.API.Controllers;
+using Umss.BloodOrgansDonationApp.API.Controllers;
 using Umss.BloodOrgansDonationApp.API.Tests.Utilities;
 
 namespace Umss.BloodOrgansDonationApp.API.Tests.Controllers
 {
-    public class CommentControllerTest: IClassFixture<ServiceFixture>
+    public class CommentControllerTest : IClassFixture<ServiceFixture>
     {
         protected readonly CommentController commentController;
         protected readonly ServiceFixture serviceFixture;

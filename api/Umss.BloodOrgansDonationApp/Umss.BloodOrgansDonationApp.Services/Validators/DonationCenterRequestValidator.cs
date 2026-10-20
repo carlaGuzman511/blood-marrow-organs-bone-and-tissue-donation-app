@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+using FluentValidation;
 using Umss.BloodOrgansDonationApp.Models.Requests;
 
 namespace Umss.BloodOrgansDonationApp.Services.Validators

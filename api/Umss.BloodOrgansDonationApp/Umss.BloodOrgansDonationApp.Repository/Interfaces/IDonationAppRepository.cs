@@ -1,4 +1,4 @@
-﻿namespace Umss.BloodOrgansDonationApp.Repository.Interfaces
+namespace Umss.BloodOrgansDonationApp.Repository.Interfaces
 {
     public interface IDonationAppRepository<T>
     {

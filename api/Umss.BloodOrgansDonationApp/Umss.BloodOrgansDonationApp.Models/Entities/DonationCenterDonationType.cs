@@ -1,4 +1,4 @@
-﻿namespace Umss.BloodOrgansDonationApp.Models.Entities
+namespace Umss.BloodOrgansDonationApp.Models.Entities
 {
     public class DonationCenterDonationType
     {

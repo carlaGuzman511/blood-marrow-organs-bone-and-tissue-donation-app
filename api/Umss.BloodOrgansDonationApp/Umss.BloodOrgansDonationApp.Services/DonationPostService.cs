@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using FluentValidation;
 using Umss.BloodOrgansDonationApp.Models;
 using Umss.BloodOrgansDonationApp.Models.Exceptions;
@@ -104,7 +104,7 @@ namespace Umss.BloodOrgansDonationApp.Services
         public async Task<DonationPostResponse> UpdateByUser(Guid userId, Guid donationPostId, DonationPostRequest donationPostRequest)
         {
             DonationPost? donationPost = await _donationPostRepository.GetByUser(userId, donationPostId);
-            if(donationPost == null)
+            if (donationPost == null)
             {
                 throw new EntityNotFoundException($"Donation Post with ID {donationPostId} not found.");
             }
@@ -117,7 +117,7 @@ namespace Umss.BloodOrgansDonationApp.Services
             donationPost.Id = donationPostId;
             donationPost.UserId = userId;
             donationPost.UpdatedAt = DateTime.UtcNow;
-               
+
             donationPost = await _donationPostRepository.Update(donationPost);
 
             return _mapper.Map<DonationPostResponse>(donationPost);

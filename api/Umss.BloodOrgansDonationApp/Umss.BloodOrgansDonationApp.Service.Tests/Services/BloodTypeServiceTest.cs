@@ -1,4 +1,4 @@
-﻿using Moq;
+using Moq;
 using FluentValidation;
 using Umss.BloodOrgansDonationApp.Models;
 using Umss.BloodOrgansDonationApp.Models.Requests;
@@ -52,7 +52,7 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
             this.repositoryFixture.BloodTypeRepositoryMock
                 .Setup(x => x.Create(It.IsAny<BloodType>())).ReturnsAsync(GetBloodType());
 
-            var bloodType= await this.bloodTypeService.Create(request);
+            var bloodType = await this.bloodTypeService.Create(request);
 
             Assert.NotNull(bloodType);
             Assert.Equal(bloodType.Name, request.Name);
@@ -73,7 +73,7 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
         {
             this.repositoryFixture.BloodTypeRepositoryMock
                 .Setup(x => x.GetAll()).ReturnsAsync(this.GetBloodTypes());
-            
+
             var bloodTypes = await this.bloodTypeService.GetAll();
 
             Assert.NotEmpty(bloodTypes);
@@ -98,7 +98,7 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
         {
             this.repositoryFixture.BloodTypeRepositoryMock
                 .Setup(x => x.Get(It.IsAny<Guid>())).ReturnsAsync(this.GetBloodType());
-            
+
             var bloodTypes = await this.bloodTypeService.Get(Guid.NewGuid());
 
             Assert.NotNull(bloodTypes);
@@ -117,12 +117,12 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
 
             this.repositoryFixture.BloodTypeRepositoryMock
                 .Setup(x => x.Get(It.IsAny<Guid>())).ReturnsAsync(existing);
-            
+
             this.repositoryFixture.MapperMock
                 .Setup(m => m.Map(It.IsAny<BloodTypeRequest>(), It.IsAny<BloodType>()))
                 .Callback<BloodTypeRequest, BloodType>((src, dest) => { dest.Name = src.Name; dest.Image = src.Image; })
                 .Returns((BloodTypeRequest src, BloodType dest) => dest);
-            
+
             this.repositoryFixture.BloodTypeRepositoryMock.Setup(x => x.Update(It.IsAny<BloodType>())).ReturnsAsync((BloodType b) => b);
 
             var result = await this.bloodTypeService.Update(id, request);

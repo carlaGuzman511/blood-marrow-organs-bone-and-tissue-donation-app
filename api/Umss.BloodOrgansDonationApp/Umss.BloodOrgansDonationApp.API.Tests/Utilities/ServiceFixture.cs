@@ -1,4 +1,4 @@
-﻿using Moq;
+using Moq;
 using Umss.BloodOrgansDonationApp.Services.Interfaces;
 
 namespace Umss.BloodOrgansDonationApp.API.Tests.Utilities

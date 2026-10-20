@@ -1,8 +1,8 @@
-﻿using Umss.BloodOrgansDonationApp.Models;
+using Umss.BloodOrgansDonationApp.Models;
 
 namespace Umss.BloodOrgansDonationApp.Repository.Interfaces
 {
-    public interface IUserRepository: IDonationAppRepository<User>
+    public interface IUserRepository : IDonationAppRepository<User>
     {
         Task<User?> GetByEmailAsync(string email);
         Task<bool> CheckPasswordAsync(User user, string password);

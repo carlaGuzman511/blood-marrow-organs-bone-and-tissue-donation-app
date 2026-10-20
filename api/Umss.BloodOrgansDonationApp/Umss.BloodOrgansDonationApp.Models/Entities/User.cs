@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Umss.BloodOrgansDonationApp.Models.Entities;
 
 namespace Umss.BloodOrgansDonationApp.Models
 {
-    public class User: IdentityUser<Guid>
+    public class User : IdentityUser<Guid>
     {
         public required string FullName { get; set; }
         public BloodType BloodType { get; set; }

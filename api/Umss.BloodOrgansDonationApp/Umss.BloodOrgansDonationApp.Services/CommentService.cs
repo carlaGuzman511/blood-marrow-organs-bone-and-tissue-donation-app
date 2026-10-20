@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using FluentValidation;
 using Umss.BloodOrgansDonationApp.Models.Entities;
 using Umss.BloodOrgansDonationApp.Models.Exceptions;
@@ -42,7 +42,7 @@ namespace Umss.BloodOrgansDonationApp.Services
         public async Task<CommentResponse?> Get(Guid donationPostId, Guid commentId)
         {
             Comment? comment = await _commentRepository.Get(donationPostId, commentId);
-            if (comment != null) 
+            if (comment != null)
             {
                 return _mapper.Map<CommentResponse>(comment);
             }

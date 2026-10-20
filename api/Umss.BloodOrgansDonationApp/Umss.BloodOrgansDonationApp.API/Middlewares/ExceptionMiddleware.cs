@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Umss.BloodOrgansDonationApp.Models.Exceptions;
 

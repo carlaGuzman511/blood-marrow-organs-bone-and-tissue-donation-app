@@ -8,7 +8,7 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
 {
     [ApiController]
     [Route("api/users")]
-    public class UserController: ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
 
@@ -22,7 +22,8 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
         public async Task<ActionResult<UserResponse>> Get(Guid id)
         {
             UserResponse? response = await _userService.Get(id);
-            if (response == null) { 
+            if (response == null)
+            {
                 return NotFound($"User with ID {id} not found.");
             }
 
@@ -58,7 +59,7 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
             UserResponse response = await _userService.Create(userRequest);
             return CreatedAtAction(nameof(Get), new { id = response.Id }, response);
         }
-        
+
         [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult<UserResponse>> Update(Guid id, [FromBody] UserRequest userRequest)

@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using FluentValidation;
 using Umss.BloodOrgansDonationApp.Models;
 using Umss.BloodOrgansDonationApp.Models.Exceptions;
@@ -27,7 +27,7 @@ namespace Umss.BloodOrgansDonationApp.Services
 
             DonationType donationType = _mapper.Map<DonationType>(donationTypeRequest);
             donationType.Id = Guid.NewGuid();
-            
+
             donationType = await _donationTypeRepository.Create(donationType);
 
             return _mapper.Map<DonationTypeResponse>(donationType);
@@ -41,7 +41,7 @@ namespace Umss.BloodOrgansDonationApp.Services
         public async Task<DonationTypeResponse?> Get(Guid id)
         {
             DonationType? donationType = await _donationTypeRepository.Get(id);
-            if (donationType != null) 
+            if (donationType != null)
             {
                 return _mapper.Map<DonationTypeResponse>(donationType);
             }

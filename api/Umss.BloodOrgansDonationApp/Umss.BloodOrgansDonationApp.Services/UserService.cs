@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using FluentValidation;
 using Umss.BloodOrgansDonationApp.Models;
 using Umss.BloodOrgansDonationApp.Models.Exceptions;

@@ -1,0 +1,21 @@
+# Formatting rules enforced in CI by `dotnet format --verify-no-changes` (see .github/workflows/api-ci.yml).
+# Fix locally with: dotnet format Umss.BloodOrgansDonationApp.sln
+root = true
+
+[*]
+charset = utf-8
+trim_trailing_whitespace = true
+
+[*.cs]
+indent_style = space
+indent_size = 4
+
+# Brace / new-line style (Allman, the .NET default).
+csharp_new_line_before_open_brace = all
+csharp_new_line_before_else = true
+csharp_new_line_before_catch = true
+csharp_new_line_before_finally = true
+
+[*.{csproj,props,targets,xml,json}]
+indent_style = space
+indent_size = 2

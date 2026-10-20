@@ -32,6 +32,14 @@ dotnet ef database update --project Umss.BloodOrgansDonationApp.Repository --sta
 
 Migrations and data seeding (`DataSeeder.SeedAsync`) run automatically on API startup (see `Program.cs`) — there's no separate seed command.
 
+### CI
+
+`.github/workflows/api-ci.yml` (repo root) runs on push/PR touching `api/**`: restore → `dotnet format --verify-no-changes` → Release build → `dotnet test` with coverlet coverage (ReportGenerator summary + Codecov, needs the `CODECOV_TOKEN` repo secret) → gitleaks secret scan of `api/`. Formatting rules live in `.editorconfig` next to the `.sln`; before pushing run:
+
+```bash
+dotnet format Umss.BloodOrgansDonationApp.sln
+```
+
 The API is Dockerized (`Umss.BloodOrgansDonationApp.API/Dockerfile`, multi-stage build, publishes `linux-x64`, listens on 8080 in the container).
 
 ## Architecture

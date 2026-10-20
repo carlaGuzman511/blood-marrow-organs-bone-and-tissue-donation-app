@@ -1,4 +1,4 @@
-﻿using Moq;
+using Moq;
 using Umss.BloodOrgansDonationApp.Models;
 using Umss.BloodOrgansDonationApp.Models.Requests;
 using Umss.BloodOrgansDonationApp.Models.Responses;
@@ -41,7 +41,7 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
 
             return users;
         }
-        private IEnumerable<User> GetUsers() 
+        private IEnumerable<User> GetUsers()
         {
             User[] users = new User[8]
             {
@@ -59,9 +59,9 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
         }
         private UserRequest GetValidUserRequest()
         {
-            UserRequest userRequest = new UserRequest 
+            UserRequest userRequest = new UserRequest
             {
-                FullName = "Jhon Doe", 
+                FullName = "Jhon Doe",
                 Email = "new.user@gmail.com",
                 BloodTypeId = Guid.NewGuid(),
                 Password = "jd7+es87s#sd01.",

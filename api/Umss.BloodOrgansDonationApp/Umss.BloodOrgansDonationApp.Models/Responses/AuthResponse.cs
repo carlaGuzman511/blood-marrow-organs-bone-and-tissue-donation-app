@@ -1,4 +1,4 @@
-﻿namespace Umss.BloodOrgansDonationApp.Models.Responses
+namespace Umss.BloodOrgansDonationApp.Models.Responses
 {
     public class AuthResponse
     {

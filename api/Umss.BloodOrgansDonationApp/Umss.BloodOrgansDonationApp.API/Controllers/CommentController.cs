@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Umss.BloodOrgansDonationApp.Models.Requests;
 using Umss.BloodOrgansDonationApp.Models.Responses;
 using Umss.BloodOrgansDonationApp.Services.Interfaces;
@@ -8,7 +8,7 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
 {
     [ApiController]
     [Route("api/posts")]
-    public class CommentController: ControllerBase
+    public class CommentController : ControllerBase
     {
         private readonly ICommentService _commentService;
 
@@ -22,7 +22,7 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
         public async Task<ActionResult<CommentResponse>> Get(Guid donationPostId, Guid commentId)
         {
             CommentResponse? response = await _commentService.Get(donationPostId, commentId);
-            if(response == null)
+            if (response == null)
             {
                 return NotFound($"Comment with ID {commentId} not found.");
             }

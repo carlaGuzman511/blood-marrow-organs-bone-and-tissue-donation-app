@@ -1,4 +1,4 @@
-﻿namespace Umss.BloodOrgansDonationApp.Models.Requests
+namespace Umss.BloodOrgansDonationApp.Models.Requests
 {
     public class DonationTypeRequest
     {

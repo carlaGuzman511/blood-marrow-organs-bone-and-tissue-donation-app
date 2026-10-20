@@ -8,7 +8,7 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
 {
     [ApiController]
     [Route("api")]
-    public class DonationPostController: ControllerBase
+    public class DonationPostController : ControllerBase
     {
         private readonly IDonationPostService _DonationPostService;
 
@@ -22,7 +22,7 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
         public async Task<ActionResult<DonationPostResponse>> GetByUser(Guid userId, Guid donationPostId)
         {
             DonationPostResponse? response = await _DonationPostService.GetByUser(userId, donationPostId);
-            if(response == null)
+            if (response == null)
             {
                 return NotFound($"Donation Post ID {donationPostId}, and User ID {userId} not found.");
             }

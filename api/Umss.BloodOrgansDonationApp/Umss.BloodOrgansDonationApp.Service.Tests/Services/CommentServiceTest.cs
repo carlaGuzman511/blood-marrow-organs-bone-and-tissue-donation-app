@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Moq;
 using System.Threading.Tasks;
 using Umss.BloodOrgansDonationApp.Models;
@@ -41,7 +41,7 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
             };
 
             Comment[] comments = new Comment[8] {
-                new Comment { Id = Guid.NewGuid(), Description = "First Comment", DonationPostId = Guid.NewGuid(), CreatedAt = DateTime.Now, UserId = Guid.NewGuid(), User = user },   
+                new Comment { Id = Guid.NewGuid(), Description = "First Comment", DonationPostId = Guid.NewGuid(), CreatedAt = DateTime.Now, UserId = Guid.NewGuid(), User = user },
                 new Comment { Id = Guid.NewGuid(), Description = "Second Comment", DonationPostId = Guid.NewGuid(), CreatedAt = DateTime.Now, UserId = Guid.NewGuid(), User = user },
                 new Comment { Id = Guid.NewGuid(), Description = "Third Comment", DonationPostId = Guid.NewGuid(), CreatedAt = DateTime.Now, UserId = Guid.NewGuid(), User = user },
                 new Comment { Id = Guid.NewGuid(), Description = "Fourth Comment", DonationPostId = Guid.NewGuid(), CreatedAt = DateTime.Now , UserId = Guid.NewGuid(), User = user},

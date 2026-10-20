@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Umss.BloodOrgansDonationApp.Models;
 using Umss.BloodOrgansDonationApp.Models.Entities;
 
@@ -56,270 +56,270 @@ namespace Umss.BloodOrgansDonationApp.Repository.Data
                 DonationTypeId = Guid.Parse("ab6c2f52-4e5c-4fef-99b3-e33a6dcb2cfc"),
                 IsActive = true
             };
-                    var dcdt2 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("9eb5c3f4-cf14-4e6b-b015-bf9b8b5d1c2a"),
-                        DonationTypeId = Guid.Parse("ab6c2f52-4e5c-4fef-99b3-e33a6dcb2cfc"),
-                        IsActive = true
-                    };
-                    var dcdt3 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("6eb1fc3a-f38f-49b5-baa9-5ce5bba2cd8f"),
-                        DonationTypeId = Guid.Parse("bf5b5e0a-0f4f-4762-bb2a-8db5d0d6fbd5"),
-                        IsActive = true
-                    };
-                    var dcdt4 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("61a0f0e6-ba6d-4ad6-b67e-ac8c889e4073"),
-                        DonationTypeId = Guid.Parse("8a1d9e25-7e02-42e9-bc0c-d4724f2f61e9"),
-                        IsActive = true
-                    };
-                    var dcdt5 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("369f6b86-b4e4-4c85-876d-ae0d9d353928"),
-                        DonationTypeId = Guid.Parse("8a1d9e25-7e02-42e9-bc0c-d4724f2f61e9"),
-                        IsActive = true
-                    };
-                    var dcdt6 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("78dd884f-0435-456e-93cd-afaa6bae666e"),
-                        DonationTypeId = Guid.Parse("f9b3a8a7-219d-4881-b7ad-d85c6c5f460f"),
-                        IsActive = true
-                    };
-                    var dcdt7 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("9eb5c3f4-cf14-4e6b-b015-bf9b8b5d1c2a"),
-                        DonationTypeId = Guid.Parse("f9b3a8a7-219d-4881-b7ad-d85c6c5f460f"),
-                        IsActive = true
-                    };
-                    var dcdt8 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("0d47ed29-fb5d-41ac-b43a-916cd11ecc61"),
-                        DonationTypeId = Guid.Parse("8b672d34-0b64-4376-b618-c4d8a2f7de37"),
-                        IsActive = true
-                    };
-                    var dcdt9 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("a15228f3-e35c-4f61-9b4c-96e2bb5e8226"),
-                        DonationTypeId = Guid.Parse("8b672d34-0b64-4376-b618-c4d8a2f7de37"),
-                        IsActive = true
-                    };
-                    var dcdt10 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("bc283c80-eede-415f-b52c-9a4ef7f63a58"),
-                        DonationTypeId = Guid.Parse("5fbd9af3-9a3e-4f24-b916-cb792c9cb404"),
-                        IsActive = true
-                    };
-                    var dcdt11 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("924964de-44e8-4339-814f-9ca2529cfd4f"),
-                        DonationTypeId = Guid.Parse("5fbd9af3-9a3e-4f24-b916-cb792c9cb404"),
-                        IsActive = true
-                    };
-                    var dcdt12 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("83f7da65-fa29-4d4f-973b-823f3c89e13e"),
-                        DonationTypeId = Guid.Parse("8b672d34-0b64-4376-b618-c4d8a2f7de37"),
-                        IsActive = true
-                    };
-                    var dcdt13 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("c9ad7d68-fe83-4db0-86be-7da5f229c3d0"),
-                        DonationTypeId = Guid.Parse("8b672d34-0b64-4376-b618-c4d8a2f7de37"),
-                        IsActive = true
-                    };
-                    var dcdt14 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("09eb46f2-c8ee-4540-916c-7d39757798bc"),
-                        DonationTypeId = Guid.Parse("bf5b5e0a-0f4f-4762-bb2a-8db5d0d6fbd5"),
-                        IsActive = true
-                    };
-                    var dcdt15 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("3acaaaa9-efc1-4f37-b7fa-715792c660b0"),
-                        DonationTypeId = Guid.Parse("bf5b5e0a-0f4f-4762-bb2a-8db5d0d6fbd5"),
-                        IsActive = true
-                    };
-                    var dcdt16 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("30b619f7-b8e6-47a1-b881-5f2141bb7d77"),
-                        DonationTypeId = Guid.Parse("bf5b5e0a-0f4f-4762-bb2a-8db5d0d6fbd5"),
-                        IsActive = true
-                    };
-                    var dcdt17 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("6c6f3ca9-1f13-4caf-bb0a-50fc68a3708f"),
-                        DonationTypeId = Guid.Parse("bf5b5e0a-0f4f-4762-bb2a-8db5d0d6fbd5"),
-                        IsActive = true
-                    };
-                    var dcdt18 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("b3299e6b-2029-4f2e-b4a6-45e43c64f750"),
-                        DonationTypeId = Guid.Parse("bf5b5e0a-0f4f-4762-bb2a-8db5d0d6fbd5"),
-                        IsActive = true
-                    };
-                    var dcdt19 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("d995d15b-1a8d-4ccc-80e2-4558d8ec7582"),
-                        DonationTypeId = Guid.Parse("bf5b5e0a-0f4f-4762-bb2a-8db5d0d6fbd5"),
-                        IsActive = true
-                    };
-                    var dcdt20 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("3ebf53ae-51a6-439d-9837-35638acde1fb"),
-                        DonationTypeId = Guid.Parse("bf5b5e0a-0f4f-4762-bb2a-8db5d0d6fbd5"),
-                        IsActive = true
-                    };
-                    var dcdt21 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("0d70390f-7f9a-436c-af23-1f167deb29d3"),
-                        DonationTypeId = Guid.Parse("9d3a2d74-1bd2-4436-a929-9b176d60ee56"),
-                        IsActive = true
-                    };
-                    var dcdt22 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("0f2c1ed3-9a6d-4c17-9ac7-0a08d6e0ba1d"),
-                        DonationTypeId = Guid.Parse("9d3a2d74-1bd2-4436-a929-9b176d60ee56"),
-                        IsActive = true
-                    };
-                    var dcdt23 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("d7765eb2-49ca-49f3-87f8-08c21615e0eb"),
-                        DonationTypeId = Guid.Parse("9d3a2d74-1bd2-4436-a929-9b176d60ee56"),
-                        IsActive = true
-                    };
-                    var dcdt24 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("98ae90a1-bdd1-4a0a-bb18-ddee9a110efd"),
-                        DonationTypeId = Guid.Parse("9d3a2d74-1bd2-4436-a929-9b176d60ee56"),
-                        IsActive = true
-                    };
-                    var dcdt25 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("0f2c1ed3-9a6d-4c17-9ac7-0a08d6e0ba1d"),
-                        DonationTypeId = Guid.Parse("94088d4a-b1d8-4c33-a629-1681d21b01ba"),
-                        IsActive = true
-                    };
-                    var dcdt26 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("d7765eb2-49ca-49f3-87f8-08c21615e0eb"),
-                        DonationTypeId = Guid.Parse("94088d4a-b1d8-4c33-a629-1681d21b01ba"),
-                        IsActive = true
-                    };
-                    var dcdt27 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("6c6f3ca9-1f13-4caf-bb0a-50fc68a3708f"),
-                        DonationTypeId = Guid.Parse("6a2d6f1a-b6f6-4d8e-b0c5-3b3c71e7eab3"),
-                        IsActive = true
-                    };
-                    var dcdt28 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("b3299e6b-2029-4f2e-b4a6-45e43c64f750"),
-                        DonationTypeId = Guid.Parse("a4c39e91-b960-4f31-850c-1ad3d9bc6dcb"),
-                        IsActive = true
-                    };
-                    var dcdt29 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("d995d15b-1a8d-4ccc-80e2-4558d8ec7582"),
-                        DonationTypeId = Guid.Parse("a4c39e91-b960-4f31-850c-1ad3d9bc6dcb"),
-                        IsActive = true
-                    };
-                    var dcdt30 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("3ebf53ae-51a6-439d-9837-35638acde1fb"),
-                        DonationTypeId = Guid.Parse("a4c39e91-b960-4f31-850c-1ad3d9bc6dcb"),
-                        IsActive = true
-                    };
-                    var dcdt31 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("0d70390f-7f9a-436c-af23-1f167deb29d3"),
-                        DonationTypeId = Guid.Parse("94088d4a-b1d8-4c33-a629-1681d21b01ba"),
-                        IsActive = true
-                    };
-                    var dcdt32 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("6eb1fc3a-f38f-49b5-baa9-5ce5bba2cd8f"),
-                        DonationTypeId = Guid.Parse("6a2d6f1a-b6f6-4d8e-b0c5-3b3c71e7eab3"),
-                        IsActive = true
-                    };
-                    var dcdt33 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("30b619f7-b8e6-47a1-b881-5f2141bb7d77"),
-                        DonationTypeId = Guid.Parse("6a2d6f1a-b6f6-4d8e-b0c5-3b3c71e7eab3"),
-                        IsActive = true
-                    };
-                    var dcdt34 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("3acaaaa9-efc1-4f37-b7fa-715792c660b0"),
-                        DonationTypeId = Guid.Parse("6a2d6f1a-b6f6-4d8e-b0c5-3b3c71e7eab3"),
-                        IsActive = true
-                    };
-                    var dcdt35 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("a15228f3-e35c-4f61-9b4c-96e2bb5e8226"),
-                        DonationTypeId = Guid.Parse("b72dbd13-04aa-42e1-8825-4e52dfbaebcd"),
-                        IsActive = true
-                    };
-                    var dcdt36 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("0d47ed29-fb5d-41ac-b43a-916cd11ecc61"),
-                        DonationTypeId = Guid.Parse("b72dbd13-04aa-42e1-8825-4e52dfbaebcd"),
-                        IsActive = true
-                    };
-                    var dcdt37 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("83f7da65-fa29-4d4f-973b-823f3c89e13e"),
-                        DonationTypeId = Guid.Parse("b72dbd13-04aa-42e1-8825-4e52dfbaebcd"),
-                        IsActive = true
-                    };
-                    var dcdt38 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("c9ad7d68-fe83-4db0-86be-7da5f229c3d0"),
-                        DonationTypeId = Guid.Parse("b72dbd13-04aa-42e1-8825-4e52dfbaebcd"),
-                        IsActive = true
-                    };
-                    var dcdt39 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("09eb46f2-c8ee-4540-916c-7d39757798bc"),
-                        DonationTypeId = Guid.Parse("6a2d6f1a-b6f6-4d8e-b0c5-3b3c71e7eab3"),
-                        IsActive = true
-                    };
-                    var dcdt40 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("369f6b86-b4e4-4c85-876d-ae0d9d353928"),
-                        DonationTypeId = Guid.Parse("63d04f7a-2dfd-4d3d-99a0-543f0bc90027"),
-                        IsActive = true
-                    };
-                    var dcdt41 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("61a0f0e6-ba6d-4ad6-b67e-ac8c889e4073"),
-                        DonationTypeId = Guid.Parse("63d04f7a-2dfd-4d3d-99a0-543f0bc90027"),
-                        IsActive = true
-                    };
-                    var dcdt42 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("924964de-44e8-4339-814f-9ca2529cfd4f"),
-                        DonationTypeId = Guid.Parse("63d04f7a-2dfd-4d3d-99a0-543f0bc90027"),
-                        IsActive = true
-                    };
-                    var dcdt43 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("bc283c80-eede-415f-b52c-9a4ef7f63a58"),
-                        DonationTypeId = Guid.Parse("63d04f7a-2dfd-4d3d-99a0-543f0bc90027"),
-                        IsActive = true
-                    };
-                    var dcdt44 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("78dd884f-0435-456e-93cd-afaa6bae666e"),
-                        DonationTypeId = Guid.Parse("9d3a2d74-1bd2-4436-a929-9b176d60ee56"),
-                        IsActive = true
-                    };
-                    var dcdt45 = new DonationCenterDonationType
-                    {
-                        DonationCenterId = Guid.Parse("9eb5c3f4-cf14-4e6b-b015-bf9b8b5d1c2a"),
-                        DonationTypeId = Guid.Parse("e0b6d4e7-ccf5-4fc2-85c1-c46a3a1e93d1"),
-                        IsActive = true
-                    };
+            var dcdt2 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("9eb5c3f4-cf14-4e6b-b015-bf9b8b5d1c2a"),
+                DonationTypeId = Guid.Parse("ab6c2f52-4e5c-4fef-99b3-e33a6dcb2cfc"),
+                IsActive = true
+            };
+            var dcdt3 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("6eb1fc3a-f38f-49b5-baa9-5ce5bba2cd8f"),
+                DonationTypeId = Guid.Parse("bf5b5e0a-0f4f-4762-bb2a-8db5d0d6fbd5"),
+                IsActive = true
+            };
+            var dcdt4 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("61a0f0e6-ba6d-4ad6-b67e-ac8c889e4073"),
+                DonationTypeId = Guid.Parse("8a1d9e25-7e02-42e9-bc0c-d4724f2f61e9"),
+                IsActive = true
+            };
+            var dcdt5 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("369f6b86-b4e4-4c85-876d-ae0d9d353928"),
+                DonationTypeId = Guid.Parse("8a1d9e25-7e02-42e9-bc0c-d4724f2f61e9"),
+                IsActive = true
+            };
+            var dcdt6 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("78dd884f-0435-456e-93cd-afaa6bae666e"),
+                DonationTypeId = Guid.Parse("f9b3a8a7-219d-4881-b7ad-d85c6c5f460f"),
+                IsActive = true
+            };
+            var dcdt7 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("9eb5c3f4-cf14-4e6b-b015-bf9b8b5d1c2a"),
+                DonationTypeId = Guid.Parse("f9b3a8a7-219d-4881-b7ad-d85c6c5f460f"),
+                IsActive = true
+            };
+            var dcdt8 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("0d47ed29-fb5d-41ac-b43a-916cd11ecc61"),
+                DonationTypeId = Guid.Parse("8b672d34-0b64-4376-b618-c4d8a2f7de37"),
+                IsActive = true
+            };
+            var dcdt9 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("a15228f3-e35c-4f61-9b4c-96e2bb5e8226"),
+                DonationTypeId = Guid.Parse("8b672d34-0b64-4376-b618-c4d8a2f7de37"),
+                IsActive = true
+            };
+            var dcdt10 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("bc283c80-eede-415f-b52c-9a4ef7f63a58"),
+                DonationTypeId = Guid.Parse("5fbd9af3-9a3e-4f24-b916-cb792c9cb404"),
+                IsActive = true
+            };
+            var dcdt11 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("924964de-44e8-4339-814f-9ca2529cfd4f"),
+                DonationTypeId = Guid.Parse("5fbd9af3-9a3e-4f24-b916-cb792c9cb404"),
+                IsActive = true
+            };
+            var dcdt12 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("83f7da65-fa29-4d4f-973b-823f3c89e13e"),
+                DonationTypeId = Guid.Parse("8b672d34-0b64-4376-b618-c4d8a2f7de37"),
+                IsActive = true
+            };
+            var dcdt13 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("c9ad7d68-fe83-4db0-86be-7da5f229c3d0"),
+                DonationTypeId = Guid.Parse("8b672d34-0b64-4376-b618-c4d8a2f7de37"),
+                IsActive = true
+            };
+            var dcdt14 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("09eb46f2-c8ee-4540-916c-7d39757798bc"),
+                DonationTypeId = Guid.Parse("bf5b5e0a-0f4f-4762-bb2a-8db5d0d6fbd5"),
+                IsActive = true
+            };
+            var dcdt15 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("3acaaaa9-efc1-4f37-b7fa-715792c660b0"),
+                DonationTypeId = Guid.Parse("bf5b5e0a-0f4f-4762-bb2a-8db5d0d6fbd5"),
+                IsActive = true
+            };
+            var dcdt16 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("30b619f7-b8e6-47a1-b881-5f2141bb7d77"),
+                DonationTypeId = Guid.Parse("bf5b5e0a-0f4f-4762-bb2a-8db5d0d6fbd5"),
+                IsActive = true
+            };
+            var dcdt17 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("6c6f3ca9-1f13-4caf-bb0a-50fc68a3708f"),
+                DonationTypeId = Guid.Parse("bf5b5e0a-0f4f-4762-bb2a-8db5d0d6fbd5"),
+                IsActive = true
+            };
+            var dcdt18 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("b3299e6b-2029-4f2e-b4a6-45e43c64f750"),
+                DonationTypeId = Guid.Parse("bf5b5e0a-0f4f-4762-bb2a-8db5d0d6fbd5"),
+                IsActive = true
+            };
+            var dcdt19 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("d995d15b-1a8d-4ccc-80e2-4558d8ec7582"),
+                DonationTypeId = Guid.Parse("bf5b5e0a-0f4f-4762-bb2a-8db5d0d6fbd5"),
+                IsActive = true
+            };
+            var dcdt20 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("3ebf53ae-51a6-439d-9837-35638acde1fb"),
+                DonationTypeId = Guid.Parse("bf5b5e0a-0f4f-4762-bb2a-8db5d0d6fbd5"),
+                IsActive = true
+            };
+            var dcdt21 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("0d70390f-7f9a-436c-af23-1f167deb29d3"),
+                DonationTypeId = Guid.Parse("9d3a2d74-1bd2-4436-a929-9b176d60ee56"),
+                IsActive = true
+            };
+            var dcdt22 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("0f2c1ed3-9a6d-4c17-9ac7-0a08d6e0ba1d"),
+                DonationTypeId = Guid.Parse("9d3a2d74-1bd2-4436-a929-9b176d60ee56"),
+                IsActive = true
+            };
+            var dcdt23 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("d7765eb2-49ca-49f3-87f8-08c21615e0eb"),
+                DonationTypeId = Guid.Parse("9d3a2d74-1bd2-4436-a929-9b176d60ee56"),
+                IsActive = true
+            };
+            var dcdt24 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("98ae90a1-bdd1-4a0a-bb18-ddee9a110efd"),
+                DonationTypeId = Guid.Parse("9d3a2d74-1bd2-4436-a929-9b176d60ee56"),
+                IsActive = true
+            };
+            var dcdt25 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("0f2c1ed3-9a6d-4c17-9ac7-0a08d6e0ba1d"),
+                DonationTypeId = Guid.Parse("94088d4a-b1d8-4c33-a629-1681d21b01ba"),
+                IsActive = true
+            };
+            var dcdt26 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("d7765eb2-49ca-49f3-87f8-08c21615e0eb"),
+                DonationTypeId = Guid.Parse("94088d4a-b1d8-4c33-a629-1681d21b01ba"),
+                IsActive = true
+            };
+            var dcdt27 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("6c6f3ca9-1f13-4caf-bb0a-50fc68a3708f"),
+                DonationTypeId = Guid.Parse("6a2d6f1a-b6f6-4d8e-b0c5-3b3c71e7eab3"),
+                IsActive = true
+            };
+            var dcdt28 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("b3299e6b-2029-4f2e-b4a6-45e43c64f750"),
+                DonationTypeId = Guid.Parse("a4c39e91-b960-4f31-850c-1ad3d9bc6dcb"),
+                IsActive = true
+            };
+            var dcdt29 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("d995d15b-1a8d-4ccc-80e2-4558d8ec7582"),
+                DonationTypeId = Guid.Parse("a4c39e91-b960-4f31-850c-1ad3d9bc6dcb"),
+                IsActive = true
+            };
+            var dcdt30 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("3ebf53ae-51a6-439d-9837-35638acde1fb"),
+                DonationTypeId = Guid.Parse("a4c39e91-b960-4f31-850c-1ad3d9bc6dcb"),
+                IsActive = true
+            };
+            var dcdt31 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("0d70390f-7f9a-436c-af23-1f167deb29d3"),
+                DonationTypeId = Guid.Parse("94088d4a-b1d8-4c33-a629-1681d21b01ba"),
+                IsActive = true
+            };
+            var dcdt32 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("6eb1fc3a-f38f-49b5-baa9-5ce5bba2cd8f"),
+                DonationTypeId = Guid.Parse("6a2d6f1a-b6f6-4d8e-b0c5-3b3c71e7eab3"),
+                IsActive = true
+            };
+            var dcdt33 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("30b619f7-b8e6-47a1-b881-5f2141bb7d77"),
+                DonationTypeId = Guid.Parse("6a2d6f1a-b6f6-4d8e-b0c5-3b3c71e7eab3"),
+                IsActive = true
+            };
+            var dcdt34 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("3acaaaa9-efc1-4f37-b7fa-715792c660b0"),
+                DonationTypeId = Guid.Parse("6a2d6f1a-b6f6-4d8e-b0c5-3b3c71e7eab3"),
+                IsActive = true
+            };
+            var dcdt35 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("a15228f3-e35c-4f61-9b4c-96e2bb5e8226"),
+                DonationTypeId = Guid.Parse("b72dbd13-04aa-42e1-8825-4e52dfbaebcd"),
+                IsActive = true
+            };
+            var dcdt36 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("0d47ed29-fb5d-41ac-b43a-916cd11ecc61"),
+                DonationTypeId = Guid.Parse("b72dbd13-04aa-42e1-8825-4e52dfbaebcd"),
+                IsActive = true
+            };
+            var dcdt37 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("83f7da65-fa29-4d4f-973b-823f3c89e13e"),
+                DonationTypeId = Guid.Parse("b72dbd13-04aa-42e1-8825-4e52dfbaebcd"),
+                IsActive = true
+            };
+            var dcdt38 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("c9ad7d68-fe83-4db0-86be-7da5f229c3d0"),
+                DonationTypeId = Guid.Parse("b72dbd13-04aa-42e1-8825-4e52dfbaebcd"),
+                IsActive = true
+            };
+            var dcdt39 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("09eb46f2-c8ee-4540-916c-7d39757798bc"),
+                DonationTypeId = Guid.Parse("6a2d6f1a-b6f6-4d8e-b0c5-3b3c71e7eab3"),
+                IsActive = true
+            };
+            var dcdt40 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("369f6b86-b4e4-4c85-876d-ae0d9d353928"),
+                DonationTypeId = Guid.Parse("63d04f7a-2dfd-4d3d-99a0-543f0bc90027"),
+                IsActive = true
+            };
+            var dcdt41 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("61a0f0e6-ba6d-4ad6-b67e-ac8c889e4073"),
+                DonationTypeId = Guid.Parse("63d04f7a-2dfd-4d3d-99a0-543f0bc90027"),
+                IsActive = true
+            };
+            var dcdt42 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("924964de-44e8-4339-814f-9ca2529cfd4f"),
+                DonationTypeId = Guid.Parse("63d04f7a-2dfd-4d3d-99a0-543f0bc90027"),
+                IsActive = true
+            };
+            var dcdt43 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("bc283c80-eede-415f-b52c-9a4ef7f63a58"),
+                DonationTypeId = Guid.Parse("63d04f7a-2dfd-4d3d-99a0-543f0bc90027"),
+                IsActive = true
+            };
+            var dcdt44 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("78dd884f-0435-456e-93cd-afaa6bae666e"),
+                DonationTypeId = Guid.Parse("9d3a2d74-1bd2-4436-a929-9b176d60ee56"),
+                IsActive = true
+            };
+            var dcdt45 = new DonationCenterDonationType
+            {
+                DonationCenterId = Guid.Parse("9eb5c3f4-cf14-4e6b-b015-bf9b8b5d1c2a"),
+                DonationTypeId = Guid.Parse("e0b6d4e7-ccf5-4fc2-85c1-c46a3a1e93d1"),
+                IsActive = true
+            };
 
             donationCenterDonationTypes[0] = dcdt1;
             donationCenterDonationTypes[1] = dcdt2;

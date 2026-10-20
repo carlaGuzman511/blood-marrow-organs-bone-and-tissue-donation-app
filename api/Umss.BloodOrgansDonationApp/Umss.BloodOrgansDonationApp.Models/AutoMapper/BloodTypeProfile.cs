@@ -1,9 +1,9 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Umss.BloodOrgansDonationApp.Models.Requests;
 
 namespace Umss.BloodOrgansDonationApp.Models.AutoMapper
 {
-    public class BloodTypeProfile: Profile
+    public class BloodTypeProfile : Profile
     {
         public BloodTypeProfile()
         {

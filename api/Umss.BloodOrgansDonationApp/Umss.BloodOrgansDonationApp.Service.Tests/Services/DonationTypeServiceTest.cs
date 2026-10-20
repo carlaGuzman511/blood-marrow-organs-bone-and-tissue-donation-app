@@ -1,4 +1,4 @@
-﻿using Moq;
+using Moq;
 using Umss.BloodOrgansDonationApp.Models;
 using Umss.BloodOrgansDonationApp.Models.Requests;
 using Umss.BloodOrgansDonationApp.Models.Responses;
@@ -7,7 +7,7 @@ using Umss.BloodOrgansDonationApp.Services;
 
 namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
 {
-    public class DonationTypeServiceTest: IClassFixture<RepositoryFixture>
+    public class DonationTypeServiceTest : IClassFixture<RepositoryFixture>
     {
         private readonly RepositoryFixture repositoryFixture;
         private readonly DonationTypeService donationTypeService;
@@ -17,7 +17,7 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
             this.repositoryFixture = repositoryFixture;
             this.donationTypeService = new DonationTypeService(this.repositoryFixture.DonationTypeRepository, this.repositoryFixture.Mapper);
         }
-        private IEnumerable<DonationType> GetDonationTypes() 
+        private IEnumerable<DonationType> GetDonationTypes()
         {
             DonationType[] donationTypes = new DonationType[8]
             {
@@ -36,11 +36,11 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
         private DonationType GetDonationType()
         {
             DonationType donationType = new DonationType { Id = Guid.NewGuid(), Name = "Blood Donation", Description = "Blood Donation", Requirements = "Blood Donation", Process = "Blood Donation", Importance = "Blood Donation", Benefits = "Blood Donation", SecondaryEffects = "Blood Donation", Image = String.Empty };
-            
+
             return donationType;
         }
 
-        private DonationTypeRequest GetDonationTypeRequest() 
+        private DonationTypeRequest GetDonationTypeRequest()
         {
             DonationTypeRequest donationTypeRequest = new DonationTypeRequest
             {
@@ -56,7 +56,7 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
 
             return donationTypeRequest;
         }
-        
+
         [Fact]
         public async Task GetAll()
         {

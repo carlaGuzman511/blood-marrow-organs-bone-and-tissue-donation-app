@@ -1,4 +1,4 @@
-﻿using Umss.BloodOrgansDonationApp.Models;
+using Umss.BloodOrgansDonationApp.Models;
 
 namespace Umss.BloodOrgansDonationApp.Services.Interfaces
 {

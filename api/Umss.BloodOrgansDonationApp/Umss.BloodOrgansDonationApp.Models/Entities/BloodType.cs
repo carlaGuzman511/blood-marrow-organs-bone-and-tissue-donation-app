@@ -1,4 +1,4 @@
-﻿namespace Umss.BloodOrgansDonationApp.Models
+namespace Umss.BloodOrgansDonationApp.Models
 {
     public class BloodType
     {

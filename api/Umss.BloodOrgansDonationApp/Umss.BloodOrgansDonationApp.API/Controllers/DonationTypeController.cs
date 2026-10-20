@@ -8,7 +8,7 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
 {
     [ApiController]
     [Route("api/donation-types")]
-    public class DonationTypeController: ControllerBase
+    public class DonationTypeController : ControllerBase
     {
         private readonly IDonationTypeService _donationTypeService;
 

@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Umss.BloodOrgansDonationApp.Repository.Interfaces;
 using Umss.BloodOrgansDonationApp.Models;
 using Microsoft.AspNetCore.Identity;

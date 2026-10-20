@@ -31,7 +31,8 @@ builder.Services.AddDbContext<DonationAppContext>(
     options => options.UseNpgsql(connectionString));
 
 builder.Services.AddIdentity<User, IdentityRole<Guid>>
-    (options => {
+    (options =>
+    {
         options.Password.RequireNonAlphanumeric = true;
         options.Password.RequiredLength = 8;
         options.Password.RequireUppercase = true;
@@ -41,11 +42,13 @@ builder.Services.AddIdentity<User, IdentityRole<Guid>>
     .AddEntityFrameworkStores<DonationAppContext>()
     .AddDefaultTokenProviders();
 
-builder.Services.AddAuthentication(options => {
+builder.Services.AddAuthentication(options =>
+{
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
-.AddJwtBearer(options => {
+.AddJwtBearer(options =>
+{
     // Tokens are issued by Keycloak; signing keys are fetched from its
     // /.well-known/openid-configuration + JWKS endpoint via Authority, not configured statically.
     options.Authority = builder.Configuration["Keycloak:Authority"];

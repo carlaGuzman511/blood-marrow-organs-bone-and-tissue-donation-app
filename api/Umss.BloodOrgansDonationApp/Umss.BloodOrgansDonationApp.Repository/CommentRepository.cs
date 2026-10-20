@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Umss.BloodOrgansDonationApp.Models.Entities;
 using Umss.BloodOrgansDonationApp.Models.Exceptions;
 using Umss.BloodOrgansDonationApp.Repository.Data;
@@ -23,8 +23,8 @@ namespace Umss.BloodOrgansDonationApp.Repository
         public async Task Delete(Guid donationPostId, Guid commentId)
         {
             Comment? comment = await Get(donationPostId, commentId);
-            if (comment != null) 
-            { 
+            if (comment != null)
+            {
                 _appContext.Remove(comment);
             }
 

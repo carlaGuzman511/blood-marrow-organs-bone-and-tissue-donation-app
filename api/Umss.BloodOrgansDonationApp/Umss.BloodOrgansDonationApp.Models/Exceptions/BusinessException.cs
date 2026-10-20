@@ -1,4 +1,4 @@
-﻿namespace Umss.BloodOrgansDonationApp.Models.Exceptions
+namespace Umss.BloodOrgansDonationApp.Models.Exceptions
 {
     public class BusinessException : Exception
     {

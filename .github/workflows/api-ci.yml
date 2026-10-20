@@ -1,0 +1,133 @@
+# CI for the .NET API (US-CI-01).
+# restore -> format check -> build -> test + coverage -> report + Codecov, plus a secret scan of api/ (US-SEC-01).
+name: API CI
+
+on:
+  push:
+    branches: [main, develop, "feature/**", "feat/**"]
+    paths:
+      - "api/**"
+      - ".github/workflows/api-ci.yml"
+  pull_request:
+    paths:
+      - "api/**"
+      - ".github/workflows/api-ci.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: api-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  SOLUTION: Umss.BloodOrgansDonationApp.sln
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+defaults:
+  run:
+    working-directory: api/Umss.BloodOrgansDonationApp
+
+jobs:
+  build-test:
+    name: Build, format & test
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: nuget-${{ runner.os }}-${{ hashFiles('api/Umss.BloodOrgansDonationApp/**/*.csproj') }}
+          restore-keys: nuget-${{ runner.os }}-
+
+      - name: Restore
+        run: dotnet restore $SOLUTION
+
+      # Fails if any file isn't formatted per .editorconfig.
+      # Fix locally with: dotnet format Umss.BloodOrgansDonationApp.sln
+      - name: Verify formatting
+        run: dotnet format $SOLUTION --verify-no-changes --no-restore
+
+      - name: Build
+        run: dotnet build $SOLUTION --configuration Release --no-restore
+
+      # Runs every test project in the solution (API.Tests, Service.Tests, Repository.Tests).
+      - name: Test
+        run: >
+          dotnet test $SOLUTION
+          --configuration Release
+          --no-build
+          --collect:"XPlat Code Coverage"
+          --results-directory ${{ github.workspace }}/coverage
+          --logger "trx;LogFilePrefix=test-results"
+          -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura
+             DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.ExcludeByFile="**/Migrations/*.cs"
+
+      - name: Coverage report
+        if: ${{ !cancelled() }}
+        uses: danielpalme/ReportGenerator-GitHub-Action@5.3.11
+        with:
+          reports: ${{ github.workspace }}/coverage/**/coverage.cobertura.xml
+          targetdir: ${{ github.workspace }}/coverage-report
+          reporttypes: HtmlInline;Cobertura;MarkdownSummaryGithub
+
+      - name: Publish coverage summary
+        if: ${{ !cancelled() }}
+        working-directory: ${{ github.workspace }}
+        run: |
+          if [ -f coverage-report/SummaryGithub.md ]; then
+            cat coverage-report/SummaryGithub.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload test results & coverage report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-test-results
+          path: |
+            ${{ github.workspace }}/coverage/**/*.trx
+            ${{ github.workspace }}/coverage-report
+          retention-days: 14
+
+      # Tracks the coverage trend per PR. CODECOV_TOKEN is a repo secret
+      # (Settings -> Secrets and variables -> Actions); a missing token never fails the build.
+      - name: Upload to Codecov
+        if: ${{ !cancelled() }}
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ${{ github.workspace }}/coverage-report/Cobertura.xml
+          flags: api
+          fail_ci_if_error: false
+
+  secret-scan:
+    name: Secret scan (api/)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GITLEAKS_VERSION: 8.21.2
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Scans the current files under api/ so a real connection string or key can't be
+      # committed again (US-SEC-01 / US-API-33). Old leaks stay in history until it is purged.
+      - name: Install gitleaks
+        working-directory: ${{ runner.temp }}
+        run: |
+          curl -sSfL "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" | tar -xz gitleaks
+          sudo mv gitleaks /usr/local/bin/gitleaks
+
+      - name: Scan api/ for secrets
+        working-directory: ${{ github.workspace }}
+        run: gitleaks dir api --redact --verbose --exit-code 1

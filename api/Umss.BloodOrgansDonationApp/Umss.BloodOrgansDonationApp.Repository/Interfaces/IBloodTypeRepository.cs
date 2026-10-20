@@ -1,8 +1,8 @@
-﻿using Umss.BloodOrgansDonationApp.Models;
+using Umss.BloodOrgansDonationApp.Models;
 
 namespace Umss.BloodOrgansDonationApp.Repository.Interfaces
 {
-    public interface IBloodTypeRepository: IDonationAppRepository<BloodType>
+    public interface IBloodTypeRepository : IDonationAppRepository<BloodType>
     {
 
     }

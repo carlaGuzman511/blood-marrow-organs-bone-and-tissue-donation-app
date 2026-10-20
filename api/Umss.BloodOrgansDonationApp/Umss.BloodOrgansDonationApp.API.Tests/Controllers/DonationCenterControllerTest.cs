@@ -1,9 +1,9 @@
-﻿using Umss.BloodOrgansDonationApp.API.Controllers;
+using Umss.BloodOrgansDonationApp.API.Controllers;
 using Umss.BloodOrgansDonationApp.API.Tests.Utilities;
 
 namespace Umss.BloodOrgansDonationApp.API.Tests.Controllers
 {
-    public class DonationCenterControllerTest: IClassFixture<ServiceFixture>
+    public class DonationCenterControllerTest : IClassFixture<ServiceFixture>
     {
         protected readonly ServiceFixture serviceFixture;
         protected readonly DonationCenterController donationCenterController;

@@ -1,11 +1,11 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Umss.BloodOrgansDonationApp.Models.Entities;
 using Umss.BloodOrgansDonationApp.Models.Requests;
 using Umss.BloodOrgansDonationApp.Models.Responses;
 
 namespace Umss.BloodOrgansDonationApp.Models.AutoMapper
 {
-    public class DonationPostProfile: Profile
+    public class DonationPostProfile : Profile
     {
         public DonationPostProfile()
         {

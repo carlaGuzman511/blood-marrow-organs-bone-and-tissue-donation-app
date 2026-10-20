@@ -1,4 +1,4 @@
-﻿using Moq;
+using Moq;
 using FluentValidation;
 using Umss.BloodOrgansDonationApp.Models;
 using Umss.BloodOrgansDonationApp.Models.Entities;
@@ -213,9 +213,9 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
 
             this.repositoryFixture.MapperMock
                 .Setup(x => x.Map<DonationCenterResponse>(It.IsAny<DonationCenter>()))
-                .Returns((DonationCenter src) => new DonationCenterResponse 
-                { 
-                    Id = src.Id, 
+                .Returns((DonationCenter src) => new DonationCenterResponse
+                {
+                    Id = src.Id,
                     Name = src.Name,
                     Address = src.Address,
                     City = src.City,
@@ -261,9 +261,9 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
 
             this.repositoryFixture.MapperMock
                 .Setup(x => x.Map<DonationCenterResponse>(It.IsAny<DonationCenter>()))
-                .Returns(new DonationCenterResponse 
-                { 
-                    Id = donationCenter.Id, 
+                .Returns(new DonationCenterResponse
+                {
+                    Id = donationCenter.Id,
                     Name = donationCenter.Name,
                     Address = donationCenter.Address,
                     City = donationCenter.City,
@@ -326,9 +326,9 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
 
             this.repositoryFixture.MapperMock
                 .Setup(x => x.Map<DonationCenterResponse>(It.IsAny<DonationCenter>()))
-                .Returns(new DonationCenterResponse 
-                { 
-                    Id = createdDonationCenter.Id, 
+                .Returns(new DonationCenterResponse
+                {
+                    Id = createdDonationCenter.Id,
                     Name = createdDonationCenter.Name,
                     Address = createdDonationCenter.Address,
                     City = createdDonationCenter.City,
@@ -386,9 +386,9 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
 
             this.repositoryFixture.MapperMock
                 .Setup(x => x.Map<DonationCenterResponse>(It.IsAny<DonationCenter>()))
-                .Returns(new DonationCenterResponse 
-                { 
-                    Id = createdDonationCenter.Id, 
+                .Returns(new DonationCenterResponse
+                {
+                    Id = createdDonationCenter.Id,
                     Name = createdDonationCenter.Name,
                     Address = createdDonationCenter.Address,
                     City = createdDonationCenter.City,
@@ -427,9 +427,9 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
 
             this.repositoryFixture.MapperMock
                 .Setup(x => x.Map<DonationCenterResponse>(It.IsAny<DonationCenter>()))
-                .Returns(new DonationCenterResponse 
-                { 
-                    Id = updatedDonationCenter.Id, 
+                .Returns(new DonationCenterResponse
+                {
+                    Id = updatedDonationCenter.Id,
                     Name = updatedDonationCenter.Name,
                     Address = updatedDonationCenter.Address,
                     City = updatedDonationCenter.City,

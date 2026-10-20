@@ -1,4 +1,4 @@
-﻿using Umss.BloodOrgansDonationApp.Models.Entities;
+using Umss.BloodOrgansDonationApp.Models.Entities;
 
 namespace Umss.BloodOrgansDonationApp.Models
 {

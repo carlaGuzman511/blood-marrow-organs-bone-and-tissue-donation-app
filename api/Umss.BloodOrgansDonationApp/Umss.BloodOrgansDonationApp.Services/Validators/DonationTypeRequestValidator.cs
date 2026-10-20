@@ -1,10 +1,10 @@
-﻿
+
 using FluentValidation;
 using Umss.BloodOrgansDonationApp.Models.Requests;
 
 namespace Umss.BloodOrgansDonationApp.Services.Validators
 {
-    internal class DonationTypeRequestValidator: AbstractValidator<DonationTypeRequest>
+    internal class DonationTypeRequestValidator : AbstractValidator<DonationTypeRequest>
     {
         public DonationTypeRequestValidator()
         {
