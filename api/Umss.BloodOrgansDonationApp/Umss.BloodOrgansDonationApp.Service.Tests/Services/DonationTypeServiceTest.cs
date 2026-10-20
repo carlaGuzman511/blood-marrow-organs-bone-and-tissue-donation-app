@@ -1,6 +1,7 @@
 using Moq;
 using Umss.BloodOrgansDonationApp.Models;
 using Umss.BloodOrgansDonationApp.Models.Requests;
+using Umss.BloodOrgansDonationApp.Models.Requests.Queries;
 using Umss.BloodOrgansDonationApp.Models.Responses;
 using Umss.BloodOrgansDonationApp.Service.Tests.Utilities;
 using Umss.BloodOrgansDonationApp.Services;
@@ -60,10 +61,10 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
         [Fact]
         public async Task GetAll()
         {
-            this.repositoryFixture.DonationTypeRepositoryMock.Setup(x => x.GetAll()).ReturnsAsync(this.GetDonationTypes);
-            IEnumerable<DonationTypeResponse> donationTypes = await this.donationTypeService.GetAll();
+            this.repositoryFixture.DonationTypeRepositoryMock.Setup(x => x.GetAll(It.IsAny<DonationTypeQuery>())).ReturnsAsync(Paged.Of(this.GetDonationTypes()));
+            PagedResult<DonationTypeResponse> donationTypes = await this.donationTypeService.GetAll(new DonationTypeQuery());
 
-            Assert.NotEmpty(donationTypes);
+            Assert.NotEmpty(donationTypes.Items);
         }
 
         [Fact]

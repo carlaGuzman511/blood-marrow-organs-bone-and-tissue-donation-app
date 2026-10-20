@@ -1,8 +1,8 @@
 import React from 'react'
-import { User } from '@/models/App.types';
+import { Donor } from '@/models/App.types';
 import { useRouter } from 'expo-router';
 import { View, TouchableOpacity } from 'react-native'
-import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import AppCard from '@/components/ui/AppCard';
 import CardHeader from '@/components/ui/CardHeader';
 import AppText from '@/components/ui/AppText';
@@ -10,7 +10,7 @@ import styles from './UserCard.styles';
 import { COLORS } from '@/constants';
 
 type Props = {
-    item: User
+    item: Donor
 }
 
 const UserCard = ({item}: Props) => {
@@ -35,7 +35,7 @@ const UserCard = ({item}: Props) => {
             <AppCard style={styles.card}>
                 <CardHeader
                     name={item.fullName}
-                    city={item.address || 'Unknown location'}
+                    city={item.city || 'Unknown location'}
                     image={item.image || ''}
                     isOpen={true}
                 />
@@ -47,17 +47,7 @@ const UserCard = ({item}: Props) => {
                             color={COLORS.primary}
                         />
                         <AppText preset="body4" style={styles.infoText}>
-                            {item.bloodType.name}
-                        </AppText>
-                    </View>
-                    <View style={styles.infoRow}>
-                        <Ionicons 
-                            name='call-outline' 
-                            size={18} 
-                            color={COLORS.primary}
-                        />
-                        <AppText preset="body4" style={styles.infoText}>
-                            {item.phoneNumber || 'Not provided'}
+                            {item.bloodType?.name ?? '—'}
                         </AppText>
                     </View>
                 </View>

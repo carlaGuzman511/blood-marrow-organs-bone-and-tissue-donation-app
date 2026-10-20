@@ -2,6 +2,7 @@ using Moq;
 using FluentValidation;
 using Umss.BloodOrgansDonationApp.Models;
 using Umss.BloodOrgansDonationApp.Models.Requests;
+using Umss.BloodOrgansDonationApp.Models.Requests.Queries;
 using Umss.BloodOrgansDonationApp.Models.Exceptions;
 using Umss.BloodOrgansDonationApp.Service.Tests.Utilities;
 using Umss.BloodOrgansDonationApp.Services;
@@ -72,11 +73,11 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
         public async Task GetAll_Success_ReturnsBloodTypes()
         {
             this.repositoryFixture.BloodTypeRepositoryMock
-                .Setup(x => x.GetAll()).ReturnsAsync(this.GetBloodTypes());
+                .Setup(x => x.GetAll(It.IsAny<BloodTypeQuery>())).ReturnsAsync(Paged.Of(this.GetBloodTypes()));
 
-            var bloodTypes = await this.bloodTypeService.GetAll();
+            var bloodTypes = await this.bloodTypeService.GetAll(new BloodTypeQuery());
 
-            Assert.NotEmpty(bloodTypes);
+            Assert.NotEmpty(bloodTypes.Items);
         }
 
         [Fact]
@@ -85,11 +86,11 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
             IEnumerable<BloodType> emptyList = new List<BloodType>();
 
             this.repositoryFixture.BloodTypeRepositoryMock
-                .Setup(x => x.GetAll()).ReturnsAsync(emptyList);
+                .Setup(x => x.GetAll(It.IsAny<BloodTypeQuery>())).ReturnsAsync(Paged.Of(emptyList));
 
-            var bloodTypes = await this.bloodTypeService.GetAll();
+            var bloodTypes = await this.bloodTypeService.GetAll(new BloodTypeQuery());
 
-            Assert.Empty(bloodTypes);
+            Assert.Empty(bloodTypes.Items);
         }
 
         //Método bajo prueba + Escenario + Resultado esperado

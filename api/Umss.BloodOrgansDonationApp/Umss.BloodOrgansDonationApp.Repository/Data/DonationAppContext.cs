@@ -20,6 +20,15 @@ namespace Umss.BloodOrgansDonationApp.Repository.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            // One local profile per Keycloak user. Postgres allows many NULLs in a unique index,
+            // so profiles not linked yet don't collide.
+            modelBuilder.Entity<User>(user =>
+            {
+                user.Property(u => u.KeycloakSubject).HasMaxLength(255);
+                user.Property(u => u.City).HasMaxLength(100);
+                user.HasIndex(u => u.KeycloakSubject).IsUnique();
+            });
+
             modelBuilder.Entity<DonationCenterDonationType>()
                 .HasKey(x => new { x.DonationCenterId, x.DonationTypeId });
 
@@ -36,6 +45,10 @@ namespace Umss.BloodOrgansDonationApp.Repository.Data
                 .HasForeignKey(p => p.DonationCenterId)
                 .OnDelete(DeleteBehavior.Restrict); // or DeleteBehavior.NoAction
                                                     //.OnDelete(DeleteBehavior.Cascade);
+
+            // Feed order (newest first, Id as tie-breaker); Postgres reads it backwards for DESC.
+            modelBuilder.Entity<DonationPost>()
+                .HasIndex(p => new { p.CreatedAt, p.Id });
 
             modelBuilder.Entity<Comment>()
                 .HasOne(p => p.DonationPost)

@@ -1,4 +1,6 @@
 using Umss.BloodOrgansDonationApp.Models.Requests;
+using Umss.BloodOrgansDonationApp.Models.Requests.Queries;
+using Umss.BloodOrgansDonationApp.Models.Responses;
 using Umss.BloodOrgansDonationApp.Repository.Interfaces;
 using Umss.BloodOrgansDonationApp.Models;
 using Umss.BloodOrgansDonationApp.Services.Interfaces;
@@ -46,9 +48,11 @@ namespace Umss.BloodOrgansDonationApp.Services
             return await _bloodTypeRepository.Get(id);
         }
 
-        public async Task<IEnumerable<BloodType>> GetAll()
+        public async Task<PagedResult<BloodType>> GetAll(BloodTypeQuery query)
         {
-            return await _bloodTypeRepository.GetAll();
+            PageQueryValidator.Check(query);
+
+            return await _bloodTypeRepository.GetAll(query);
         }
 
         public async Task<BloodType> Update(Guid id, BloodTypeRequest bloodTypeRequest)

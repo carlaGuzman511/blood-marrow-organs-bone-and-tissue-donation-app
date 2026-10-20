@@ -1389,16 +1389,16 @@ namespace Umss.BloodOrgansDonationApp.Repository.Data
             };
 
             bloodTypes[0] = aPositive;
-            bloodTypes[0] = aNegative;
+            bloodTypes[1] = aNegative;
 
-            bloodTypes[0] = bPositive;
-            bloodTypes[0] = bNegative;
+            bloodTypes[2] = bPositive;
+            bloodTypes[3] = bNegative;
 
-            bloodTypes[0] = abPositive;
-            bloodTypes[0] = abNegative;
+            bloodTypes[4] = abPositive;
+            bloodTypes[5] = abNegative;
 
-            bloodTypes[0] = oPositive;
-            bloodTypes[0] = oNegative;
+            bloodTypes[6] = oPositive;
+            bloodTypes[7] = oNegative;
 
             return bloodTypes;
         }

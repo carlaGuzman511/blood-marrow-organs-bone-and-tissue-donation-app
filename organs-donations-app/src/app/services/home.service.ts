@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BloodType, DonationCenter, DonationPost, User } from '../models/DonationPost';
+import { BloodType, DonationCenter, DonationPost, User, Donor } from '../models/DonationPost';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -51,7 +51,7 @@ export class HomeService {
     return this.httpService.get<DonationCenter[]>(`${this.apiUrl}/donation-centers`);
   }
 
-  getUsers(){
-      return this.httpService.get<User[]>(`${this.apiUrl}/users`);
+  getDonors(){
+      return this.httpService.get<Donor[]>(`${this.apiUrl}/donors`);
   }
 }

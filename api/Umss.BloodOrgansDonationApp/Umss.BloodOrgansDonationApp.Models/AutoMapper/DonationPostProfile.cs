@@ -21,10 +21,12 @@ namespace Umss.BloodOrgansDonationApp.Models.AutoMapper
                 .ForMember(dp => dp.UserId, x => x.Ignore())
                 .ForMember(dp => dp.CreatedAt, x => x.Ignore());
 
-            CreateMap<DonationPost, DonationPostResponse>();
+            CreateMap<DonationPost, DonationPostResponse>()
+                .ForMember(r => r.CommentCount, x => x.MapFrom(src => src.Comments == null ? 0 : src.Comments.Count));
             CreateMap<DonationCenter, DonationCenterResponse>();
             CreateMap<DonationType, DonationTypeResponse>();
-            CreateMap<User, UserResponse>();
+            // Post and comment authors are shown to every signed-in user: public fields only.
+            CreateMap<User, AuthorResponse>();
             CreateMap<Comment, CommentResponse>();
 
             //CreateMap<DonationCenter, DonationCenterResponse>()

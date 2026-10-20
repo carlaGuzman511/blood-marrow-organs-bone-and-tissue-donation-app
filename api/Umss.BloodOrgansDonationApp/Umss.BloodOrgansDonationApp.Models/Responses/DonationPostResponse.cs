@@ -7,7 +7,8 @@ namespace Umss.BloodOrgansDonationApp.Models.Responses
         public DonationTypeResponse DonationType { get; set; }
 
         public bool Priority { get; set; }
-        public UserResponse? User { get; set; }
+        /// <summary>The user who published the post (public fields only), or null for a center post.</summary>
+        public AuthorResponse? User { get; set; }
         public DonationCenterResponse? DonationCenter { get; set; }
         public string Title { get; set; } = string.Empty;
         public required string Description { get; set; }
@@ -15,5 +16,6 @@ namespace Umss.BloodOrgansDonationApp.Models.Responses
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public ICollection<CommentResponse> Comments { get; set; }
+        public int CommentCount { get; set; }
     }
 }

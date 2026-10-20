@@ -4,6 +4,7 @@ using Umss.BloodOrgansDonationApp.Models;
 using Umss.BloodOrgansDonationApp.Models.Entities;
 using Umss.BloodOrgansDonationApp.Models.Exceptions;
 using Umss.BloodOrgansDonationApp.Models.Requests;
+using Umss.BloodOrgansDonationApp.Models.Requests.Queries;
 using Umss.BloodOrgansDonationApp.Models.Responses;
 using Umss.BloodOrgansDonationApp.Service.Tests.Utilities;
 using Umss.BloodOrgansDonationApp.Services;
@@ -208,8 +209,8 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
             // Arrange
             var donationCenters = this.GetDonationCenters();
             this.repositoryFixture.DonationCenterRepositoryMock
-                .Setup(x => x.GetAll())
-                .ReturnsAsync(donationCenters);
+                .Setup(x => x.GetAll(It.IsAny<DonationCenterQuery>()))
+                .ReturnsAsync(Paged.Of(donationCenters));
 
             this.repositoryFixture.MapperMock
                 .Setup(x => x.Map<DonationCenterResponse>(It.IsAny<DonationCenter>()))
@@ -225,11 +226,12 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
                 });
 
             // Act
-            var result = await this.donationCenterService.GetAll();
+            var result = await this.donationCenterService.GetAll(new DonationCenterQuery());
 
             // Assert
-            Assert.NotEmpty(result);
-            Assert.Equal(3, result.Count());
+            Assert.NotEmpty(result.Items);
+            Assert.Equal(3, result.Items.Count);
+            Assert.Equal(3, result.TotalCount);
         }
 
         [Fact(DisplayName = "GetAll should return empty list when no records exist")]
@@ -237,15 +239,15 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
         {
             // Arrange
             this.repositoryFixture.DonationCenterRepositoryMock
-                .Setup(x => x.GetAll())
-                .ReturnsAsync(this.GetEmptyDonationCenters());
+                .Setup(x => x.GetAll(It.IsAny<DonationCenterQuery>()))
+                .ReturnsAsync(Paged.Of(this.GetEmptyDonationCenters()));
 
             // Act
-            var result = await this.donationCenterService.GetAll();
+            var result = await this.donationCenterService.GetAll(new DonationCenterQuery());
 
             // Assert
-            Assert.Empty(result);
-            this.repositoryFixture.DonationCenterRepositoryMock.Verify(x => x.GetAll(), Times.Once);
+            Assert.Empty(result.Items);
+            this.repositoryFixture.DonationCenterRepositoryMock.Verify(x => x.GetAll(It.IsAny<DonationCenterQuery>()), Times.AtLeastOnce);
         }
 
         [Fact(DisplayName = "Get should return donation center when valid ID is provided")]

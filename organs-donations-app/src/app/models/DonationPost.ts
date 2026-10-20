@@ -50,6 +50,17 @@ export type User = {
     donationPosts?: Donation[],
 }
 
+// Public donor card from GET /api/donors. Personal data (address, phone, email, date of birth,
+// location) is never exposed to other users; only the user themself sees it via /api/me.
+export type Donor = {
+    id: string,
+    fullName: string,
+    image?: string,
+    city?: string,
+    bloodTypeId: string,
+    bloodType?: BloodType,
+}
+
 export type BloodType = {
     id: string,
     name: string,       

@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Umss.BloodOrgansDonationApp.Models;
+using Umss.BloodOrgansDonationApp.Models.Requests.Queries;
+using Umss.BloodOrgansDonationApp.Models.Responses;
+using Umss.BloodOrgansDonationApp.Repository.Extensions;
 using Umss.BloodOrgansDonationApp.Models.Exceptions;
 using Umss.BloodOrgansDonationApp.Repository.Data;
 using Umss.BloodOrgansDonationApp.Repository.Interfaces;
@@ -41,14 +44,35 @@ namespace Umss.BloodOrgansDonationApp.Repository
                 .FirstOrDefaultAsync(dc => dc.Id == id);
         }
 
-        public async Task<IEnumerable<DonationCenter>> GetAll()
+        public async Task<PagedResult<DonationCenter>> GetAll(DonationCenterQuery query)
         {
-            return await _appContext.DonationCenters
+            IQueryable<DonationCenter> centers = _appContext.DonationCenters.AsNoTracking();
+
+            string? search = query.NormalizedSearch();
+            if (search != null)
+            {
+                centers = centers.Where(dc => dc.Name.ToLower().Contains(search) || dc.Address.ToLower().Contains(search));
+            }
+
+            if (!string.IsNullOrWhiteSpace(query.City))
+            {
+                string city = query.City.Trim().ToLowerInvariant();
+                centers = centers.Where(dc => dc.City.ToLower() == city);
+            }
+
+            if (query.DonationTypeId.HasValue)
+            {
+                Guid donationTypeId = query.DonationTypeId.Value;
+                centers = centers.Where(dc => dc.DonationCenterDonationTypes.Any(j => j.DonationTypeId == donationTypeId));
+            }
+
+            return await centers
                 .Include(dc => dc.DonationCenterDonationTypes)
                     .ThenInclude(dcdt => dcdt.DonationType)
-                    .AsNoTracking()
-                //.Include(dc => dc.DonationPosts)
-                .ToListAsync();
+                .AsSplitQuery()
+                .OrderBy(dc => dc.Name)
+                .ThenBy(dc => dc.Id)
+                .ToPagedResultAsync(query);
         }
 
         /// <summary>

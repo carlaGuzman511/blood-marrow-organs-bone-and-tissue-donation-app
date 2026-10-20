@@ -15,6 +15,7 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Utilities
         protected internal Mock<IDonationCenterRepository> DonationCenterRepositoryMock { get; }
         protected internal Mock<IMapper> MapperMock { get; }
         protected internal Mock<ITokenService> tokenServiceMock { get; }
+        protected internal Mock<ICurrentUserService> CurrentUserServiceMock { get; }
 
         protected internal IUserRepository UserRepository { get; }
         protected internal ICommentRepository CommentRepository { get; }
@@ -24,6 +25,7 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Utilities
         protected internal IDonationCenterRepository DonationCenterRepository { get; }
         protected internal IMapper Mapper { get; }
         protected internal ITokenService tokenService { get; }
+        protected internal ICurrentUserService CurrentUserService { get; }
 
         public RepositoryFixture()
         {
@@ -50,6 +52,12 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Utilities
 
             this.tokenServiceMock = new Mock<ITokenService>();
             this.tokenService = this.tokenServiceMock.Object;
+
+            // The pre-existing service tests act as a network admin, so the new caller checks let them through.
+            // Authorization itself is covered by the dedicated tests in Services/Security.
+            this.CurrentUserServiceMock = new Mock<ICurrentUserService>();
+            this.CurrentUserServiceMock.SetupGet(x => x.IsNetworkAdmin).Returns(true);
+            this.CurrentUserService = this.CurrentUserServiceMock.Object;
         }
     }
 }

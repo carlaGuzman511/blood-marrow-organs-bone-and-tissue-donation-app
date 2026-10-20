@@ -1,8 +1,8 @@
 import { api } from "@/api/axios";
-import { User } from "@/models/App.types";
+import { Donor } from "@/models/App.types";
 
-export const getUsers = async () => {
-  const response = await api.get<User[]>('/api/users');
+export const getDonors = async () => {
+  const response = await api.get<Donor[]>('/api/donors');
 
   return response.data;
 }

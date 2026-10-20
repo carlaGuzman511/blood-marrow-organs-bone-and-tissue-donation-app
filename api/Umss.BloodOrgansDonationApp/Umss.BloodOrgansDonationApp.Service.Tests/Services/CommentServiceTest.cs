@@ -18,7 +18,7 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
         public CommentServiceTest(RepositoryFixture repositoryFixture)
         {
             this.repositoryFixture = repositoryFixture;
-            this.commentService = new CommentService(repositoryFixture.CommentRepository, repositoryFixture.Mapper);
+            this.commentService = new CommentService(repositoryFixture.CommentRepository, repositoryFixture.Mapper, repositoryFixture.CurrentUserService);
         }
         private IEnumerable<Comment> GetComments()
         {
@@ -168,7 +168,7 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
             // Real mapper (same profiles as Program.cs): CommentProfile maps UserId from the request,
             // which is exactly the behavior under test.
             IMapper mapper = new MapperConfiguration(cfg => cfg.AddMaps(typeof(CommentProfile).Assembly)).CreateMapper();
-            CommentService service = new CommentService(this.repositoryFixture.CommentRepository, mapper);
+            CommentService service = new CommentService(this.repositoryFixture.CommentRepository, mapper, this.repositoryFixture.CurrentUserService);
 
             Comment existing = this.GetComment();
             Guid authorId = existing.UserId;

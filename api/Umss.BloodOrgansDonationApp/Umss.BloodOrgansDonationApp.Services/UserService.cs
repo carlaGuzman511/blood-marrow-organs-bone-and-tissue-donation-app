@@ -3,6 +3,7 @@ using FluentValidation;
 using Umss.BloodOrgansDonationApp.Models;
 using Umss.BloodOrgansDonationApp.Models.Exceptions;
 using Umss.BloodOrgansDonationApp.Models.Requests;
+using Umss.BloodOrgansDonationApp.Models.Requests.Queries;
 using Umss.BloodOrgansDonationApp.Models.Responses;
 using Umss.BloodOrgansDonationApp.Repository.Interfaces;
 using Umss.BloodOrgansDonationApp.Services.Interfaces;
@@ -15,11 +16,13 @@ namespace Umss.BloodOrgansDonationApp.Services
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly ITokenService _tokenService;
-        public UserService(IUserRepository userRepository, IMapper mapper, ITokenService tokenService)
+        private readonly ICurrentUserService _currentUser;
+        public UserService(IUserRepository userRepository, IMapper mapper, ITokenService tokenService, ICurrentUserService currentUser)
         {
             this._userRepository = userRepository;
             _mapper = mapper;
             _tokenService = tokenService;
+            _currentUser = currentUser;
         }
         public async Task<UserResponse> Create(UserRequest userRequest)
         {
@@ -36,11 +39,14 @@ namespace Umss.BloodOrgansDonationApp.Services
 
         public async Task Delete(Guid id)
         {
+            EnsureNetworkAdmin();
             await _userRepository.Delete(id);
         }
 
         public async Task<UserResponse?> Get(Guid id)
         {
+            await _currentUser.EnsureSelfOrAdminAsync(id);
+
             User? user = await _userRepository.Get(id);
             if (user != null)
             {
@@ -52,12 +58,13 @@ namespace Umss.BloodOrgansDonationApp.Services
             }
         }
 
-        public async Task<IEnumerable<UserResponse>> GetAll()
+        public async Task<PagedResult<UserResponse>> GetAll(UserQuery query)
         {
-            IEnumerable<User> users = await _userRepository.GetAll();
-            IEnumerable<UserResponse> response = users.Select(x => _mapper.Map<UserResponse>(x));
+            EnsureNetworkAdmin();
+            PageQueryValidator.Check(query);
 
-            return response;
+            PagedResult<User> users = await _userRepository.GetAll(query);
+            return users.Map(x => _mapper.Map<UserResponse>(x));
         }
 
         public async Task<AuthResponse> LoginAsync(LoginRequest loginRequest)
@@ -86,6 +93,8 @@ namespace Umss.BloodOrgansDonationApp.Services
 
         public async Task<UserResponse> Update(Guid id, UserRequest userRequest)
         {
+            await _currentUser.EnsureSelfOrAdminAsync(id);
+
             User? user = await _userRepository.Get(id);
             if (user == null)
             {
@@ -101,6 +110,15 @@ namespace Umss.BloodOrgansDonationApp.Services
             user = await _userRepository.Update(user);
 
             return _mapper.Map<UserResponse>(user);
+        }
+
+        // Every profile holds personal data (address, location, date of birth): listing or deleting them is admin-only.
+        private void EnsureNetworkAdmin()
+        {
+            if (!_currentUser.IsNetworkAdmin)
+            {
+                throw new ForbiddenException("Only network administrators can do this.");
+            }
         }
     }
 }

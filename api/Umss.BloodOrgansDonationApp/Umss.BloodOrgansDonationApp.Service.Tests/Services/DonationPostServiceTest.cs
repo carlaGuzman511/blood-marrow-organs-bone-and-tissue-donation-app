@@ -2,6 +2,7 @@ using Moq;
 using System.Threading.Tasks;
 using Umss.BloodOrgansDonationApp.Models;
 using Umss.BloodOrgansDonationApp.Models.Requests;
+using Umss.BloodOrgansDonationApp.Models.Requests.Queries;
 using Umss.BloodOrgansDonationApp.Models.Responses;
 using Umss.BloodOrgansDonationApp.Service.Tests.Utilities;
 using Umss.BloodOrgansDonationApp.Services;
@@ -16,7 +17,7 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
         public DonationPostServiceTest(RepositoryFixture repositoryFixture)
         {
             this.repositoryFixture = repositoryFixture;
-            this.donationPostService = new DonationPostService(this.repositoryFixture.DonationPostRepository, this.repositoryFixture.Mapper);
+            this.donationPostService = new DonationPostService(this.repositoryFixture.DonationPostRepository, this.repositoryFixture.Mapper, this.repositoryFixture.CurrentUserService);
         }
         private IEnumerable<DonationPost> GetDonationPosts()
         {
@@ -59,19 +60,19 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
         [Fact]
         public async Task GetByDonationCenterId()
         {
-            this.repositoryFixture.DonationPostRepositoryMock.Setup(x => x.GetByDonationCenter(It.IsAny<Guid>())).ReturnsAsync(this.GetDonationPosts());
-            IEnumerable<DonationPostResponse> donationPosts = await this.donationPostService.GetByDonationCenter(Guid.NewGuid());
+            this.repositoryFixture.DonationPostRepositoryMock.Setup(x => x.GetByDonationCenter(It.IsAny<Guid>(), It.IsAny<DonationPostQuery>())).ReturnsAsync(Paged.Of(this.GetDonationPosts()));
+            PagedResult<DonationPostResponse> donationPosts = await this.donationPostService.GetByDonationCenter(Guid.NewGuid(), new DonationPostQuery());
 
-            Assert.NotEmpty(donationPosts);
+            Assert.NotEmpty(donationPosts.Items);
         }
 
         [Fact]
         public async Task GetByUserId()
         {
-            this.repositoryFixture.DonationPostRepositoryMock.Setup(x => x.GetByUser(It.IsAny<Guid>())).ReturnsAsync(this.GetDonationPosts());
-            IEnumerable<DonationPostResponse> donationPosts = await this.donationPostService.GetByUser(Guid.NewGuid());
+            this.repositoryFixture.DonationPostRepositoryMock.Setup(x => x.GetByUser(It.IsAny<Guid>(), It.IsAny<DonationPostQuery>())).ReturnsAsync(Paged.Of(this.GetDonationPosts()));
+            PagedResult<DonationPostResponse> donationPosts = await this.donationPostService.GetByUser(Guid.NewGuid(), new DonationPostQuery());
 
-            Assert.NotEmpty(donationPosts);
+            Assert.NotEmpty(donationPosts.Items);
         }
 
         [Fact]

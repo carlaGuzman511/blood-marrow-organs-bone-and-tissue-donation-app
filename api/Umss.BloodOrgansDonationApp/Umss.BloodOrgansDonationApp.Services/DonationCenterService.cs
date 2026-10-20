@@ -4,6 +4,7 @@ using Umss.BloodOrgansDonationApp.Models;
 using Umss.BloodOrgansDonationApp.Models.Entities;
 using Umss.BloodOrgansDonationApp.Models.Exceptions;
 using Umss.BloodOrgansDonationApp.Models.Requests;
+using Umss.BloodOrgansDonationApp.Models.Requests.Queries;
 using Umss.BloodOrgansDonationApp.Models.Responses;
 using Umss.BloodOrgansDonationApp.Repository.Interfaces;
 using Umss.BloodOrgansDonationApp.Services.Interfaces;
@@ -59,12 +60,12 @@ namespace Umss.BloodOrgansDonationApp.Services
             }
         }
 
-        public async Task<IEnumerable<DonationCenterResponse>> GetAll()
+        public async Task<PagedResult<DonationCenterResponse>> GetAll(DonationCenterQuery query)
         {
-            IEnumerable<DonationCenter> donationCenters = await _donationCenterRepository.GetAll();
-            IEnumerable<DonationCenterResponse> response = donationCenters.Select(x => _mapper.Map<DonationCenterResponse>(x));
+            PageQueryValidator.Check(query);
 
-            return response;
+            PagedResult<DonationCenter> donationCenters = await _donationCenterRepository.GetAll(query);
+            return donationCenters.Map(x => _mapper.Map<DonationCenterResponse>(x));
         }
 
         public async Task<DonationCenterResponse> Update(Guid id, DonationCenterRequest donationCenterRequest)

@@ -1,10 +1,13 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Security.Claims;
-using System.Text.Json;
 using Umss.BloodOrgansDonationApp.API.Middlewares;
+using Umss.BloodOrgansDonationApp.API.Security;
+using Umss.BloodOrgansDonationApp.API.Swagger;
 using Umss.BloodOrgansDonationApp.Models;
 using Umss.BloodOrgansDonationApp.Models.AutoMapper;
 using Umss.BloodOrgansDonationApp.Repository;
@@ -12,6 +15,7 @@ using Umss.BloodOrgansDonationApp.Repository.Data;
 using Umss.BloodOrgansDonationApp.Repository.Interfaces;
 using Umss.BloodOrgansDonationApp.Services;
 using Umss.BloodOrgansDonationApp.Services.Interfaces;
+using Umss.BloodOrgansDonationApp.Services.Security;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -54,43 +58,30 @@ builder.Services.AddAuthentication(options =>
     options.Authority = builder.Configuration["Keycloak:Authority"];
     options.Audience = builder.Configuration["Keycloak:Audience"];
     options.RequireHttpsMetadata = builder.Configuration.GetValue<bool>("Keycloak:RequireHttpsMetadata", true);
+    // Keep Keycloak's claim names ("sub", "email", "email_verified") instead of renaming them to WS-* URIs.
+    options.MapInboundClaims = false;
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-    };
-    options.Events = new JwtBearerEvents
-    {
-        // Keycloak puts realm roles under the "realm_access.roles" claim rather than
-        // the standard role claim type, so [Authorize(Roles = "...")] would never match
-        // without projecting them onto ClaimTypes.Role here.
-        OnTokenValidated = context =>
-        {
-            var realmAccess = context.Principal?.FindFirst("realm_access")?.Value;
-            if (!string.IsNullOrEmpty(realmAccess) && context.Principal?.Identity is ClaimsIdentity identity)
-            {
-                using var doc = JsonDocument.Parse(realmAccess);
-                if (doc.RootElement.TryGetProperty("roles", out var roles))
-                {
-                    foreach (var role in roles.EnumerateArray())
-                    {
-                        var roleName = role.GetString();
-                        if (!string.IsNullOrEmpty(roleName))
-                        {
-                            identity.AddClaim(new Claim(ClaimTypes.Role, roleName));
-                        }
-                    }
-                }
-            }
-
-            return Task.CompletedTask;
-        }
+        NameClaimType = "preferred_username",
+        RoleClaimType = ClaimTypes.Role,
     };
 });
 
-builder.Services.AddAuthorization();
+// Keycloak realm roles -> lower-cased role claims, for every authentication scheme.
+builder.Services.AddTransient<IClaimsTransformation, KeycloakClaimsTransformation>();
+builder.Services.AddAuthorization(AppPolicies.Configure);
+
+// Who is calling: services read the caller from the token through these, never from the route or body.
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ICurrentUserAccessor, HttpContextCurrentUserAccessor>();
+builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+builder.Services.AddScoped<IProfileService, ProfileService>();
+builder.Services.AddScoped<IDonorService, DonorService>();
+
 builder.Services.AddScoped<ITokenService, TokenService>();
 
 builder.Services.AddScoped<IDonationCenterRepository, DonationCenterRepository>();
@@ -127,7 +118,34 @@ builder.Services.AddCors(options =>
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    // "Authorize" button: paste a Keycloak access token to call protected endpoints from Swagger UI.
+    OpenApiSecurityScheme bearer = new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Keycloak access token (realm organ-donation-prod), without the Bearer prefix.",
+        Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" },
+    };
+    options.AddSecurityDefinition("Bearer", bearer);
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement { [bearer] = Array.Empty<string>() });
+
+    // Descriptions of endpoints (API) and of query parameters such as page/pageSize (Models).
+    foreach (string project in new[] { "Umss.BloodOrgansDonationApp.API", "Umss.BloodOrgansDonationApp.Models" })
+    {
+        string xmlPath = Path.Combine(AppContext.BaseDirectory, project + ".xml");
+        if (File.Exists(xmlPath))
+        {
+            options.IncludeXmlComments(xmlPath);
+        }
+    }
+
+    options.OperationFilter<CamelCaseQueryParametersFilter>();
+});
 
 builder.WebHost.ConfigureKestrel(serverOptions =>
 {

@@ -1,8 +1,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Umss.BloodOrgansDonationApp.API.Security;
 using Umss.BloodOrgansDonationApp.Models;
 using Umss.BloodOrgansDonationApp.Models.Entities;
 using Umss.BloodOrgansDonationApp.Models.Requests;
+using Umss.BloodOrgansDonationApp.Models.Requests.Queries;
+using Umss.BloodOrgansDonationApp.Models.Responses;
 using Umss.BloodOrgansDonationApp.Services.Interfaces;
 
 namespace Umss.BloodOrgansDonationApp.API.Controllers
@@ -20,7 +23,7 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
 
         [Authorize]
         [HttpGet("{id}")]
-        public async Task<ActionResult<Response<BloodType>>> Get(Guid id)
+        public async Task<ActionResult<BloodType>> Get(Guid id)
         {
             BloodType? response = await _bloodTypeService.Get(id);
             if (response == null)
@@ -32,7 +35,7 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
         }
 
         //TODO: Implement a soft delete
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = AppPolicies.NetworkAdmin)]
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(Guid id)
         {
@@ -46,15 +49,16 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
             return NoContent();
         }
 
+        /// <summary>One page of blood types, ordered by name. The list is small: use pageSize=100 for a dropdown.</summary>
         [Authorize]
         [HttpGet]
-        public async Task<ActionResult<Response<IEnumerable<BloodType>>>> Get()
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<PagedResult<BloodType>>> Get([FromQuery] BloodTypeQuery query)
         {
-            IEnumerable<BloodType> response = await _bloodTypeService.GetAll();
-            return Ok(response);
+            return Ok(await _bloodTypeService.GetAll(query));
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = AppPolicies.NetworkAdmin)]
         [HttpPost]
         public async Task<ActionResult<BloodType>> Create([FromBody] BloodTypeRequest bloodTypeRequest)
         {
@@ -62,7 +66,7 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
             return CreatedAtAction(nameof(Get), new { id = response.Id }, response);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = AppPolicies.NetworkAdmin)]
         [HttpPut("{id}")]
         public async Task<ActionResult<BloodType>> Update(Guid id, [FromBody] BloodTypeRequest bloodTypeRequest)
         {

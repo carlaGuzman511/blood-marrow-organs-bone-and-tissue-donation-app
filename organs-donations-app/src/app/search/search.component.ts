@@ -1,4 +1,4 @@
-import { BloodType, Donation, DonationCenter, User } from '../models/DonationPost';
+import { BloodType, Donation, DonationCenter, Donor } from '../models/DonationPost';
 import { HomeService } from '../services/home.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { of } from 'rxjs';
@@ -39,9 +39,9 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class SearchComponent implements OnInit{
   donationCenters: DonationCenter[] = [];
-  users: User[] = [];
+  users: Donor[] = [];
   filteredDonationCenters: DonationCenter[] = [];
-  filteredUsers: User[] = [];
+  filteredUsers: Donor[] = [];
   donationTypes: Donation[] = [];
   bloodTypes: BloodType[] = [];
   isLoading: boolean = false;
@@ -63,7 +63,7 @@ export class SearchComponent implements OnInit{
   ngOnInit(): void 
   {
     this.getDonationCenters();
-    this.getUsers();
+    this.getDonors();
     this.getBloodTypes();
     this.getDonationTypes();
   }
@@ -82,7 +82,7 @@ export class SearchComponent implements OnInit{
     const desc = description.toLowerCase().trim();
 
     this.filteredUsers = this.users.filter(user => {
-      const matchDesc = user.fullName?.toLowerCase().includes(desc) || user.address?.toLowerCase().includes(desc);
+      const matchDesc = user.fullName?.toLowerCase().includes(desc) || user.city?.toLowerCase().includes(desc);
       const matchBloodType = user.bloodTypeId === bloodTypeId;
 
       return matchDesc && matchBloodType;
@@ -148,13 +148,13 @@ export class SearchComponent implements OnInit{
   }
 
   
-  getUsers(): void 
+  getDonors(): void 
   {
     this.isLoading = true;
-    this.homeService.getUsers()
+    this.homeService.getDonors()
       .pipe(
         catchError(error => {
-          this.snackBar.open(`Error fetching users ${error}`, 'Close', { duration: 2500 });
+          this.snackBar.open(`Error fetching donors ${error}`, 'Close', { duration: 2500 });
           return of([]);
         }),
         finalize(() => this.isLoading = false)

@@ -1,6 +1,7 @@
 using Moq;
 using Umss.BloodOrgansDonationApp.Models;
 using Umss.BloodOrgansDonationApp.Models.Requests;
+using Umss.BloodOrgansDonationApp.Models.Requests.Queries;
 using Umss.BloodOrgansDonationApp.Models.Responses;
 using Umss.BloodOrgansDonationApp.Service.Tests.Utilities;
 using Umss.BloodOrgansDonationApp.Services;
@@ -15,7 +16,7 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
         public UserServiceTest(RepositoryFixture repositoryFixture)
         {
             this.repositoryFixture = repositoryFixture;
-            this.userService = new UserService(this.repositoryFixture.UserRepository, this.repositoryFixture.Mapper, this.repositoryFixture.tokenService);
+            this.userService = new UserService(this.repositoryFixture.UserRepository, this.repositoryFixture.Mapper, this.repositoryFixture.tokenService, this.repositoryFixture.CurrentUserService);
         }
 
         private BloodType GetBloodType()
@@ -29,14 +30,14 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
         {
             UserResponse[] users = new UserResponse[8]
             {
-                new UserResponse {Id = Guid.NewGuid(), FullName = "Juan Perez", Email = "juan.perez@gmail.com", Address = "Av. America Nro. 897", Image = string.Empty, PhoneNumber = "+59175478526", DateOfBirth = new DateTime(1998, 11, 5), BloodType = this.GetBloodType(), Password = "xtygfjd", Latitude = 17.525, Longitude = 12.2555 },
-                new UserResponse {Id = Guid.NewGuid(), FullName = "Juan Perez", Email = "juan.perez@gmail.com", Address = "Av. America Nro. 897", Image = string.Empty, PhoneNumber = "+59175478526", DateOfBirth = new DateTime(1998, 11, 5), BloodType = this.GetBloodType(), Password = "xtygfjd", Latitude = 17.525, Longitude = 12.2555 },
-                new UserResponse {Id = Guid.NewGuid(), FullName = "Juan Perez", Email = "juan.perez@gmail.com", Address = "Av. America Nro. 897", Image = string.Empty, PhoneNumber = "+59175478526", DateOfBirth = new DateTime(1998, 11, 5), BloodType = this.GetBloodType(), Password = "xtygfjd", Latitude = 17.525, Longitude = 12.2555 },
-                new UserResponse {Id = Guid.NewGuid(), FullName = "Juan Perez", Email = "juan.perez@gmail.com", Address = "Av. America Nro. 897", Image = string.Empty, PhoneNumber = "+59175478526", DateOfBirth = new DateTime(1998, 11, 5), BloodType = this.GetBloodType(), Password = "xtygfjd", Latitude = 17.525, Longitude = 12.2555 },
-                new UserResponse {Id = Guid.NewGuid(), FullName = "Juan Perez", Email = "juan.perez@gmail.com", Address = "Av. America Nro. 897", Image = string.Empty, PhoneNumber = "+59175478526", DateOfBirth = new DateTime(1998, 11, 5), BloodType = this.GetBloodType(), Password = "xtygfjd", Latitude = 17.525, Longitude = 12.2555 },
-                new UserResponse {Id = Guid.NewGuid(), FullName = "Juan Perez", Email = "juan.perez@gmail.com", Address = "Av. America Nro. 897", Image = string.Empty, PhoneNumber = "+59175478526", DateOfBirth = new DateTime(1998, 11, 5), BloodType = this.GetBloodType(), Password = "xtygfjd", Latitude = 17.525, Longitude = 12.2555 },
-                new UserResponse {Id = Guid.NewGuid(), FullName = "Juan Perez", Email = "juan.perez@gmail.com", Address = "Av. America Nro. 897", Image = string.Empty, PhoneNumber = "+59175478526", DateOfBirth = new DateTime(1998, 11, 5), BloodType = this.GetBloodType(), Password = "xtygfjd", Latitude = 17.525, Longitude = 12.2555 },
-                new UserResponse {Id = Guid.NewGuid(), FullName = "Juan Perez", Email = "juan.perez@gmail.com", Address = "Av. America Nro. 897", Image = string.Empty, PhoneNumber = "+59175478526", DateOfBirth = new DateTime(1998, 11, 5), BloodType = this.GetBloodType(), Password = "xtygfjd", Latitude = 17.525, Longitude = 12.2555 },
+                new UserResponse {Id = Guid.NewGuid(), FullName = "Juan Perez", Email = "juan.perez@gmail.com", Address = "Av. America Nro. 897", Image = string.Empty, PhoneNumber = "+59175478526", DateOfBirth = new DateTime(1998, 11, 5), BloodType = this.GetBloodType(), Latitude = 17.525, Longitude = 12.2555 },
+                new UserResponse {Id = Guid.NewGuid(), FullName = "Juan Perez", Email = "juan.perez@gmail.com", Address = "Av. America Nro. 897", Image = string.Empty, PhoneNumber = "+59175478526", DateOfBirth = new DateTime(1998, 11, 5), BloodType = this.GetBloodType(), Latitude = 17.525, Longitude = 12.2555 },
+                new UserResponse {Id = Guid.NewGuid(), FullName = "Juan Perez", Email = "juan.perez@gmail.com", Address = "Av. America Nro. 897", Image = string.Empty, PhoneNumber = "+59175478526", DateOfBirth = new DateTime(1998, 11, 5), BloodType = this.GetBloodType(), Latitude = 17.525, Longitude = 12.2555 },
+                new UserResponse {Id = Guid.NewGuid(), FullName = "Juan Perez", Email = "juan.perez@gmail.com", Address = "Av. America Nro. 897", Image = string.Empty, PhoneNumber = "+59175478526", DateOfBirth = new DateTime(1998, 11, 5), BloodType = this.GetBloodType(), Latitude = 17.525, Longitude = 12.2555 },
+                new UserResponse {Id = Guid.NewGuid(), FullName = "Juan Perez", Email = "juan.perez@gmail.com", Address = "Av. America Nro. 897", Image = string.Empty, PhoneNumber = "+59175478526", DateOfBirth = new DateTime(1998, 11, 5), BloodType = this.GetBloodType(), Latitude = 17.525, Longitude = 12.2555 },
+                new UserResponse {Id = Guid.NewGuid(), FullName = "Juan Perez", Email = "juan.perez@gmail.com", Address = "Av. America Nro. 897", Image = string.Empty, PhoneNumber = "+59175478526", DateOfBirth = new DateTime(1998, 11, 5), BloodType = this.GetBloodType(), Latitude = 17.525, Longitude = 12.2555 },
+                new UserResponse {Id = Guid.NewGuid(), FullName = "Juan Perez", Email = "juan.perez@gmail.com", Address = "Av. America Nro. 897", Image = string.Empty, PhoneNumber = "+59175478526", DateOfBirth = new DateTime(1998, 11, 5), BloodType = this.GetBloodType(), Latitude = 17.525, Longitude = 12.2555 },
+                new UserResponse {Id = Guid.NewGuid(), FullName = "Juan Perez", Email = "juan.perez@gmail.com", Address = "Av. America Nro. 897", Image = string.Empty, PhoneNumber = "+59175478526", DateOfBirth = new DateTime(1998, 11, 5), BloodType = this.GetBloodType(), Latitude = 17.525, Longitude = 12.2555 },
             };
 
             return users;
@@ -103,7 +104,7 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
 
         private UserResponse GetUserResponse()
         {
-            UserResponse user = new UserResponse { Id = Guid.NewGuid(), FullName = "Juan Perez", Email = "juan.perez@gmail.com", Address = "Av. America Nro. 897", Image = string.Empty, PhoneNumber = "+59175478526", DateOfBirth = new DateTime(1998, 11, 5), BloodType = this.GetBloodType(), Password = "xtygfjd", Latitude = 17.525, Longitude = 12.2555 };
+            UserResponse user = new UserResponse { Id = Guid.NewGuid(), FullName = "Juan Perez", Email = "juan.perez@gmail.com", Address = "Av. America Nro. 897", Image = string.Empty, PhoneNumber = "+59175478526", DateOfBirth = new DateTime(1998, 11, 5), BloodType = this.GetBloodType(), Latitude = 17.525, Longitude = 12.2555 };
 
             return user;
         }
@@ -111,10 +112,10 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
         [Fact]
         public async Task GetAll()
         {
-            this.repositoryFixture.UserRepositoryMock.Setup(x => x.GetAll()).ReturnsAsync(this.GetUsers());
-            IEnumerable<UserResponse> users = await this.userService.GetAll();
+            this.repositoryFixture.UserRepositoryMock.Setup(x => x.GetAll(It.IsAny<UserQuery>())).ReturnsAsync(Paged.Of(this.GetUsers()));
+            PagedResult<UserResponse> users = await this.userService.GetAll(new UserQuery());
 
-            Assert.NotEmpty(users);
+            Assert.NotEmpty(users.Items);
         }
 
         [Fact]

@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Umss.BloodOrgansDonationApp.Models;
+using Umss.BloodOrgansDonationApp.Models.Requests.Queries;
+using Umss.BloodOrgansDonationApp.Models.Responses;
+using Umss.BloodOrgansDonationApp.Repository.Extensions;
 using Umss.BloodOrgansDonationApp.Repository.Data;
 using Umss.BloodOrgansDonationApp.Repository.Interfaces;
 
@@ -37,9 +40,13 @@ namespace Umss.BloodOrgansDonationApp.Repository
             return await _donationAppContext.BloodTypes.FindAsync(id);
         }
 
-        public async Task<IEnumerable<BloodType>> GetAll()
+        public async Task<PagedResult<BloodType>> GetAll(BloodTypeQuery query)
         {
-            return await _donationAppContext.BloodTypes.AsNoTracking().ToListAsync();
+            return await _donationAppContext.BloodTypes
+                .AsNoTracking()
+                .OrderBy(bt => bt.Name)
+                .ThenBy(bt => bt.Id)
+                .ToPagedResultAsync(query);
         }
         public async Task<BloodType> Update(BloodType element)
         {

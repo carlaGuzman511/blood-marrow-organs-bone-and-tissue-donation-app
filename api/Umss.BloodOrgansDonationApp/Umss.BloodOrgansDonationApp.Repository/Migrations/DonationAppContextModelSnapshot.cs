@@ -265,6 +265,8 @@ namespace Umss.BloodOrgansDonationApp.Repository.Migrations
 
                     b.HasIndex("UserId");
 
+                    b.HasIndex("CreatedAt", "Id");
+
                     b.ToTable("DonationPosts");
                 });
 
@@ -376,6 +378,10 @@ namespace Umss.BloodOrgansDonationApp.Repository.Migrations
                     b.Property<Guid>("BloodTypeId")
                         .HasColumnType("uuid");
 
+                    b.Property<string>("City")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("text");
@@ -397,6 +403,10 @@ namespace Umss.BloodOrgansDonationApp.Repository.Migrations
                     b.Property<string>("Image")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<string>("KeycloakSubject")
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
 
                     b.Property<double>("Latitude")
                         .HasColumnType("double precision");
@@ -440,6 +450,9 @@ namespace Umss.BloodOrgansDonationApp.Repository.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("BloodTypeId");
+
+                    b.HasIndex("KeycloakSubject")
+                        .IsUnique();
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");

@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Umss.BloodOrgansDonationApp.Models;
+using Umss.BloodOrgansDonationApp.Models.Requests.Queries;
+using Umss.BloodOrgansDonationApp.Models.Responses;
+using Umss.BloodOrgansDonationApp.Repository.Extensions;
 using Umss.BloodOrgansDonationApp.Models.Exceptions;
 using Umss.BloodOrgansDonationApp.Repository.Data;
 using Umss.BloodOrgansDonationApp.Repository.Interfaces;
@@ -48,11 +51,16 @@ namespace Umss.BloodOrgansDonationApp.Repository
                 .FirstOrDefaultAsync(dp => dp.UserId == userId && dp.Id == donationPostId);
         }
 
-        public async Task<IEnumerable<DonationPost>> Get()
+        public async Task<PagedResult<DonationPost>> Get(DonationPostQuery query)
         {
-            return await QueryWithDetails()
-                .OrderByDescending(dp => dp.CreatedAt)
-                .ToListAsync();
+            IQueryable<DonationPost> posts = Filter(_appContext.DonationPosts.AsNoTracking(), query);
+            if (query.DonationCenterId.HasValue)
+            {
+                Guid donationCenterId = query.DonationCenterId.Value;
+                posts = posts.Where(dp => dp.DonationCenterId == donationCenterId);
+            }
+
+            return await PageWithDetails(posts, query);
         }
 
         public async Task<DonationPost?> GetByDonationCenter(Guid donationCenterId, Guid donationPostId)
@@ -61,20 +69,69 @@ namespace Umss.BloodOrgansDonationApp.Repository
                 .FirstOrDefaultAsync(dp => dp.DonationCenterId == donationCenterId && dp.Id == donationPostId);
         }
 
-        public async Task<IEnumerable<DonationPost>> GetByUser(Guid userId)
+        public async Task<PagedResult<DonationPost>> GetByUser(Guid userId, DonationPostQuery query)
         {
-            return await QueryWithDetails()
-                .Where(dp => dp.UserId == userId)
-                .OrderByDescending(dp => dp.CreatedAt)
-                .ToListAsync();
+            IQueryable<DonationPost> posts = Filter(_appContext.DonationPosts.AsNoTracking(), query)
+                .Where(dp => dp.UserId == userId);
+
+            return await PageWithDetails(posts, query);
         }
 
-        public async Task<IEnumerable<DonationPost>> GetByDonationCenter(Guid donationCenterId)
+        public async Task<PagedResult<DonationPost>> GetByDonationCenter(Guid donationCenterId, DonationPostQuery query)
         {
-            return await QueryWithDetails()
-                .Where(dp => dp.DonationCenterId == donationCenterId)
+            // The route decides the center; query.DonationCenterId is ignored here.
+            IQueryable<DonationPost> posts = Filter(_appContext.DonationPosts.AsNoTracking(), query)
+                .Where(dp => dp.DonationCenterId == donationCenterId);
+
+            return await PageWithDetails(posts, query);
+        }
+
+        private static IQueryable<DonationPost> Filter(IQueryable<DonationPost> posts, DonationPostQuery query)
+        {
+            string? search = query.NormalizedSearch();
+            if (search != null)
+            {
+                posts = posts.Where(dp => dp.Title.ToLower().Contains(search) || dp.Description.ToLower().Contains(search));
+            }
+
+            if (query.BloodTypeId.HasValue)
+            {
+                Guid bloodTypeId = query.BloodTypeId.Value;
+                posts = posts.Where(dp => dp.BloodTypeId == bloodTypeId);
+            }
+
+            if (query.DonationTypeId.HasValue)
+            {
+                Guid donationTypeId = query.DonationTypeId.Value;
+                posts = posts.Where(dp => dp.DonationTypeId == donationTypeId);
+            }
+
+            if (query.Priority.HasValue)
+            {
+                bool priority = query.Priority.Value;
+                posts = posts.Where(dp => dp.Priority == priority);
+            }
+
+            return posts;
+        }
+
+        /// <summary>
+        /// Newest first; Id breaks ties so pages never overlap (served by IX_DonationPosts_CreatedAt_Id).
+        /// Split query: one SQL per collection, so a page of posts isn't multiplied by its comments.
+        /// </summary>
+        private static Task<PagedResult<DonationPost>> PageWithDetails(IQueryable<DonationPost> posts, DonationPostQuery query)
+        {
+            return posts
+                .Include(dp => dp.BloodType)
+                .Include(dp => dp.DonationType)
+                .Include(dp => dp.User)
+                .Include(dp => dp.DonationCenter)
+                .Include(dp => dp.Comments)
+                    .ThenInclude(c => c.User)
+                .AsSplitQuery()
                 .OrderByDescending(dp => dp.CreatedAt)
-                .ToListAsync();
+                .ThenByDescending(dp => dp.Id)
+                .ToPagedResultAsync(query);
         }
 
         /// <summary>

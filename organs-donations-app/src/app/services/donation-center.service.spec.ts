@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { HomeService } from './home.service';
-import { BloodType, Donation, DonationCenter, DonationPost, User } from '../models/DonationPost';
+import { BloodType, Donation, DonationCenter, DonationPost, User, Donor } from '../models/DonationPost';
 import { environment } from '../../environments/environment';
 
 describe('HomeService', () => {
@@ -324,70 +324,32 @@ describe('HomeService', () => {
     req.flush(mockDonationCenters);
   });
 
-  it('should fetch users', () => {
-    const mockUsers: User[] = [
+  it('should fetch donors (public fields only)', () => {
+    const mockDonors: Donor[] = [
     {
       id: "a15220f0-e35c-4f61-9b4c-96e2bb5e8226",
       fullName: "Juan Perez Mamani",
-      email: "juan.perez@gmail.com",
       bloodTypeId: "a15228f3-e35c-4f61-9b4c-96e2bb5e8116",
-      password: "x*.001abc!",
-      address: "Av. America Nro. 100",
-      phoneNumber: "+59175478526",
       image: "",
-      dateOfBirth: "05-11-1998",
-      latitude: 1.05,
-      longitude: 1.02,
-      donationPosts:  []   
     },
     {
       id: "a15220f0-e35c-4f61-9b4c-12e2bb5e8226",
       fullName: "Sonia Morales Huanca",
-      email: "sonia.morales@gmail.com",
       bloodTypeId: "a98228f3-e35c-4f61-9b4c-96e2bb5e8116",
-      password: "a*.881abc!",
-      address: "Av. Petrolera Nro. 100",
-      phoneNumber: "+59172278526",
       image: "",
-      dateOfBirth: "28-01-1998",
-      latitude: 1.08,
-      longitude: 1.01,
-      donationPosts:  []   
     }];
 
-    service.getUsers().subscribe((users) => {
-      expect(users?.length).toBe(2);
-
-      expect(users[0].id).toBe("a15220f0-e35c-4f61-9b4c-96e2bb5e8226");
-      expect(users[0].fullName).toBe("Juan Perez Mamani");
-      expect(users[0].email).toBe("juan.perez@gmail.com");
-      expect(users[0].bloodTypeId).toBe("a15228f3-e35c-4f61-9b4c-96e2bb5e8116");
-      expect(users[0].password).toBe("x*.001abc!");
-      expect(users[0].address).toBe("Av. America Nro. 100");
-      expect(users[0].phoneNumber).toBe("+59175478526");
-      expect(users[0].image).toBe("");
-      expect(users[0].dateOfBirth).toBe("05-11-1998");
-      expect(users[0].latitude).toBe(1.05);
-      expect(users[0].longitude).toBe(1.02);
-      expect(users[0].donationPosts?.length).toBe(0);
-
-      expect(users[1].id).toBe("a15220f0-e35c-4f61-9b4c-12e2bb5e8226");
-      expect(users[1].fullName).toBe("Sonia Morales Huanca");
-      expect(users[1].email).toBe("sonia.morales@gmail.com");
-      expect(users[1].bloodTypeId).toBe("a98228f3-e35c-4f61-9b4c-96e2bb5e8116");
-      expect(users[1].password).toBe("a*.881abc!");
-      expect(users[1].address).toBe("Av. Petrolera Nro. 100");
-      expect(users[1].phoneNumber).toBe("+59172278526");
-      expect(users[1].image).toBe("");
-      expect(users[1].dateOfBirth).toBe("28-01-1998");
-      expect(users[1].latitude).toBe(1.08);
-      expect(users[1].longitude).toBe(1.01);
-      expect(users[1].donationPosts?.length).toBe(0);
+    service.getDonors().subscribe((donors) => {
+      expect(donors?.length).toBe(2);
+      expect(donors[0].id).toBe("a15220f0-e35c-4f61-9b4c-96e2bb5e8226");
+      expect(donors[0].fullName).toBe("Juan Perez Mamani");
+      expect(donors[0].bloodTypeId).toBe("a15228f3-e35c-4f61-9b4c-96e2bb5e8116");
+      expect(donors[1].fullName).toBe("Sonia Morales Huanca");
     });
 
-    const req = httpMock.expectOne(`${apiUrl}/users`);
+    const req = httpMock.expectOne(`${apiUrl}/donors`);
     expect(req.request.method).toBe('GET');
-    req.flush(mockUsers);
+    req.flush(mockDonors);
   });
 
   

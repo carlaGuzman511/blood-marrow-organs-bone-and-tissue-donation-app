@@ -2,17 +2,17 @@ import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter, useLocalSearchParams } from 'expo-router';
-import { useUsers } from '@/hooks/useUsers';
+import { useDonors } from '@/hooks/useDonors';
 import Header from '@/components/Header';
 import { COLORS, FONTS } from '@/constants';
-import { EvilIcons, MaterialCommunityIcons, Ionicons, Entypo } from '@expo/vector-icons';
+import { EvilIcons, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 import styles from './DonorDetails.styles';
 
 export default function DonorDetails() {
   const router = useRouter();
   const params = useLocalSearchParams<{ id?: string }>();
-  const id = Number(params.id);
-  const { data: users = [], isLoading } = useUsers();
+  const id = params.id;
+  const { data: users = [], isLoading } = useDonors();
   const user = users.find((item) => item.id === id);
 
   if (isLoading) {
@@ -46,15 +46,11 @@ export default function DonorDetails() {
           <Text style={styles.nameText}>{user.fullName}</Text>
           <View style={styles.locationRow}>
             <EvilIcons name="location" size={20} color={COLORS.primary} />
-            <Text style={styles.locationText}>{user.address}</Text>
+            <Text style={styles.locationText}>{user.city || 'Unknown location'}</Text>
           </View>
         </View>
 
         <View style={styles.actionRow}>
-          <TouchableOpacity style={[styles.actionButton, styles.secondaryAction]}>
-            <Ionicons name="call-outline" size={22} color={COLORS.green} />
-            <Text style={[styles.actionText, styles.secondaryActionText]}>Call Now</Text>
-          </TouchableOpacity>
           <TouchableOpacity style={[styles.actionButton, styles.primaryAction]}>
             <Entypo name="forward" size={22} color={COLORS.white} />
             <Text style={[styles.actionText, styles.primaryActionText]}>Request</Text>
@@ -67,20 +63,12 @@ export default function DonorDetails() {
             <View style={styles.row}>
               <View style={styles.infoItem}>
                 <Text style={styles.labelText}>Blood Type</Text>
-                <Text style={styles.valueText}>{user.bloodType.name}</Text>
+                <Text style={styles.valueText}>{user.bloodType?.name ?? '—'}</Text>
               </View>
               <View style={styles.infoItem}>
-                <Text style={styles.labelText}>Phone</Text>
-                <Text style={styles.valueText}>{user.phoneNumber}</Text>
+                <Text style={styles.labelText}>City</Text>
+                <Text style={styles.valueText}>{user.city || 'Unknown'}</Text>
               </View>
-            </View>
-            <View style={{ marginBottom: 16 }}>
-              <Text style={styles.labelText}>Date of Birth</Text>
-              <Text style={styles.bodyText}>{user.dateOfBirth}</Text>
-            </View>
-            <View>
-              <Text style={styles.labelText}>Address</Text>
-              <Text style={styles.bodyText}>{user.address}</Text>
             </View>
           </View>
         </View>
@@ -97,7 +85,7 @@ export default function DonorDetails() {
               <View style={styles.statItem}>
                 <MaterialCommunityIcons name="map-marker" size={30} color={COLORS.primary} />
                 <Text style={styles.statLabel}>Location</Text>
-                <Text style={styles.statValue}>{user.address.split(',')[0] || 'Unknown'}</Text>
+                <Text style={styles.statValue}>{user.city || 'Unknown'}</Text>
               </View>
             </View>
           </View>

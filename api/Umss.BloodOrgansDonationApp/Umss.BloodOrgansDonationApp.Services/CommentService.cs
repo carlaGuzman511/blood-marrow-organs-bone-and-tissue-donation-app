@@ -1,5 +1,6 @@
 using AutoMapper;
 using FluentValidation;
+using Umss.BloodOrgansDonationApp.Models;
 using Umss.BloodOrgansDonationApp.Models.Entities;
 using Umss.BloodOrgansDonationApp.Models.Exceptions;
 using Umss.BloodOrgansDonationApp.Models.Requests;
@@ -14,10 +15,12 @@ namespace Umss.BloodOrgansDonationApp.Services
     {
         private readonly ICommentRepository _commentRepository;
         private readonly IMapper _mapper;
-        public CommentService(ICommentRepository commentRepository, IMapper mapper)
+        private readonly ICurrentUserService _currentUser;
+        public CommentService(ICommentRepository commentRepository, IMapper mapper, ICurrentUserService currentUser)
         {
             _commentRepository = commentRepository;
             _mapper = mapper;
+            _currentUser = currentUser;
         }
         public async Task<CommentResponse> Create(Guid donationPostId, CommentRequest commentRequest)
         {
@@ -25,6 +28,8 @@ namespace Umss.BloodOrgansDonationApp.Services
             commentRequestValidator.ValidateAndThrow(commentRequest);
 
             Comment comment = _mapper.Map<Comment>(commentRequest);
+            // The author is the caller, never the UserId sent in the body.
+            comment.UserId = await _currentUser.RequireProfileIdAsync();
             comment.Id = Guid.NewGuid();
             comment.CreatedAt = DateTime.UtcNow;
             comment.DonationPostId = donationPostId;
@@ -36,6 +41,13 @@ namespace Umss.BloodOrgansDonationApp.Services
 
         public async Task Delete(Guid donationPostId, Guid commentId)
         {
+            Comment? comment = await _commentRepository.Get(donationPostId, commentId);
+            if (comment == null)
+            {
+                throw new EntityNotFoundException($"Comment with ID {commentId} from post ID {donationPostId} not found.");
+            }
+
+            await EnsureAuthorOrAdminAsync(comment);
             await _commentRepository.Delete(donationPostId, commentId);
         }
 
@@ -67,6 +79,8 @@ namespace Umss.BloodOrgansDonationApp.Services
                 throw new EntityNotFoundException($"Comment with ID {commentId} from post ID {donationPostId} not found.");
             }
 
+            await EnsureAuthorOrAdminAsync(comment);
+
             CommentRequestValidator commentRequestValidator = new CommentRequestValidator();
             commentRequestValidator.ValidateAndThrow(commentRequest);
 
@@ -82,6 +96,20 @@ namespace Umss.BloodOrgansDonationApp.Services
             comment = await _commentRepository.Update(comment);
 
             return _mapper.Map<CommentResponse>(comment);
+        }
+
+        private async Task EnsureAuthorOrAdminAsync(Comment comment)
+        {
+            if (_currentUser.IsNetworkAdmin)
+            {
+                return;
+            }
+
+            User? caller = await _currentUser.GetProfileAsync();
+            if (caller == null || caller.Id != comment.UserId)
+            {
+                throw new ForbiddenException("You can only change your own comments.");
+            }
         }
     }
 }

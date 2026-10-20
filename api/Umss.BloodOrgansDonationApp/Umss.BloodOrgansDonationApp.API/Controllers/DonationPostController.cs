@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Umss.BloodOrgansDonationApp.Models.Requests;
+using Umss.BloodOrgansDonationApp.Models.Requests.Queries;
 using Umss.BloodOrgansDonationApp.Models.Responses;
 using Umss.BloodOrgansDonationApp.Services.Interfaces;
 
@@ -30,17 +31,13 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
             return Ok(response);
         }
 
+        /// <summary>One page of the feed, newest first; search by title or description, filter by blood type, donation type, center or priority. An empty feed is 200 with no items.</summary>
         [Authorize]
         [HttpGet("donation-posts")]
-        public async Task<ActionResult<IEnumerable<DonationPostResponse>>> Get()
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<PagedResult<DonationPostResponse>>> Get([FromQuery] DonationPostQuery query)
         {
-            IEnumerable<DonationPostResponse> response = await _DonationPostService.Get();
-            if (response.Count() == 0)
-            {
-                return NoContent();
-            }
-
-            return Ok(response);
+            return Ok(await _DonationPostService.Get(query));
         }
 
         [Authorize]
@@ -57,12 +54,13 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
             return NoContent();
         }
 
+        /// <summary>One page of a user's posts, newest first (same filters as the feed).</summary>
         [Authorize]
         [HttpGet("users/{userId}/donation-posts")]
-        public async Task<ActionResult<IEnumerable<DonationPostResponse>>> GetByUser(Guid userId)
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<PagedResult<DonationPostResponse>>> GetByUser(Guid userId, [FromQuery] DonationPostQuery query)
         {
-            IEnumerable<DonationPostResponse> response = await _DonationPostService.GetByUser(userId);
-            return Ok(response);
+            return Ok(await _DonationPostService.GetByUser(userId, query));
         }
 
         [Authorize]
@@ -108,12 +106,13 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
             return NoContent();
         }
 
+        /// <summary>One page of a center's posts, newest first (same filters as the feed).</summary>
         [Authorize]
         [HttpGet("donation-centers/{donationCenterId}/donation-posts")]
-        public async Task<ActionResult<IEnumerable<DonationPostResponse>>> GetByDonationCenter(Guid donationCenterId)
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<PagedResult<DonationPostResponse>>> GetByDonationCenter(Guid donationCenterId, [FromQuery] DonationPostQuery query)
         {
-            IEnumerable<DonationPostResponse> response = await _DonationPostService.GetByDonationCenter(donationCenterId);
-            return Ok(response);
+            return Ok(await _DonationPostService.GetByDonationCenter(donationCenterId, query));
         }
 
         [Authorize]

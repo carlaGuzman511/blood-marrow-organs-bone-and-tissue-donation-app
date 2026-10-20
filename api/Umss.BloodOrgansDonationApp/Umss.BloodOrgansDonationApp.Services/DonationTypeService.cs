@@ -3,6 +3,7 @@ using FluentValidation;
 using Umss.BloodOrgansDonationApp.Models;
 using Umss.BloodOrgansDonationApp.Models.Exceptions;
 using Umss.BloodOrgansDonationApp.Models.Requests;
+using Umss.BloodOrgansDonationApp.Models.Requests.Queries;
 using Umss.BloodOrgansDonationApp.Models.Responses;
 using Umss.BloodOrgansDonationApp.Repository;
 using Umss.BloodOrgansDonationApp.Repository.Interfaces;
@@ -51,12 +52,12 @@ namespace Umss.BloodOrgansDonationApp.Services
             }
         }
 
-        public async Task<IEnumerable<DonationTypeResponse>> GetAll()
+        public async Task<PagedResult<DonationTypeResponse>> GetAll(DonationTypeQuery query)
         {
-            IEnumerable<DonationType> donationTypes = await _donationTypeRepository.GetAll();
-            IEnumerable<DonationTypeResponse> responses = donationTypes.Select(x => _mapper.Map<DonationTypeResponse>(x));
+            PageQueryValidator.Check(query);
 
-            return responses;
+            PagedResult<DonationType> donationTypes = await _donationTypeRepository.GetAll(query);
+            return donationTypes.Map(x => _mapper.Map<DonationTypeResponse>(x));
         }
 
         public async Task<DonationTypeResponse> Update(Guid id, DonationTypeRequest donationTypeRequest)

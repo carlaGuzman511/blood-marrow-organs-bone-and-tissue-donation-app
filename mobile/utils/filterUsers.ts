@@ -1,9 +1,9 @@
 import type { SearchFilters } from '../models/Search.types';
-import type { User } from '@/models/App.types';
+import type { Donor } from '@/models/App.types';
 import { normalize } from "@/utils/normalize";
 
 export function filterUsers(
-    user: User,
+    user: Donor,
     filters: SearchFilters
 ): boolean {
 
@@ -21,11 +21,11 @@ export function filterUsers(
 
     const byBloodType =
         !bloodType ||
-        normalize(user.bloodType.name) === bloodType;
+        normalize(user.bloodType?.name) === bloodType;
 
     const byLocation =
         !location ||
-        normalize(user.address).includes(location);
+        normalize(user.city).includes(location);
 
     return (
         bySearch &&

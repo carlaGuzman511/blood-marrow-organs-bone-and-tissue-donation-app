@@ -9,7 +9,9 @@ namespace Umss.BloodOrgansDonationApp.API.Middlewares
     /// Controllers must not catch these themselves:
     /// <list type="bullet">
     /// <item><see cref="ValidationException"/> -> 400 with errors grouped by property.</item>
+    /// <item><see cref="ForbiddenException"/> -> 403.</item>
     /// <item><see cref="EntityNotFoundException"/> -> 404.</item>
+    /// <item><see cref="ConflictException"/> -> 409.</item>
     /// <item><see cref="BusinessException"/> -> 400.</item>
     /// <item>anything else -> 500 with a generic message; details are logged, never returned.</item>
     /// </list>
@@ -66,6 +68,18 @@ namespace Umss.BloodOrgansDonationApp.API.Middlewares
             {
                 Status = StatusCodes.Status400BadRequest,
                 Title = "One or more validation errors occurred.",
+            },
+            ForbiddenException => new ProblemDetails
+            {
+                Status = StatusCodes.Status403Forbidden,
+                Title = "Forbidden.",
+                Detail = exception.Message,
+            },
+            ConflictException => new ProblemDetails
+            {
+                Status = StatusCodes.Status409Conflict,
+                Title = "Conflict.",
+                Detail = exception.Message,
             },
             EntityNotFoundException => new ProblemDetails
             {

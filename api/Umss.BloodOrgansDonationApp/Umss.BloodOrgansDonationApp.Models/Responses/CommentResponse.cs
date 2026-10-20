@@ -7,6 +7,7 @@ namespace Umss.BloodOrgansDonationApp.Models.Responses
         public required Guid DonationPostId { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
-        public UserResponse User { get; set; }
+        /// <summary>The comment author (public fields only).</summary>
+        public AuthorResponse? User { get; set; }
     }
 }

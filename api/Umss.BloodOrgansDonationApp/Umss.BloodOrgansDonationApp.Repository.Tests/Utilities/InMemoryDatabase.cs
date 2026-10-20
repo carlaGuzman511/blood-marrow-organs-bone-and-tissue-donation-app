@@ -83,6 +83,7 @@ namespace Umss.BloodOrgansDonationApp.Repository.Tests.Utilities
         {
             Id = Guid.NewGuid(),
             UserName = name,
+            Email = $"{name.ToLowerInvariant()}@example.com",
             FullName = name,
             BloodTypeId = bloodTypeId,
             Address = "Calle 2",

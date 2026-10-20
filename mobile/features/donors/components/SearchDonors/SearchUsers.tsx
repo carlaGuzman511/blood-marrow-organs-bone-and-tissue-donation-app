@@ -4,7 +4,7 @@ import { FlatList } from 'react-native-gesture-handler';
 import { useRouter } from 'expo-router';
 
 import UserCard from '@/components/UserCard';
-import { useUsers } from '@/hooks/useUsers';
+import { useDonors } from '@/hooks/useDonors';
 import { useSearchFilters } from '@/hooks/useSearchFilters';
 import { useFilteredData } from '@/hooks/useFilteredData';
 import SearchLayout from '@/components/ui/layout/SearchLayout';
@@ -19,7 +19,7 @@ import styles from './SearchUsers.styles';
 export default function SearchUsers() {
   const router = useRouter();
   const { filters, setSearch, setFilter, removeFilter } = useSearchFilters();
-  const { data: users = [] } = useUsers();
+  const { data: users = [] } = useDonors();
 
   const filteredUsers = useFilteredData({
     data: users,

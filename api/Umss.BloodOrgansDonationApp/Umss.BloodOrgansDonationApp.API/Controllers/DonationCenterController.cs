@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Umss.BloodOrgansDonationApp.Models.Requests;
+using Umss.BloodOrgansDonationApp.Models.Requests.Queries;
 using Umss.BloodOrgansDonationApp.Models.Responses;
 using Umss.BloodOrgansDonationApp.Services.Interfaces;
 
@@ -30,12 +31,13 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
             return Ok(response);
         }
 
+        /// <summary>One page of donation centers, ordered by name; search by name or address, filter by city or donation type.</summary>
         [Authorize]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<DonationCenterResponse>>> Get()
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<PagedResult<DonationCenterResponse>>> Get([FromQuery] DonationCenterQuery query)
         {
-            IEnumerable<DonationCenterResponse> response = await _donationCenterService.GetAll();
-            return Ok(response);
+            return Ok(await _donationCenterService.GetAll(query));
         }
 
         [Authorize]

@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Umss.BloodOrgansDonationApp.API.Security;
 using Umss.BloodOrgansDonationApp.Models.Requests;
+using Umss.BloodOrgansDonationApp.Models.Requests.Queries;
 using Umss.BloodOrgansDonationApp.Models.Responses;
 using Umss.BloodOrgansDonationApp.Services.Interfaces;
 
@@ -30,7 +32,7 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
             return Ok(response);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = AppPolicies.NetworkAdmin)]
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(Guid id)
         {
@@ -44,15 +46,16 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
             return NoContent();
         }
 
+        /// <summary>One page of donation types, ordered by name; search by name.</summary>
         [Authorize]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<DonationTypeResponse>>> Get()
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<PagedResult<DonationTypeResponse>>> Get([FromQuery] DonationTypeQuery query)
         {
-            IEnumerable<DonationTypeResponse> response = await _donationTypeService.GetAll();
-            return Ok(response);
+            return Ok(await _donationTypeService.GetAll(query));
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = AppPolicies.NetworkAdmin)]
         [HttpPost]
         public async Task<ActionResult<DonationTypeResponse>> Create([FromBody] DonationTypeRequest donationTypeRequest)
         {
@@ -60,7 +63,7 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
             return CreatedAtAction(nameof(Get), new { id = response.Id }, response);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = AppPolicies.NetworkAdmin)]
         [HttpPut("{id}")]
         public async Task<ActionResult<DonationTypeResponse>> Update(Guid id, [FromBody] DonationTypeRequest donationTypeRequest)
         {
