@@ -1,9 +1,26 @@
+// One page of a list endpoint (every GET list in the API since US-API-18).
+export type PagedResult<T> = {
+    items: T[],
+    page: number,
+    pageSize: number,
+    totalCount: number,
+    totalPages: number,
+}
+
+// Who wrote a post or comment: public fields only.
+export type Author = {
+    id: string,
+    fullName: string,
+    image?: string,
+}
+
 export type Comment = {
-    id?: number,
+    id?: string,
     description: string,
     donationPostId?: string,
     createdAt?: string,
     updatedAt?: string,
+    user?: Author,
 }
 
 export type Donation = {
@@ -28,10 +45,11 @@ export type DonationPost = {
     donationTypeId?: string,
     donationType?: Donation,
     userId?: string,
-    user?: User,    
+    user?: Author,
     donationCenterId?: string,
     donationCenter?: DonationCenter,
     comments: Comment[],
+    commentCount?: number,
     image?: string,
     createdAt: string,
     updatedAt: string,

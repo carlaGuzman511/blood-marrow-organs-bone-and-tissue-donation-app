@@ -222,15 +222,34 @@ namespace Umss.BloodOrgansDonationApp.Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("Bed")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
                     b.Property<Guid>("BloodTypeId")
                         .HasColumnType("uuid");
 
+                    b.Property<string>("Component")
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<string>("CoordinationPhone")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
                     b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("Deadline")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<string>("Diagnosis")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
 
                     b.Property<Guid?>("DonationCenterId")
                         .HasColumnType("uuid");
@@ -238,19 +257,61 @@ namespace Umss.BloodOrgansDonationApp.Repository.Migrations
                     b.Property<Guid>("DonationTypeId")
                         .HasColumnType("uuid");
 
+                    b.Property<int>("Folio")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Folio"));
+                    NpgsqlPropertyBuilderExtensions.HasIdentityOptions(b.Property<int>("Folio"), 1000L, null, null, null, null, null);
+
                     b.Property<string>("Image")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<bool>("Priority")
-                        .HasColumnType("boolean");
+                    b.Property<string>("MedicalRecord")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<int?>("PatientAge")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("PatientCode")
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)");
+
+                    b.Property<string>("Service")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Status")
+                        .IsConcurrencyToken()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<DateTime?>("StatusChangedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("StatusChangedById")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("UnitsCovered")
+                        .IsConcurrencyToken()
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("UnitsRequired")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Urgency")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.Property<Guid?>("UserId")
                         .HasColumnType("uuid");
@@ -263,9 +324,16 @@ namespace Umss.BloodOrgansDonationApp.Repository.Migrations
 
                     b.HasIndex("DonationTypeId");
 
+                    b.HasIndex("Folio")
+                        .IsUnique();
+
+                    b.HasIndex("StatusChangedById");
+
                     b.HasIndex("UserId");
 
                     b.HasIndex("CreatedAt", "Id");
+
+                    b.HasIndex("Status", "Urgency", "Deadline");
 
                     b.ToTable("DonationPosts");
                 });
@@ -360,6 +428,48 @@ namespace Umss.BloodOrgansDonationApp.Repository.Migrations
                     b.HasIndex("DonationTypeId");
 
                     b.ToTable("DonationCentersDonationTypes");
+                });
+
+            modelBuilder.Entity("Umss.BloodOrgansDonationApp.Models.Entities.DonationRequestStatusChange", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("ChangedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("ChangedById")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ChangedBySubject")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<Guid>("DonationPostId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("FromStatus")
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<string>("Reason")
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
+                    b.Property<string>("ToStatus")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChangedById");
+
+                    b.HasIndex("DonationPostId", "ChangedAt");
+
+                    b.ToTable("DonationRequestStatusChanges");
                 });
 
             modelBuilder.Entity("Umss.BloodOrgansDonationApp.Models.User", b =>
@@ -534,6 +644,11 @@ namespace Umss.BloodOrgansDonationApp.Repository.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Umss.BloodOrgansDonationApp.Models.User", "StatusChangedBy")
+                        .WithMany()
+                        .HasForeignKey("StatusChangedById")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("Umss.BloodOrgansDonationApp.Models.User", "User")
                         .WithMany("DonationPosts")
                         .HasForeignKey("UserId")
@@ -544,6 +659,8 @@ namespace Umss.BloodOrgansDonationApp.Repository.Migrations
                     b.Navigation("DonationCenter");
 
                     b.Navigation("DonationType");
+
+                    b.Navigation("StatusChangedBy");
 
                     b.Navigation("User");
                 });
@@ -586,6 +703,24 @@ namespace Umss.BloodOrgansDonationApp.Repository.Migrations
                     b.Navigation("DonationType");
                 });
 
+            modelBuilder.Entity("Umss.BloodOrgansDonationApp.Models.Entities.DonationRequestStatusChange", b =>
+                {
+                    b.HasOne("Umss.BloodOrgansDonationApp.Models.User", "ChangedBy")
+                        .WithMany()
+                        .HasForeignKey("ChangedById")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Umss.BloodOrgansDonationApp.Models.DonationPost", "DonationPost")
+                        .WithMany("StatusChanges")
+                        .HasForeignKey("DonationPostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ChangedBy");
+
+                    b.Navigation("DonationPost");
+                });
+
             modelBuilder.Entity("Umss.BloodOrgansDonationApp.Models.User", b =>
                 {
                     b.HasOne("Umss.BloodOrgansDonationApp.Models.BloodType", "BloodType")
@@ -607,6 +742,8 @@ namespace Umss.BloodOrgansDonationApp.Repository.Migrations
             modelBuilder.Entity("Umss.BloodOrgansDonationApp.Models.DonationPost", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("StatusChanges");
                 });
 
             modelBuilder.Entity("Umss.BloodOrgansDonationApp.Models.DonationType", b =>

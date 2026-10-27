@@ -1,8 +1,5 @@
-import { api } from "@/api/axios";
+import { getLookup } from "@/api/paging";
 import { Donation } from "@/models/App.types";
 
-export const getDonationTypes = async () => {
-  const response = await api.get<Donation[]>('/api/donation-types');
-  
-  return response.data;
-}
+/** All donation types (a small catalog: one page of 100). */
+export const getDonationTypes = (): Promise<Donation[]> => getLookup<Donation>('/api/donation-types');

@@ -40,12 +40,8 @@ export class DonationCenterComponent implements OnInit {
     // donationTypes: new FormControl(''),
   });
   pageSize = 10;
-  currentPage = 0;
-
-  get paginatedItems() {
-    const start = this.currentPage * this.pageSize;
-    return this.donationCenters.slice(start, start + this.pageSize);
-  }
+  currentPage = 0; // 0-based for app-pagination; the API's page is currentPage + 1
+  totalCount = 0;
 
   constructor(
     private donationCenterService: DonationCenterService,
@@ -58,6 +54,7 @@ export class DonationCenterComponent implements OnInit {
   
   onPageChange(page: number) {
     this.currentPage = page;
+    this.getDonationCenters();
   }
 
   saveDonationCenter(donationCenter: DonationCenter): void
@@ -129,16 +126,17 @@ export class DonationCenterComponent implements OnInit {
 
   getDonationCenters(): void {
     this.isLoading = true;
-    this.donationCenterService.getDonationCenters()
+    this.donationCenterService.getDonationCenters({ page: this.currentPage + 1, pageSize: this.pageSize })
       .pipe(
         catchError(error => {
           this.snackBar.open(`Error fetching donation centers ${error}`, 'Close', { duration: 2500 });
-          return of([]);
+          return of(null);
         }),
         finalize(() => this.isLoading = false)
       )
       .subscribe((data) => {
-        this.donationCenters = data;
+        this.donationCenters = data?.items ?? [];
+        this.totalCount = data?.totalCount ?? 0;
       });
     }
 

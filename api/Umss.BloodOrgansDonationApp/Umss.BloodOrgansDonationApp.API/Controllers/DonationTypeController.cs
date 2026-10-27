@@ -49,7 +49,8 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
         /// <summary>One page of donation types, ordered by name; search by name.</summary>
         [Authorize]
         [HttpGet]
-        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest, "application/problem+json")]
         public async Task<ActionResult<PagedResult<DonationTypeResponse>>> Get([FromQuery] DonationTypeQuery query)
         {
             return Ok(await _donationTypeService.GetAll(query));

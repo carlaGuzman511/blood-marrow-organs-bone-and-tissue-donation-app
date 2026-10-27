@@ -11,6 +11,9 @@ import { useDonationPosts } from '@/hooks/useDonationPosts';
 import { DONATION_POST_FILTERS } from '@/config/filters/donationPostFilters';
 import { useFilteredData } from '@/hooks/useFilteredData';
 import { useSearchFilters } from '@/hooks/useSearchFilters';
+import { useDebouncedValue } from '@/hooks/useDebouncedValue';
+import { useBloodTypes } from '@/hooks/useBloodTypes';
+import { resolveBloodTypeId } from '@/utils/resolveBloodTypeId';
 import { filterDonationPosts } from '@/utils/filterDonationPosts';
 import ActiveFilters from '../../../../components/ui/ActiveFilters';
 import SearchBar from '../../../../components/ui/SearchBar';
@@ -20,9 +23,15 @@ import styles from './SearchDonationPosts.styles';
 
 export function DonationPostSearchContent() {
   const router = useRouter();
-  const { data: posts = [], isLoading, error } = useDonationPosts();
-
   const { filters, setSearch, setFilter, removeFilter } = useSearchFilters();
+  const search = useDebouncedValue(filters.search);
+  const { data: bloodTypes = [], isSuccess: bloodTypesLoaded } = useBloodTypes();
+  const bloodTypeName = filters.values.bloodType;
+  const { items: posts, totalCount, loadMore } = useDonationPosts(
+    { search, bloodTypeId: resolveBloodTypeId(bloodTypeName, bloodTypes) },
+    !bloodTypeName || bloodTypesLoaded,
+  );
+
   const filteredPosts = useFilteredData({ data: posts, filters, predicate: filterDonationPosts });
   
     return (
@@ -42,12 +51,14 @@ export function DonationPostSearchContent() {
         filterGroups={DONATION_POST_FILTERS}
         onRemove={removeFilter}
       />
-      <SearchResultCount count={filteredPosts.length} />
+      <SearchResultCount count={filters.values.service ? filteredPosts.length : totalCount} />
       <FlatList
         data={filteredPosts}
         keyExtractor={(item, index) => item.id ?? String(index)}
         renderItem={({ item }) => <DonationCard item={item} onPress={() => undefined} />}
         contentContainerStyle={styles.list}
+        onEndReached={loadMore}
+        onEndReachedThreshold={0.5}
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
             <Text style={styles.emptyText}>No donation requests match your search.</Text>

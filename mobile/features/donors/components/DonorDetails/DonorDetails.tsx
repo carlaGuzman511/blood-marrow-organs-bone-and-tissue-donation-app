@@ -2,7 +2,7 @@ import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter, useLocalSearchParams } from 'expo-router';
-import { useDonors } from '@/hooks/useDonors';
+import { useDonor } from '@/hooks/useDonors';
 import Header from '@/components/Header';
 import { COLORS, FONTS } from '@/constants';
 import { EvilIcons, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
@@ -12,8 +12,8 @@ export default function DonorDetails() {
   const router = useRouter();
   const params = useLocalSearchParams<{ id?: string }>();
   const id = params.id;
-  const { data: users = [], isLoading } = useDonors();
-  const user = users.find((item) => item.id === id);
+  // Fetched by id: the donor may be on any page of the list.
+  const { data: user, isLoading } = useDonor(id);
 
   if (isLoading) {
     return (

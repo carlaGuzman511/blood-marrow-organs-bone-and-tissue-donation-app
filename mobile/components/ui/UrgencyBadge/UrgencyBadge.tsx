@@ -1,31 +1,21 @@
 import React from "react";
-import { View, Text } from "react-native";
-import styles from "./UrgencyBadge.styles";
-import { COLORS } from "@/theme/colors";
+import { ClinicalTone } from "@/theme";
+import StatusBadge from "../StatusBadge";
 
-type Props = {
-    urgency: "Critical" | "High" | "Normal";
+export type Urgency = "Critical" | "High" | "Normal";
+
+/** Urgency of a request: tone and Spanish label. */
+export const URGENCY: Record<Urgency, { tone: ClinicalTone; label: string }> = {
+    Critical: { tone: "urgent", label: "Urgente" },
+    High: { tone: "observation", label: "Prioridad alta" },
+    Normal: { tone: "info", label: "Programada" },
 };
 
-const colors = {
-    Critical: COLORS.danger,
-    High: COLORS.warning,
-    Normal: COLORS.success,
+type Props = {
+    urgency: Urgency;
 };
 
 export default function UrgencyBadge({ urgency }: Props) {
-    return (
-        <View
-            style={[
-                styles.container,
-                {
-                    backgroundColor: colors[urgency],
-                },
-            ]}
-        >
-            <Text style={styles.text}>
-                {urgency}
-            </Text>
-        </View>
-    );
+    const { tone, label } = URGENCY[urgency];
+    return <StatusBadge tone={tone} label={label} />;
 }

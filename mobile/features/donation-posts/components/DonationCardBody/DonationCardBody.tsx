@@ -19,7 +19,8 @@ export default function DonationCardBody({ item }: Props) {
     <View style={styles.body}>
       <CardHeader
         name={user?.fullName || center?.name || ""}
-        city={user?.address || center?.address || ""}
+        // A user's home address is private (the API no longer sends it); a center's address is public.
+        city={center?.address || ""}
         image={user?.image || center?.image || ""}
         isOpen={false} 
       />

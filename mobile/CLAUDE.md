@@ -51,6 +51,21 @@ Server state (API data) is managed with **TanStack Query** — do not introduce 
 
 Reusable, feature-agnostic building blocks (`AppText`, `AppCard`, `Badge`, `FormInput`, `FormPicker`, `SearchBar`, `FilterBottomSheet`, etc.), each in its own folder with a co-located `.styles.ts` file and an `index.ts` barrel. Forms use `react-hook-form` with `@hookform/resolvers/zod` and a Zod schema (see `schemas/donationPost.schema.ts` + `features/donation-posts/components/CreateDonationPost`) for validation; `FormInput`/`FormPicker` from `components/ui/` are the standard controlled-field wrappers.
 
+### Design system (Vitalis DonaVida, US-MOB-08)
+
+Source: Stitch `vitalis_humanitas/DESIGN.md` and the mobile screens. Everything visual comes from `theme/`:
+
+- `theme/palette.ts` is the only file with color literals. Components use semantic roles from `useTheme().colors` (`text`, `textMuted`, `primary`, `primaryText`, `tones.urgent`...), never palette values or hex.
+- Styles: `const useStyles = makeStyles((t) => ({ ... }))` next to the component, `const styles = useStyles()` inside it. Use `t.spacing` (8pt), `t.radius` (inputs/buttons `md` 12, cards `card` 20, pills `full`), `t.elevation[1-3]` and `t.typography.<variant>`.
+- Text: `<AppText variant="headlineLg">`. Plus Jakarta Sans is loaded in `app/_layout.tsx`; with a custom font the weight is the font file (`fontFor(weight)`), never `fontWeight`, or Android falls back to the system font. If the font fails, `ThemeProvider fontsLoaded={false}` switches to the system font.
+- Clinical tones: `urgent` red, `observation` amber, `viable` green, `info` blue, `neutral`. Always icon + text (`StatusBadge`), never color alone. Blood groups: `BloodTypeChip` (read aloud as "Grupo sanguíneo O negativo").
+- Touch targets are at least 48x48: `AppButton` has `minHeight` 48; smaller icons use `IconButton` (adds `hitSlop`). Icon-only controls need `accessibilityLabel`.
+- Base components: `AppButton` (primary / secondary / ghost), `IconButton`, `TextField` (52px; `FormInput` wraps it for react-hook-form), `AppCard` (elevation 0-3), `StatusBadge`, `UrgencyBadge`, `BloodTypeChip`, `RequestCard` (one screen-reader summary: urgency, group, center, title), `LivePulseBanner` (honors reduce motion), `DonationStepper`.
+- `theme/__tests__/contrast.test.ts` checks WCAG AA for every text/background pair in light and dark: add new pairs there when adding colors. White on `#0284C7` fails AA, so cyan text and fills use `#0369A1`.
+- Dark colors exist (`darkColors`), but the app is pinned to light in `app/_layout.tsx` until navigation and every screen use the theme (US-MOB-08 step 4).
+- `constants/theme.ts` (`COLORS`/`SIZES`/`FONTS`) is a deprecated bridge to the light tokens; don't use it in new code. Move screens to `useTheme` and delete it when nothing imports it.
+- Tests: `npm run test:ci`. `jest.setup.ts` stubs `@expo/vector-icons` (icon fonts don't load under Jest) and adds the Testing Library matchers.
+
 ### Search & filtering pattern
 
 Search/filter UIs share a generic pattern rather than per-feature reimplementation:

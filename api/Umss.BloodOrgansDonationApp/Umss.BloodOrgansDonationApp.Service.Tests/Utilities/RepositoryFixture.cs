@@ -1,5 +1,6 @@
 using AutoMapper;
 using Moq;
+using Umss.BloodOrgansDonationApp.Models.AutoMapper;
 using Umss.BloodOrgansDonationApp.Repository.Interfaces;
 using Umss.BloodOrgansDonationApp.Services.Interfaces;
 
@@ -13,6 +14,7 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Utilities
         protected internal Mock<IDonationPostRepository> DonationPostRepositoryMock { get; }
         protected internal Mock<IBloodTypeRepository> BloodTypeRepositoryMock { get; }
         protected internal Mock<IDonationCenterRepository> DonationCenterRepositoryMock { get; }
+        protected internal Mock<IDonationRequestRepository> DonationRequestRepositoryMock { get; }
         protected internal Mock<IMapper> MapperMock { get; }
         protected internal Mock<ITokenService> tokenServiceMock { get; }
         protected internal Mock<ICurrentUserService> CurrentUserServiceMock { get; }
@@ -23,6 +25,13 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Utilities
         protected internal IDonationPostRepository DonationPostRepository { get; }
         protected internal IBloodTypeRepository BloodTypeRepository { get; }
         protected internal IDonationCenterRepository DonationCenterRepository { get; }
+        protected internal IDonationRequestRepository DonationRequestRepository { get; }
+
+        /// <summary>AutoMapper with the real profiles, for tests that check the response itself.</summary>
+        protected internal IMapper RealMapper { get; } = new MapperConfiguration(cfg => cfg.AddMaps(typeof(DonationRequestProfile).Assembly)).CreateMapper();
+
+        /// <summary>A clock that only moves when a test sets it.</summary>
+        protected internal FixedClock Clock { get; } = new FixedClock(new DateTimeOffset(2026, 10, 21, 12, 0, 0, TimeSpan.Zero));
         protected internal IMapper Mapper { get; }
         protected internal ITokenService tokenService { get; }
         protected internal ICurrentUserService CurrentUserService { get; }
@@ -37,6 +46,9 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Utilities
 
             this.DonationPostRepositoryMock = new Mock<IDonationPostRepository>();
             this.DonationPostRepository = this.DonationPostRepositoryMock.Object;
+
+            this.DonationRequestRepositoryMock = new Mock<IDonationRequestRepository>();
+            this.DonationRequestRepository = this.DonationRequestRepositoryMock.Object;
 
             this.CommentRepositoryMock = new Mock<ICommentRepository>();
             this.CommentRepository = this.CommentRepositoryMock.Object;

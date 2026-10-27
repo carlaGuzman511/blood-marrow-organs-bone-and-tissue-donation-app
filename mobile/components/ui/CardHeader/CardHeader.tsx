@@ -38,7 +38,7 @@ function CardHeader({
                     </AppText>
                     <StatusBadge
                         label={isOpen ? "Available" : "Not Available"}
-                        isOpen={isOpen}
+                        tone={isOpen ? "viable" : "neutral"}
                     />
                 </View>
                 <View style={styles.locationContainer}>

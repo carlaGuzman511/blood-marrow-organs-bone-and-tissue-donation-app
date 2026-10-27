@@ -1,18 +1,6 @@
-import { COLORS } from "@/constants";
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-    button: {
-        flex: 1,
-        backgroundColor: COLORS.primary,
-        borderRadius: 12,
-        paddingVertical: 12,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    text: {
-        color: "white",
-        fontWeight: "700",
-        fontSize: 15,
-    },
+    // The old button filled its row; callers rely on it.
+    button: { flex: 1 },
 });

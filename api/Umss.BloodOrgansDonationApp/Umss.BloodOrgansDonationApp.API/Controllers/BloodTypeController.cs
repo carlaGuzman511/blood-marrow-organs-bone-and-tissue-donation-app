@@ -52,7 +52,8 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
         /// <summary>One page of blood types, ordered by name. The list is small: use pageSize=100 for a dropdown.</summary>
         [Authorize]
         [HttpGet]
-        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest, "application/problem+json")]
         public async Task<ActionResult<PagedResult<BloodType>>> Get([FromQuery] BloodTypeQuery query)
         {
             return Ok(await _bloodTypeService.GetAll(query));

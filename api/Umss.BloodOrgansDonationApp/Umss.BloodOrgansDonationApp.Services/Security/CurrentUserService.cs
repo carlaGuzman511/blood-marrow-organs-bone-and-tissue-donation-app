@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Logging;
 using Umss.BloodOrgansDonationApp.Models;
 using Umss.BloodOrgansDonationApp.Models.Exceptions;
+using Umss.BloodOrgansDonationApp.Models.Security;
 using Umss.BloodOrgansDonationApp.Repository.Interfaces;
 using Umss.BloodOrgansDonationApp.Services.Interfaces;
 
@@ -34,6 +35,8 @@ namespace Umss.BloodOrgansDonationApp.Services.Security
         public CallerIdentity? Caller => _accessor.GetCaller();
 
         public bool IsNetworkAdmin => Caller?.IsNetworkAdmin ?? false;
+
+        public bool IsClinicalStaff => Caller?.IsInRole(AppRoles.ClinicalStaff) ?? false;
 
         public async Task<User?> GetProfileAsync()
         {

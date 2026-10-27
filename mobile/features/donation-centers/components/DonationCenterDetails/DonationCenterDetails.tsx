@@ -2,25 +2,16 @@ import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter, useLocalSearchParams } from 'expo-router';
-import { useDonationCenters } from '@/features/donation-centers/hooks/useDonationCenters';
+import { useDonationCenter } from '@/features/donation-centers/hooks/useDonationCenters';
 import Header from '@/components/Header';
 import { COLORS, SIZES } from '@/constants';
 import { EvilIcons, MaterialCommunityIcons, Ionicons, Entypo } from '@expo/vector-icons';
 import styles from './DonationCenterDetails.styles';
-import { DonationCenter } from "@/models/App.types";
-
-type Props = {
-  item: DonationCenter;
-  onBack?: () => void;
-};
-
-export default function DonationCenterDetails({ item, onBack }: Props) {
-  const donationTypes = item.donationTypes || [];
+export default function DonationCenterDetails() {
   const router = useRouter();
   const params = useLocalSearchParams<{ id?: string }>();
-  const id = Number(params.id);
-  const { data: donationCenters = [], isLoading } = useDonationCenters();
-  const center = donationCenters.find((item) => item.id === id);
+  // Ids are GUID strings (Number() gave NaN), and the center may be on any page: fetch it by id.
+  const { data: center, isLoading } = useDonationCenter(params.id);
 
   if (isLoading) {
     return (

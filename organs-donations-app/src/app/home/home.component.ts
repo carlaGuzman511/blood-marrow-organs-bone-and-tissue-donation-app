@@ -26,6 +26,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 export class HomeComponent implements OnInit {
   donationPosts: DonationPost[] = [];
+  page = 1;
+  totalCount = 0;
+  get hasMore(): boolean { return this.donationPosts.length < this.totalCount; }
   isLoading: boolean = false;
   showForm: boolean = false;
   requestForm: FormGroup = new FormGroup({
@@ -138,18 +141,31 @@ export class HomeComponent implements OnInit {
       }})
   }
 
+  /** Reloads the feed from the first page (after a create, edit or delete too). */
   getDonationPosts(): void {
+    this.page = 1;
+    this.loadPage(false);
+  }
+
+  loadMore(): void {
+    this.page++;
+    this.loadPage(true);
+  }
+
+  private loadPage(append: boolean): void {
     this.isLoading = true;
-    this.homeService.getDonationPosts()
+    this.homeService.getDonationPosts({ page: this.page })
       .pipe(
         catchError(error => {
           this.snackBar.open(`Error fetching donation posts ${error}`, 'Close', { duration: 2500 });
-          return of([]);
+          return of(null);
         }),
         finalize(() => this.isLoading = false)
       )
       .subscribe((data) => {
-        this.donationPosts = data;
+        const items = data?.items ?? [];
+        this.donationPosts = append ? [...this.donationPosts, ...items] : items;
+        this.totalCount = data?.totalCount ?? this.totalCount;
       });
   }
 

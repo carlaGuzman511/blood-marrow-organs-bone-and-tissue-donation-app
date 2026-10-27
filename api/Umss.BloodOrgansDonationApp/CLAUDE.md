@@ -30,7 +30,7 @@ dotnet ef database update --project Umss.BloodOrgansDonationApp.Repository --sta
 
 `Umss.BloodOrgansDonationApp.Repository.Tests` runs repositories against EF Core InMemory (`Utilities/InMemoryDatabase`, one isolated store per test; use `NewContext()` to assert through a fresh context, like a new request scope). Tests under `Postgres/` (`[PostgresFact]`) run against a real server only when `POSTGRES_TEST_CONNECTION` is set (e.g. `Host=localhost;Port=5432;Username=postgres;Password=postgres`): they apply all migrations to a throwaway database and drop it afterwards. Use them for anything InMemory can't check (migrations, unique indexes, `ExecuteUpdate`).
 
-`DataSeeder` currently fails on an empty database: the seeded donation centers lack the required `Email`/`OpeningHours`/`Phone`, so `SaveChangesAsync` throws and nothing is seeded (the error is only printed by `Program.cs`). Tests create their own data instead.
+`DataSeeder` currently fails on an empty database: the seeded donation centers lack the required `Email`/`OpeningHours`/`Phone`, so `SaveChangesAsync` throws and nothing is seeded on Postgres (the error is only printed by `Program.cs`). EF InMemory has no transactions, so in API tests its 8 blood types *are* left behind. Tests create their own data instead.
 
 Migrations and data seeding (`DataSeeder.SeedAsync`) run automatically on API startup (see `Program.cs`) — there's no separate seed command.
 
@@ -74,6 +74,27 @@ JWT Bearer auth is enforced via Keycloak (`AddJwtBearer` in `Program.cs`, `Autho
 - **Other users' data:** `/api/donors` (any signed-in user) returns `DonorResponse` only: name, photo, city, blood type. Never add address, phone, email, date of birth or coordinates to it; full `UserResponse` is for yourself (`/api/me`) or network admins (`/api/users`).
 - **Ownership checks live in the services** (throw `ForbiddenException` -> 403): `users/{userId}/...` writes and `/api/users/{id}` are self-or-admin; listing/deleting users is admin-only; comment author is the caller, and only the author or an admin edits/deletes it. Center-scoped routes (`donation-centers/{id}/...`) are not restricted yet (US-API-12 increments 2-3: `clinical_staff` + center claim).
 - `ExceptionMiddleware` also maps `ForbiddenException` -> 403 and `ConflictException` -> 409.
+
+### Lists: paging and filters (US-API-18 / US-API-26)
+
+Every list endpoint takes a query object bound with `[FromQuery]` (`Models/Requests/Queries`: `PageQuery` -> `SearchPageQuery` -> `DonationPostQuery`, `UserQuery`, `DonorQuery`, ...) and returns `PagedResult<T>` (`items`, `page`, `pageSize`, `totalCount`, `totalPages`). Never return a whole table.
+
+- `page` starts at 1; `pageSize` defaults to 20, max 100 (`PageQuery.MaxPageSize`); `search` max 100 chars. Services call `PageQueryValidator.Check(query)` first (after any access check), so bad values are a 400.
+- Repositories page in SQL: filter -> unique order (always end with `Id`) -> `.ToPagedResultAsync(query)` (`Repository/Extensions/QueryableExtensions`: `CountAsync` + `Skip`/`Take`). Use `AsSplitQuery()` when the page includes collections. Services only `page.Map(...)` to responses.
+- Search is case-insensitive `x.ToLower().Contains(search)` (`query.NormalizedSearch()`); it works on Postgres and InMemory and treats `%`/`_` as text. City filters are exact, case-insensitive.
+- Small catalogs (blood types, donation types) are paged too; clients ask for `pageSize=100`.
+- Swagger: list actions declare `[ProducesResponseType(StatusCodes.Status200OK)]` and a 400 `ValidationProblemDetails` as `application/problem+json`; query params are documented from XML comments on the query classes (`GenerateDocumentationFile` in API and Models) and shown camelCase (`Swagger/CamelCaseQueryParametersFilter`). Don't put `[Produces("application/json")]` on controllers: it turns binding 400s into `application/json`.
+- Post and comment authors are `AuthorResponse` (id, name, photo): public fields only.
+
+### Clinical donation requests (US-API-01 / US-API-02)
+
+- A request is a `DonationPost` row with a `Status` (phase). The same table feeds the mobile feed (`/api/donation-posts`) and the portal board (`/api/donation-requests`), so both always show the same data. Plain posts leave the clinical columns null; `Priority` became `Urgency` (`Standard`/`Priority`/`CodeRed`), and the feed's `priority` field and filter are derived from it.
+- Enums are stored as text and sent as text (`JsonStringEnumConverter` in `Program.cs`). `Folio` is a Postgres identity starting at 1000, shown as `REQ-{folio}`.
+- `DonationRequestService`: the body is copied by hand (`Apply`), never mapped, so phase, covered units and author can't come from the client. Phase moves live in `Services/RequestLifecycle` (Completed and Cancelled are final; same phase is a no-op; others 409). Reaching the required units completes an open request automatically. Every phase change adds a `DonationRequestStatusChange` row (who, when, from, to, reason).
+- Patient data (`patient` in the response) goes only to clinical staff, network admins and the author; only they can search by patient code.
+- `PATCH /{id}/status` and `POST /{id}/units` need `AppPolicies.ClinicalStaff` (clinical_staff or network admin), checked again in the service. Clinical staff aren't tied to a center yet (US-API-12).
+- Concurrency: `Status` and `UnitsCovered` are concurrency tokens. `DonationRequestRepository.Save` compares against the `RequestState` the caller read, so a stale move becomes `ConflictException` (409) instead of overwriting.
+- Countdown: `remainingSeconds` (negative when overdue, null when closed) is computed from the injected `TimeProvider`; service tests use `Utilities/FixedClock`.
 
 ### Validation messages
 

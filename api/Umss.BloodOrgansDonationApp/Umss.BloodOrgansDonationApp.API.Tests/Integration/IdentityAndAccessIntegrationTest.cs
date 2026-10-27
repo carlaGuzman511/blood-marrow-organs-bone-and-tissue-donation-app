@@ -194,10 +194,11 @@ namespace Umss.BloodOrgansDonationApp.API.Tests.Integration
         {
             User donor = await _factory.AddUserAsync();
 
-            List<DonorResponse>? filtered = await (await Send(TestIdentity.Donor(), HttpMethod.Get, $"/api/donors?bloodTypeId={donor.BloodTypeId}"))
-                .Content.ReadFromJsonAsync<List<DonorResponse>>();
+            PagedResult<DonorResponse>? filtered = await (await Send(TestIdentity.Donor(), HttpMethod.Get, $"/api/donors?bloodTypeId={donor.BloodTypeId}"))
+                .Content.ReadFromJsonAsync<PagedResult<DonorResponse>>();
 
-            Assert.Equal(donor.Id, Assert.Single(filtered!).Id);
+            Assert.Equal(donor.Id, Assert.Single(filtered!.Items).Id);
+            Assert.Equal(1, filtered.TotalCount);
             Assert.Equal(HttpStatusCode.NotFound, (await Send(TestIdentity.Donor(), HttpMethod.Get, $"/api/donors/{Guid.NewGuid()}")).StatusCode);
             Assert.Equal(HttpStatusCode.Unauthorized, (await Send(TestIdentity.Anonymous, HttpMethod.Get, "/api/donors")).StatusCode);
         }

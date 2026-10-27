@@ -91,6 +91,28 @@ namespace Umss.BloodOrgansDonationApp.API.Tests.Utilities
             });
         }
 
+        public static Task<DonationCenter> AddCenterAsync(this WebApplicationFactory<Program> factory, string name = "Hospital General") =>
+            factory.QueryDbAsync(async db =>
+            {
+                DonationCenter center = new DonationCenter
+                {
+                    Id = Guid.NewGuid(),
+                    Name = name,
+                    Address = "Av. 1",
+                    City = "Cochabamba",
+                    Email = "hospital@test.com",
+                    OpeningHours = "24h",
+                    Phone = "4444444",
+                    Image = "h.png",
+                    Latitude = 0,
+                    Longitude = 0,
+                    DonationCenterDonationTypes = new List<DonationCenterDonationType>(),
+                };
+                db.DonationCenters.Add(center);
+                await db.SaveChangesAsync();
+                return center;
+            });
+
         public static Task<Comment> AddCommentAsync(this WebApplicationFactory<Program> factory, Guid postId, Guid authorId) =>
             factory.QueryDbAsync(async db =>
             {

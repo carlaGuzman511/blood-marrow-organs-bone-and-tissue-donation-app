@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RequestFormModalComponent } from './info-form-modal.component';
+import { InfoFormModalComponent } from './info-form-modal.component';
 
-describe('RequestFormModalComponent', () => {
-  let component: RequestFormModalComponent;
-  let fixture: ComponentFixture<RequestFormModalComponent>;
+describe('InfoFormModalComponent', () => {
+  let component: InfoFormModalComponent;
+  let fixture: ComponentFixture<InfoFormModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RequestFormModalComponent]
+      imports: [InfoFormModalComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(RequestFormModalComponent);
+    fixture = TestBed.createComponent(InfoFormModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

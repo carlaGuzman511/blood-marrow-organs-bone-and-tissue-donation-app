@@ -13,7 +13,6 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
     [ApiController]
     [Authorize]
     [Route("api/donors")]
-    [Produces("application/json")]
     public class DonorController : ControllerBase
     {
         private readonly IDonorService _donorService;
@@ -26,7 +25,7 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
         /// <summary>One page of donors, ordered by name; search by name, filter by blood type or city.</summary>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest, "application/problem+json")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<PagedResult<DonorResponse>>> Get([FromQuery] DonorQuery query)
         {

@@ -1,3 +1,5 @@
+using Umss.BloodOrgansDonationApp.Models.Entities;
+
 namespace Umss.BloodOrgansDonationApp.Models.Responses
 {
     public class DonationPostResponse
@@ -6,7 +8,9 @@ namespace Umss.BloodOrgansDonationApp.Models.Responses
         public BloodType BloodType { get; set; }
         public DonationTypeResponse DonationType { get; set; }
 
+        /// <summary>Kept for older clients: true when Urgency is Priority or CodeRed.</summary>
         public bool Priority { get; set; }
+        public Urgency Urgency { get; set; }
         /// <summary>The user who published the post (public fields only), or null for a center post.</summary>
         public AuthorResponse? User { get; set; }
         public DonationCenterResponse? DonationCenter { get; set; }

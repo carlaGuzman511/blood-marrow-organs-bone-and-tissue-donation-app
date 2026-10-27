@@ -9,13 +9,19 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "test:ci": "jest --ci"
   },
   "jest": {
-    "preset": "jest-expo"
+    "preset": "jest-expo",
+    "setupFilesAfterEnv": [
+      "@testing-library/react-native/extend-expect",
+      "<rootDir>/jest.setup.ts"
+    ]
   },
   "dependencies": {
     "@angular/google-maps": "^20.1.0",
+    "@expo-google-fonts/plus-jakarta-sans": "^0.4.2",
     "@expo/vector-icons": "^14.1.0",
     "@gorhom/bottom-sheet": "^5.2.14",
     "@hookform/resolvers": "^5.7.1",
@@ -61,6 +67,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
+    "@testing-library/react-native": "^12.9.0",
     "@types/jest": "^29.5.12",
     "@types/react": "~18.3.12",
     "@types/react-query": "^1.2.8",

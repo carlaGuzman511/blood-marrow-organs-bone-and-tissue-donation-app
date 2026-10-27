@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { HomeService } from './home.service';
-import { BloodType, Donation, DonationCenter, DonationPost, User, Donor } from '../models/DonationPost';
+import { BloodType, Donation, DonationCenter, DonationPost, User, Donor, PagedResult } from '../models/DonationPost';
 import { environment } from '../../environments/environment';
 
 describe('HomeService', () => {
@@ -22,6 +22,11 @@ describe('HomeService', () => {
   afterEach(() => {
     httpMock.verify();
   });
+
+  // The API wraps every list in a page (US-API-18).
+  function pageOf<T>(items: T[]): PagedResult<T> {
+    return { items, page: 1, pageSize: 20, totalCount: items.length, totalPages: 1 };
+  }
 
   it('should save donation center posts', () => {
     const donationCenterId: string = "30b619f7-b8e6-47a1-b881-5f2141bb7d77";
@@ -177,7 +182,9 @@ describe('HomeService', () => {
       }
     ];
 
-    service.getDonationPosts().subscribe((donationPosts) => {
+    service.getDonationPosts().subscribe((page) => {
+      const donationPosts = page.items;
+      expect(page.totalCount).toBe(2);
       expect(donationPosts.length).toBe(2);
 
       expect(donationPosts[0].id).toBe("b2af0e05-395f-42cb-a264-01556165b4f3");
@@ -239,7 +246,7 @@ describe('HomeService', () => {
 
     const req = httpMock.expectOne(`${apiUrl}/donation-posts`);
     expect(req.request.method).toBe('GET');
-    req.flush(mockDonationPosts);
+    req.flush(pageOf(mockDonationPosts));
   });
 
   it('should fetch blood types', () => {
@@ -268,9 +275,9 @@ describe('HomeService', () => {
       expect(bloodTypes[1].image).toBe("");
     });
 
-    const req = httpMock.expectOne(`${apiUrl}/blood-types`);
+    const req = httpMock.expectOne(`${apiUrl}/blood-types?pageSize=100`);
     expect(req.request.method).toBe('GET');
-    req.flush(mockBloodTypes);
+    req.flush(pageOf(mockBloodTypes));
   });
 
   it('should fetch donation centers', () => {
@@ -319,9 +326,9 @@ describe('HomeService', () => {
       expect(donationCenters[1].donationTypes?.length).toBe(0);
     });
 
-    const req = httpMock.expectOne(`${apiUrl}/donation-centers`);
+    const req = httpMock.expectOne(`${apiUrl}/donation-centers?pageSize=100`);
     expect(req.request.method).toBe('GET');
-    req.flush(mockDonationCenters);
+    req.flush(pageOf(mockDonationCenters));
   });
 
   it('should fetch donors (public fields only)', () => {
@@ -339,7 +346,8 @@ describe('HomeService', () => {
       image: "",
     }];
 
-    service.getDonors().subscribe((donors) => {
+    service.getDonors().subscribe((page) => {
+      const donors = page.items;
       expect(donors?.length).toBe(2);
       expect(donors[0].id).toBe("a15220f0-e35c-4f61-9b4c-96e2bb5e8226");
       expect(donors[0].fullName).toBe("Juan Perez Mamani");
@@ -349,7 +357,15 @@ describe('HomeService', () => {
 
     const req = httpMock.expectOne(`${apiUrl}/donors`);
     expect(req.request.method).toBe('GET');
-    req.flush(mockDonors);
+    req.flush(pageOf(mockDonors));
+  });
+
+  it('should send only the filled-in filters and paging to the API', () => {
+    service.getDonors({ search: '  ana ', bloodTypeId: null, city: '', page: 2 }).subscribe();
+
+    const req = httpMock.expectOne(`${apiUrl}/donors?search=ana&page=2`);
+    expect(req.request.method).toBe('GET');
+    req.flush(pageOf([]));
   });
 
   
@@ -402,18 +418,19 @@ describe('HomeService', () => {
       expect(donationTypes[1].image).toBe("");
     });
 
-    const req = httpMock.expectOne(`${apiUrl}/donation-types`);
+    const req = httpMock.expectOne(`${apiUrl}/donation-types?pageSize=100`);
     expect(req.request.method).toBe('GET');
-    req.flush(mockDonationTypes);
+    req.flush(pageOf(mockDonationTypes));
   });
 
   it('should fetch donation types, 500', () => {
-    service.getDonationTypes().subscribe({
-    });
+    let failed = false;
+    service.getDonationTypes().subscribe({ error: () => failed = true });
 
-    const req = httpMock.expectOne(`${apiUrl}/donation-types`);
+    const req = httpMock.expectOne(`${apiUrl}/donation-types?pageSize=100`);
     expect(req.request.method).toBe('GET');
-    req.flush(mockDonationTypes);
+    req.flush('Server error', { status: 500, statusText: 'Internal Server Error' });
+    expect(failed).toBeTrue();
   });
 
 });

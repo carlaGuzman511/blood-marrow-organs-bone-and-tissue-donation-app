@@ -12,6 +12,9 @@ namespace Umss.BloodOrgansDonationApp.API.Security
     {
         public const string NetworkAdmin = nameof(NetworkAdmin);
 
+        /// <summary>Hospital or blood bank personnel (clinical_staff), or a network admin.</summary>
+        public const string ClinicalStaff = nameof(ClinicalStaff);
+
         public static void Configure(AuthorizationOptions options)
         {
             // Secure by default: an endpoint someone forgets to annotate is still not public.
@@ -22,6 +25,10 @@ namespace Umss.BloodOrgansDonationApp.API.Security
             options.AddPolicy(NetworkAdmin, policy => policy
                 .RequireAuthenticatedUser()
                 .RequireRole(AppRoles.NetworkAdmin, AppRoles.LegacyAdmin));
+
+            options.AddPolicy(ClinicalStaff, policy => policy
+                .RequireAuthenticatedUser()
+                .RequireRole(AppRoles.ClinicalStaff, AppRoles.NetworkAdmin, AppRoles.LegacyAdmin));
         }
     }
 }

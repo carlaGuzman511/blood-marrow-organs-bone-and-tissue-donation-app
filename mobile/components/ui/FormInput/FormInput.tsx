@@ -1,8 +1,6 @@
 import React from "react";
-import { View, Text, TextInput } from "react-native";
 import { Control, Controller, FieldValues, Path } from "react-hook-form";
-import { COLORS } from "@/constants";
-import styles from "./FormInput.styles";
+import TextField from "../TextField";
 
 type Props<T extends FieldValues> = {
   control: Control<T>;
@@ -15,38 +13,20 @@ type Props<T extends FieldValues> = {
   numberOfLines?: number;
 };
 
-export default function FormInput<T extends FieldValues>({
-  control,
-  name,
-  label,
-  placeholder,
-  secureTextEntry,
-  keyboardType,
-  multiline,
-  numberOfLines,
-}: Props<T>) {
+/** `TextField` bound to react-hook-form: shows the field's validation message. */
+export default function FormInput<T extends FieldValues>({ control, name, ...fieldProps }: Props<T>) {
   return (
     <Controller
       control={control}
       name={name}
       render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
-        <View style={styles.container}>
-          <Text style={styles.label}>{label}</Text>
-          <TextInput
-            style={[styles.input, multiline && styles.textArea, error && styles.errorInput]}
-            onChangeText={onChange}
-            onBlur={onBlur}
-            value={value as string}
-            placeholder={placeholder}
-            placeholderTextColor={COLORS.gray}
-            secureTextEntry={secureTextEntry}
-            keyboardType={keyboardType}
-            multiline={multiline}
-            numberOfLines={numberOfLines}
-            textAlignVertical={multiline ? "top" : "auto"}
-          />
-          {error && <Text style={styles.errorText}>{error.message}</Text>}
-        </View>
+        <TextField
+          {...fieldProps}
+          value={(value as string | undefined) ?? ""}
+          onChangeText={onChange}
+          onBlur={onBlur}
+          error={error?.message}
+        />
       )}
     />
   );

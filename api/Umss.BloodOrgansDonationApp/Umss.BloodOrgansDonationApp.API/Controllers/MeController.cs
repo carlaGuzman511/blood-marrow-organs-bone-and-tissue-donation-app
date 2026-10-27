@@ -13,7 +13,6 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
     [ApiController]
     [Authorize]
     [Route("api/me")]
-    [Produces("application/json")]
     public class MeController : ControllerBase
     {
         private readonly IProfileService _profileService;

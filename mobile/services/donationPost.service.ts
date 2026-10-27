@@ -1,12 +1,11 @@
 import { api } from "@/api/axios";
-import { DonationPost } from "@/models/App.types";
+import { getPage, PageQuery } from "@/api/paging";
+import { DonationPost, PagedResult } from "@/models/App.types";
 import { DonationPostFormData } from "@/schemas/donationPost.schema";
 
-export const getDonationPosts = async () => {
-  const response = await api.get<DonationPost[]>('/api/donation-posts');
-  
-  return response.data;
-}
+/** One page of the feed. Filters: search (title or description), bloodTypeId, donationTypeId, priority. */
+export const getDonationPosts = (query: PageQuery = {}): Promise<PagedResult<DonationPost>> =>
+  getPage<DonationPost>('/api/donation-posts', query);
 
 export const createDonationPost = async (data: DonationPostFormData): Promise<DonationPost> => {
   const payload = {

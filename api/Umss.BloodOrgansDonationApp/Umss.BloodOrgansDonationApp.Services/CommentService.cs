@@ -4,6 +4,7 @@ using Umss.BloodOrgansDonationApp.Models;
 using Umss.BloodOrgansDonationApp.Models.Entities;
 using Umss.BloodOrgansDonationApp.Models.Exceptions;
 using Umss.BloodOrgansDonationApp.Models.Requests;
+using Umss.BloodOrgansDonationApp.Models.Requests.Queries;
 using Umss.BloodOrgansDonationApp.Models.Responses;
 using Umss.BloodOrgansDonationApp.Repository.Interfaces;
 using Umss.BloodOrgansDonationApp.Services.Interfaces;
@@ -64,12 +65,12 @@ namespace Umss.BloodOrgansDonationApp.Services
             }
         }
 
-        public async Task<IEnumerable<CommentResponse>> Get(Guid donationPostId)
+        public async Task<PagedResult<CommentResponse>> Get(Guid donationPostId, CommentQuery query)
         {
-            IEnumerable<Comment> comments = await _commentRepository.Get(donationPostId);
-            IEnumerable<CommentResponse> response = comments.Select(x => _mapper.Map<CommentResponse>(x));
+            PageQueryValidator.Check(query);
 
-            return response;
+            PagedResult<Comment> comments = await _commentRepository.Get(donationPostId, query);
+            return comments.Map(x => _mapper.Map<CommentResponse>(x));
         }
         public async Task<CommentResponse> Update(Guid donationPostId, Guid commentId, CommentRequest commentRequest)
         {

@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { DonationCenter } from '../models/DonationPost';
+import { Observable } from 'rxjs';
+import { DonationCenter, PagedResult, PageQuery } from '../models/DonationPost';
+import { HomeService } from './home.service';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -11,8 +13,9 @@ export class DonationCenterService {
 
   constructor(private httpService: HttpClient) { }
 
-  getDonationCenters(){
-    return this.httpService.get<DonationCenter[]>(`${this.apiUrl}/donation-centers`);
+  /** One page of donation centers, ordered by name. */
+  getDonationCenters(query: PageQuery = {}): Observable<PagedResult<DonationCenter>> {
+    return this.httpService.get<PagedResult<DonationCenter>>(`${this.apiUrl}/donation-centers`, { params: HomeService.toParams(query) });
   }
 
   saveDonationCenter(donationCenter: DonationCenter){

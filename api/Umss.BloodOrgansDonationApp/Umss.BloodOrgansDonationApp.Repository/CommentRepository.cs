@@ -1,7 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Umss.BloodOrgansDonationApp.Models.Entities;
 using Umss.BloodOrgansDonationApp.Models.Exceptions;
+using Umss.BloodOrgansDonationApp.Models.Requests.Queries;
+using Umss.BloodOrgansDonationApp.Models.Responses;
 using Umss.BloodOrgansDonationApp.Repository.Data;
+using Umss.BloodOrgansDonationApp.Repository.Extensions;
 using Umss.BloodOrgansDonationApp.Repository.Interfaces;
 
 namespace Umss.BloodOrgansDonationApp.Repository
@@ -35,9 +38,16 @@ namespace Umss.BloodOrgansDonationApp.Repository
         {
             return await _appContext.Comments.AsNoTracking().Where(x => x.DonationPostId == donationPostId && x.Id == commentId).FirstOrDefaultAsync();
         }
-        public async Task<IEnumerable<Comment>> Get(Guid donationPostId)
+        public async Task<PagedResult<Comment>> Get(Guid donationPostId, CommentQuery query)
         {
-            return await _appContext.Comments.AsNoTracking().Where(x => x.DonationPostId == donationPostId).ToListAsync();
+            // The author is included so the response can show who wrote it (public fields only).
+            return await _appContext.Comments
+                .AsNoTracking()
+                .Where(c => c.DonationPostId == donationPostId)
+                .Include(c => c.User)
+                .OrderBy(c => c.CreatedAt)
+                .ThenBy(c => c.Id)
+                .ToPagedResultAsync(query);
         }
 
         /// <summary>

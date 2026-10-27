@@ -79,6 +79,26 @@ export type DonationCenter = {
     donationTypeIds?: number[],
 }
 
+// One page of a list endpoint (every GET list in the API since US-API-18).
+export type PagedResult<T> = {
+    items: T[],
+    page: number,
+    pageSize: number,
+    totalCount: number,
+    totalPages: number,
+}
+
+// Query string of a list endpoint. page starts at 1; pageSize is 1..100 (default 20).
+export type PageQuery = {
+    page?: number,
+    pageSize?: number,
+    search?: string,
+    [filter: string]: string | number | boolean | undefined | null,
+}
+
+// Small catalogs (blood types, donation types, centers for a dropdown) fit in one page.
+export const LOOKUP_PAGE_SIZE = 100;
+
 export type City = {
     id?: string,
     name: string,

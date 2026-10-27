@@ -1,8 +1,8 @@
-import { BloodType, Donation, DonationCenter, Donor } from '../models/DonationPost';
+import { BloodType, Donation, DonationCenter, Donor, PageQuery } from '../models/DonationPost';
 import { HomeService } from '../services/home.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { of } from 'rxjs';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -38,10 +38,9 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './search.component.css'
 })
 export class SearchComponent implements OnInit{
-  donationCenters: DonationCenter[] = [];
-  users: Donor[] = [];
-  filteredDonationCenters: DonationCenter[] = [];
-  filteredUsers: Donor[] = [];
+  donationCenters: DonationCenter[] = []; // dropdown options
+  filteredDonationCenters: DonationCenter[] = []; // results, filtered by the API
+  filteredUsers: Donor[] = []; // results, filtered by the API
   donationTypes: Donation[] = [];
   bloodTypes: BloodType[] = [];
   isLoading: boolean = false;
@@ -50,7 +49,8 @@ export class SearchComponent implements OnInit{
   constructor(
     private homeService: HomeService, 
     private snackBar: MatSnackBar, 
-    private formBuilder: FormBuilder,)
+    private formBuilder: FormBuilder,
+    private changeDetector: ChangeDetectorRef)
     {
       this.searchForm = this.formBuilder.group({
         description: [''],
@@ -63,38 +63,30 @@ export class SearchComponent implements OnInit{
   ngOnInit(): void 
   {
     this.getDonationCenters();
-    this.getDonors();
     this.getBloodTypes();
     this.getDonationTypes();
+    this.search();
   }
 
   resetFilters(): void {
-    this.searchForm.reset();
-    this.filteredUsers = [...this.users];
-    this.filteredDonationCenters = [...this.donationCenters];
+    this.searchForm.reset({ description: '' });
+    this.search();
   }
 
   submit(): void
   {
     if(this.searchForm.invalid) return;
+    this.search();
+  }
 
+  /** Asks the API for the first page of matching donors and centers. */
+  private search(): void
+  {
     const { description, donationTypeId, bloodTypeId, donationCenterId } = this.searchForm.value;
-    const desc = description.toLowerCase().trim();
+    const search = (description ?? '').trim();
 
-    this.filteredUsers = this.users.filter(user => {
-      const matchDesc = user.fullName?.toLowerCase().includes(desc) || user.city?.toLowerCase().includes(desc);
-      const matchBloodType = user.bloodTypeId === bloodTypeId;
-
-      return matchDesc && matchBloodType;
-    });
-
-    this.filteredDonationCenters = this.donationCenters.filter(dc => {
-      const matchDesc = dc.name?.toLowerCase().includes(desc) || dc.address?.toLowerCase().includes(desc);
-      const matchDonationType = dc.donationTypes?.some(dt => dt.id === donationTypeId);
-      const matchCenterId = dc.id === donationCenterId;
-
-      return matchDesc && matchDonationType && matchCenterId;
-    });
+    this.getDonors({ search, bloodTypeId });
+    this.getResults({ search, donationTypeId }, donationCenterId);
   }
 
   getBloodTypes(): void
@@ -110,6 +102,7 @@ export class SearchComponent implements OnInit{
       )
       .subscribe((data) => {
         this.bloodTypes = data;
+        this.changeDetector.markForCheck();
       }
     )
   }
@@ -127,6 +120,7 @@ export class SearchComponent implements OnInit{
       )
       .subscribe((data) => {
         this.donationTypes = data;
+        this.changeDetector.markForCheck();
       }
     )
   }
@@ -144,23 +138,43 @@ export class SearchComponent implements OnInit{
       )
       .subscribe((data) => {
         this.donationCenters = data;
+        this.changeDetector.markForCheck();
       });
   }
 
-  
-  getDonors(): void 
+  private getResults(query: PageQuery, donationCenterId: string | null): void
   {
     this.isLoading = true;
-    this.homeService.getDonors()
+    this.homeService.searchDonationCenters(query)
       .pipe(
         catchError(error => {
-          this.snackBar.open(`Error fetching donors ${error}`, 'Close', { duration: 2500 });
-          return of([]);
+          this.snackBar.open(`Error fetching donation centers ${error}`, 'Close', { duration: 2500 });
+          return of(null);
         }),
         finalize(() => this.isLoading = false)
       )
       .subscribe((data) => {
-        this.users = data;
+        const centers = data?.items ?? [];
+        this.filteredDonationCenters = donationCenterId ? centers.filter(dc => dc.id === donationCenterId) : centers;
+        this.changeDetector.markForCheck();
+      });
+  }
+
+  
+  getDonors(query: PageQuery = {}): void
+  {
+    this.isLoading = true;
+    this.homeService.getDonors(query)
+      .pipe(
+        catchError(error => {
+          this.snackBar.open(`Error fetching donors ${error}`, 'Close', { duration: 2500 });
+          return of(null);
+        }),
+        finalize(() => this.isLoading = false)
+      )
+      .subscribe((data) => {
+        this.filteredUsers = data?.items ?? [];
+        this.changeDetector.markForCheck();
       });
   }
 }

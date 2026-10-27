@@ -1,106 +1,80 @@
 import { Dimensions } from "react-native";
-const { height, width } = Dimensions.get('window');
+import { getTheme } from "@/theme";
 
+/**
+ * Legacy bridge (US-MOB-08). The old COLORS / SIZES / FONTS keys now point at the Vitalis
+ * DonaVida tokens (light scheme), so every screen is on-brand before it is migrated.
+ * New code must use `useTheme()` / `makeStyles()` from `@/theme`; screens move off this file
+ * one by one and it is deleted when nothing imports it.
+ */
+const { colors: c, typography: t, spacing, radius } = getTheme("light");
+const { height, width } = Dimensions.get("window");
+
+/** @deprecated Use `useTheme().colors`. */
 export const COLORS = {
-    theme: 'sans-serif',
-    primary: 'navy',
-    secondary: '#689593',
-    white: '#FFFFFF',
-    secondaryWhite: '#F7F7FC', 
-    black: '#000000',
-    secondaryBlack: '#595959',
-    gray: '#F8F8F8',
-    secondaryGray: '#808080',
-    green: "#166534",
-    //   primary: "#FF3B6B",
-    primaryDark: "#E91E63",
-    error: "#E91E63",
-    //   secondary: "#2563EB",
-    success: "#22C55E",
-    warning: "#F59E0B",
-    danger: "#EF4444",
-    background: "#F7F8FA",
-    surface: "#FFFFFF",
-    border: "#ECECEC", 
-    text: "#1F2937",
-    textSecondary: "#6B7280",
-    disabled: "#CFCFCF",
-    lightGreen: "#DCFCE7",
-    lightRed:"#FEE2E2",
-    red: "#D62828",
-}
+    theme: "sans-serif",
+    primary: c.primary,
+    secondary: c.secondary,
+    white: c.surface,
+    secondaryWhite: c.background,
+    black: c.text,
+    secondaryBlack: c.text,
+    gray: c.textMuted, // was #F8F8F8, which made placeholders and icons invisible
+    secondaryGray: c.textMuted,
+    green: c.tones.viable.foreground,
+    primaryDark: c.primaryPressed,
+    error: c.error,
+    success: c.success,
+    warning: c.tones.observation.foreground,
+    danger: c.primaryText,
+    background: c.background,
+    surface: c.surface,
+    border: c.border,
+    text: c.text,
+    textSecondary: c.textMuted,
+    disabled: c.textDisabled,
+    lightGreen: c.tones.viable.background,
+    lightRed: c.tones.urgent.background,
+    red: c.primaryText,
+};
 
+/** @deprecated Use `useTheme().spacing`, `.radius` and `.typography`. */
 export const SIZES = {
-    base: 8,
+    base: spacing.xs,
     font: 14,
-    radius: 16,
-    padding: 16,
-    padding2: 12,
-    padding3: 16,
+    radius: radius.lg,
+    padding: spacing.md,
+    padding2: spacing.sm,
+    padding3: spacing.md,
     //font sizes
-    largeTitle: 50,
-    h1: 30,
-    h2: 22,
+    largeTitle: 48,
+    h1: 28,
+    h2: 24,
     h3: 20,
     h4: 18,
-    body1: 30,
-    body2: 20,
+    body1: 18,
+    body2: 18,
     body3: 14,
-    body4: 12,
+    body4: 14,
     body5: 12,
     //app dimensions
     height,
     width,
-    margin: 16,
-}
+    margin: spacing.gutter,
+};
 
+/** @deprecated Use `AppText variant=...` or `useTheme().typography`. */
 export const FONTS = {
-    largeTitle: {
-        fontFamily: 'black',
-        fontSize: SIZES.largeTitle,
-        lineHeight: 55,
-    },
-    h1: {
-        fontFamily: 'bold',
-        fontSize: SIZES.h1,
-        lineHeight: 36,
-    },
-    h2: {
-        fontFamily: 'bold',
-        fontSize: SIZES.h2,
-        lineHeight: 30,
-    },
-    h3: {
-        fontFamily: 'bold',
-        fontSize: SIZES.h3,
-        lineHeight: 22,
-    },
-    h4: {
-        fontFamily: 'bold',
-        fontSize: SIZES.h4,
-        lineHeight: 20,
-    }, 
-    body1: {
-        fontFamily: 'regular',
-        fontSize: SIZES.body1,
-        lineHeight: 36,
-    },
-    body2: {
-        fontFamily: 'regular',
-        fontSize: SIZES.body2,
-        lineHeight: 30,
-    },
-    body3: {
-        fontFamily: 'regular',
-        fontSize: SIZES.body3,
-        lineHeight: 22,
-    },
-    body4: {
-        fontFamily: 'regular',
-        fontSize: SIZES.body4,
-        lineHeight: 20,
-    },
-}
+    largeTitle: t.displayLg,
+    h1: t.headlineXlMobile,
+    h2: t.headlineLg,
+    h3: t.headlineMd,
+    h4: t.titleSm,
+    body1: t.bodyLg,
+    body2: t.bodyLg,
+    body3: t.bodySm, // was 14px; body-sm keeps card layouts as they were
+    body4: t.bodySm, // was 12px regular: below the smallest body size in the design
+};
 
-const AppTheme = { COLORS, SIZES, FONTS }
+const AppTheme = { COLORS, SIZES, FONTS };
 export default AppTheme;

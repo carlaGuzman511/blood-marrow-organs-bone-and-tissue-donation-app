@@ -5,6 +5,7 @@ using Umss.BloodOrgansDonationApp.Models;
 using Umss.BloodOrgansDonationApp.Models.AutoMapper;
 using Umss.BloodOrgansDonationApp.Models.Entities;
 using Umss.BloodOrgansDonationApp.Models.Requests;
+using Umss.BloodOrgansDonationApp.Models.Requests.Queries;
 using Umss.BloodOrgansDonationApp.Models.Responses;
 using Umss.BloodOrgansDonationApp.Service.Tests.Utilities;
 using Umss.BloodOrgansDonationApp.Services;
@@ -113,10 +114,10 @@ namespace Umss.BloodOrgansDonationApp.Service.Tests.Services
         [Fact]
         public async Task GetAll()
         {
-            this.repositoryFixture.CommentRepositoryMock.Setup(x => x.Get(It.IsAny<Guid>())).ReturnsAsync(this.GetComments());
-            IEnumerable<CommentResponse> comments = await this.commentService.Get(It.IsAny<Guid>());
+            this.repositoryFixture.CommentRepositoryMock.Setup(x => x.Get(It.IsAny<Guid>(), It.IsAny<CommentQuery>())).ReturnsAsync(Paged.Of(this.GetComments()));
+            PagedResult<CommentResponse> comments = await this.commentService.Get(Guid.NewGuid(), new CommentQuery());
 
-            Assert.NotEmpty(comments);
+            Assert.NotEmpty(comments.Items);
         }
 
         [Fact]

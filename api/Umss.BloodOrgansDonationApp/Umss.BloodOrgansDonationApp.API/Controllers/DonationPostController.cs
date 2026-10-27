@@ -34,7 +34,8 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
         /// <summary>One page of the feed, newest first; search by title or description, filter by blood type, donation type, center or priority. An empty feed is 200 with no items.</summary>
         [Authorize]
         [HttpGet("donation-posts")]
-        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest, "application/problem+json")]
         public async Task<ActionResult<PagedResult<DonationPostResponse>>> Get([FromQuery] DonationPostQuery query)
         {
             return Ok(await _DonationPostService.Get(query));
@@ -57,7 +58,8 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
         /// <summary>One page of a user's posts, newest first (same filters as the feed).</summary>
         [Authorize]
         [HttpGet("users/{userId}/donation-posts")]
-        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest, "application/problem+json")]
         public async Task<ActionResult<PagedResult<DonationPostResponse>>> GetByUser(Guid userId, [FromQuery] DonationPostQuery query)
         {
             return Ok(await _DonationPostService.GetByUser(userId, query));
@@ -109,7 +111,8 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
         /// <summary>One page of a center's posts, newest first (same filters as the feed).</summary>
         [Authorize]
         [HttpGet("donation-centers/{donationCenterId}/donation-posts")]
-        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest, "application/problem+json")]
         public async Task<ActionResult<PagedResult<DonationPostResponse>>> GetByDonationCenter(Guid donationCenterId, [FromQuery] DonationPostQuery query)
         {
             return Ok(await _DonationPostService.GetByDonationCenter(donationCenterId, query));

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Donation } from '../models/DonationPost';
+import { Observable, map } from 'rxjs';
+import { Donation, PagedResult, LOOKUP_PAGE_SIZE } from '../models/DonationPost';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -15,8 +16,11 @@ export class InformationService {
     return this.httpService.post<Donation>(`${this.apiUrl}/donation-types`, donationType);
   }
 
-  getDonationTypes(){
-    return this.httpService.get<Donation[]>(`${this.apiUrl}/donation-types`);
+  /** All donation types (a small catalog: one page of 100). */
+  getDonationTypes(): Observable<Donation[]> {
+    return this.httpService
+      .get<PagedResult<Donation>>(`${this.apiUrl}/donation-types`, { params: { pageSize: LOOKUP_PAGE_SIZE } })
+      .pipe(map(page => page.items));
   }
   
   deleteDonationTypes(donationTypeId: string)

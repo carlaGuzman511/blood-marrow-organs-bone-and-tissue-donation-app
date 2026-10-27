@@ -1,18 +1,14 @@
 import React from "react";
-import { View, Text } from "react-native";
 import { BloodType } from "@/models/App.types";
-import styles from "@/styles";
+import BloodTypeChip from "../BloodTypeChip";
 
 type Props = {
     bloodType: BloodType | undefined;
+    size?: "sm" | "md";
 };
 
-export default function BloodTypeBadge({ bloodType }: Props) {
-    return (
-        <View style={styles.container}>
-            <Text style={styles.text}>
-                🩸 {bloodType?.name ?? ""}
-            </Text>
-        </View>
-    );
+/** Blood group of an API entity; nothing when the group is unknown. */
+export default function BloodTypeBadge({ bloodType, size }: Props) {
+    if (!bloodType?.name) return null;
+    return <BloodTypeChip label={bloodType.name} size={size} />;
 }

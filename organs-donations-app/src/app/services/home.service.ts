@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BloodType, DonationCenter, DonationPost, User, Donor } from '../models/DonationPost';
+import { Observable, map } from 'rxjs';
+import { BloodType, DonationCenter, DonationPost, Donor, Donation, PagedResult, PageQuery, LOOKUP_PAGE_SIZE } from '../models/DonationPost';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -10,6 +11,23 @@ export class HomeService {
   private readonly apiUrl = environment.apiUrl;
 
   constructor(private httpService: HttpClient) { }
+
+  /** Drops empty filters so the API only sees what the user chose. */
+  static toParams(query: PageQuery = {}): HttpParams {
+    let params = new HttpParams();
+    for (const [key, value] of Object.entries(query)) {
+      if (value !== undefined && value !== null && `${value}`.trim() !== '') {
+        params = params.set(key, `${value}`.trim());
+      }
+    }
+    return params;
+  }
+
+  private getLookup<T>(path: string): Observable<T[]> {
+    return this.httpService
+      .get<PagedResult<T>>(`${this.apiUrl}/${path}`, { params: HomeService.toParams({ pageSize: LOOKUP_PAGE_SIZE }) })
+      .pipe(map(page => page.items));
+  }
 
   deleteDonationPostByUser(donationPostId: string, userId: string)
   {
@@ -31,8 +49,9 @@ export class HomeService {
     return this.httpService.put<DonationPost>(`${this.apiUrl}/donation-centers/${donationCenterId}/donation-posts/${donationPostId}`, donationPost);
   }
 
-  getDonationPosts(){
-    return this.httpService.get<DonationPost[]>(`${this.apiUrl}/donation-posts`);
+  /** One page of the feed, newest first. */
+  getDonationPosts(query: PageQuery = {}): Observable<PagedResult<DonationPost>> {
+    return this.httpService.get<PagedResult<DonationPost>>(`${this.apiUrl}/donation-posts`, { params: HomeService.toParams(query) });
   }
   
   saveDonationCenterPosts(id: string, donationPost: DonationPost){
@@ -43,15 +62,28 @@ export class HomeService {
     return this.httpService.post<DonationPost>(`${this.apiUrl}/users/${id}/donation-posts`, donationPost);
   }
   
-  getBloodTypes(){
-    return this.httpService.get<BloodType[]>(`${this.apiUrl}/blood-types`);
+  /** All blood types, for a dropdown. */
+  getBloodTypes(): Observable<BloodType[]> {
+    return this.getLookup<BloodType>('blood-types');
   }
 
-  getDonationCenters(){
-    return this.httpService.get<DonationCenter[]>(`${this.apiUrl}/donation-centers`);
+  /** All donation types, for a dropdown. */
+  getDonationTypes(): Observable<Donation[]> {
+    return this.getLookup<Donation>('donation-types');
   }
 
-  getDonors(){
-      return this.httpService.get<Donor[]>(`${this.apiUrl}/donors`);
+  /** Donation centers for a dropdown (first 100 by name). */
+  getDonationCenters(): Observable<DonationCenter[]> {
+    return this.getLookup<DonationCenter>('donation-centers');
+  }
+
+  /** One page of donation centers, filtered on the server (search, city, donationTypeId). */
+  searchDonationCenters(query: PageQuery = {}): Observable<PagedResult<DonationCenter>> {
+    return this.httpService.get<PagedResult<DonationCenter>>(`${this.apiUrl}/donation-centers`, { params: HomeService.toParams(query) });
+  }
+
+  /** One page of donors (public fields only), filtered on the server (search, city, bloodTypeId). */
+  getDonors(query: PageQuery = {}): Observable<PagedResult<Donor>> {
+    return this.httpService.get<PagedResult<Donor>>(`${this.apiUrl}/donors`, { params: HomeService.toParams(query) });
   }
 }

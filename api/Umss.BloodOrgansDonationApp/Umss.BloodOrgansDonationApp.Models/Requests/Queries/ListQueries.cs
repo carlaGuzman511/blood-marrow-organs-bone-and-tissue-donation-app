@@ -1,3 +1,5 @@
+using Umss.BloodOrgansDonationApp.Models.Entities;
+
 namespace Umss.BloodOrgansDonationApp.Models.Requests.Queries
 {
     /// <summary>GET /api/blood-types.</summary>
@@ -32,8 +34,44 @@ namespace Umss.BloodOrgansDonationApp.Models.Requests.Queries
         /// <summary>Only posts published by this donation center (feed only).</summary>
         public Guid? DonationCenterId { get; set; }
 
-        /// <summary>Only priority (true) or non-priority (false) posts.</summary>
+        /// <summary>Only priority (true: Priority or CodeRed urgency) or standard (false) posts.</summary>
         public bool? Priority { get; set; }
+    }
+
+    /// <summary>
+    /// GET /api/donation-requests: the board and its filters. <c>search</c> looks in the title,
+    /// the description and the folio ("REQ-8902" or "8902"); clinical staff also match the patient code.
+    /// </summary>
+    public class DonationRequestQuery : SearchPageQuery
+    {
+        /// <summary>Maximum number of blood types in one query.</summary>
+        public const int MaxBloodTypes = 8;
+
+        /// <summary>Only this urgency: Standard, Priority or CodeRed.</summary>
+        public Urgency? Urgency { get; set; }
+
+        /// <summary>Only this component: WholeBlood, PlateletsApheresis, BoneMarrow or OrganTissue.</summary>
+        public BloodComponent? Component { get; set; }
+
+        /// <summary>Only these blood types. Repeat it for several: <c>?bloodTypeId=a&amp;bloodTypeId=b</c>.</summary>
+        public List<Guid>? BloodTypeId { get; set; }
+
+        /// <summary>Only this phase: SearchingDonors, DonorsOnTheWay, LabValidation, Completed or Cancelled.</summary>
+        public RequestStatus? Status { get; set; }
+
+        /// <summary>true: only open requests (not Completed or Cancelled). false: only closed ones.</summary>
+        public bool? Open { get; set; }
+
+        /// <summary>Only requests of this hospital or blood bank.</summary>
+        public Guid? DonationCenterId { get; set; }
+
+        /// <summary>Only requests whose phase changed at or after this UTC moment (e.g. completed today).</summary>
+        public DateTime? StatusChangedSince { get; set; }
+    }
+
+    /// <summary>GET /api/posts/{id}/comments: oldest first, like a conversation.</summary>
+    public class CommentQuery : PageQuery
+    {
     }
 
     /// <summary>GET /api/users (network admins). <c>search</c> looks in the name and email.</summary>

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Security.Claims;
+using System.Text.Json.Serialization;
 using Umss.BloodOrgansDonationApp.API.Middlewares;
 using Umss.BloodOrgansDonationApp.API.Security;
 using Umss.BloodOrgansDonationApp.API.Swagger;
@@ -90,6 +91,7 @@ builder.Services.AddScoped<IDonationTypeRepository, DonationTypeRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IDonationPostRepository, DonationPostRepository>();
+builder.Services.AddScoped<IDonationRequestRepository, DonationRequestRepository>();
 
 builder.Services.AddScoped<IDonationCenterService, DonationCenterService>();
 builder.Services.AddScoped<IBloodTypeService, BloodTypeService>();
@@ -97,13 +99,19 @@ builder.Services.AddScoped<IDonationTypeService, DonationTypeService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IDonationPostService, DonationPostService>();
+builder.Services.AddScoped<IDonationRequestService, DonationRequestService>();
+
+// The clock services read (deadlines, countdowns); tests swap in a fixed one.
+builder.Services.AddSingleton(TimeProvider.System);
 
 builder.Services.AddAutoMapper(typeof(CommentProfile).Assembly);
 builder.Services.AddAutoMapper(typeof(UserProfile).Assembly);
 builder.Services.AddAutoMapper(typeof(DonationTypeProfile).Assembly);
 builder.Services.AddAutoMapper(typeof(DonationCenterProfile).Assembly);
 
-builder.Services.AddControllers();
+// Enums travel as text ("CodeRed", "SearchingDonors"), the same way they are stored.
+builder.Services.AddControllers()
+    .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
 builder.Services.AddCors(options =>
 {

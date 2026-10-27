@@ -1,7 +1,5 @@
 import React from "react";
-import { TouchableOpacity, Text, StyleSheet } from "react-native";
-
-import { COLORS } from "@/constants";
+import AppButton from "../AppButton";
 import styles from "./PrimaryButton.styles";
 
 type Props = {
@@ -9,18 +7,7 @@ type Props = {
     onPress: () => void;
 };
 
-export default function PrimaryButton({
-    title,
-    onPress,
-}: Props) {
-    return (
-        <TouchableOpacity
-            style={styles.button}
-            onPress={onPress}
-        >
-            <Text style={styles.text}>
-                {title}
-            </Text>
-        </TouchableOpacity>
-    );
+/** @deprecated Use `AppButton` (variant="primary"). Kept so existing screens get the new button. */
+export default function PrimaryButton({ title, onPress }: Props) {
+    return <AppButton title={title} onPress={onPress} style={styles.button} />;
 }

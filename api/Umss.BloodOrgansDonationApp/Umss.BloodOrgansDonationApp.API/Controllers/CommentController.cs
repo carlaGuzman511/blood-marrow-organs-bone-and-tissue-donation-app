@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Umss.BloodOrgansDonationApp.Models.Requests;
+using Umss.BloodOrgansDonationApp.Models.Requests.Queries;
 using Umss.BloodOrgansDonationApp.Models.Responses;
 using Umss.BloodOrgansDonationApp.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -30,12 +31,14 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
             return Ok(response);
         }
 
+        /// <summary>One page of a post's comments, oldest first.</summary>
         [Authorize]
         [HttpGet("{donationPostId}/comments")]
-        public async Task<ActionResult<IEnumerable<CommentResponse>>> Get(Guid donationPostId)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest, "application/problem+json")]
+        public async Task<ActionResult<PagedResult<CommentResponse>>> Get(Guid donationPostId, [FromQuery] CommentQuery query)
         {
-            IEnumerable<CommentResponse> response = await _commentService.Get(donationPostId);
-            return Ok(response);
+            return Ok(await _commentService.Get(donationPostId, query));
         }
 
         [Authorize]

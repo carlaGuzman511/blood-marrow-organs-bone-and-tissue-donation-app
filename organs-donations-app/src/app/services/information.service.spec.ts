@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { InformationService } from './information.service';
-import { Donation } from '../models/DonationPost';
+import { Donation, PagedResult } from '../models/DonationPost';
 import { environment } from '../../environments/environment';
 
 describe('InformationService', () => {
@@ -72,18 +72,19 @@ describe('InformationService', () => {
       expect(donationTypes[1].image).toBe("");
     });
 
-    const req = httpMock.expectOne(`${apiUrl}/donation-types`);
+    const req = httpMock.expectOne(`${apiUrl}/donation-types?pageSize=100`);
     expect(req.request.method).toBe('GET');
-    req.flush(mockDonationTypes);
+    req.flush({ items: mockDonationTypes, page: 1, pageSize: 100, totalCount: mockDonationTypes.length, totalPages: 1 } as PagedResult<Donation>);
   });
 
   it('should fetch donation types, 500', () => {
-    service.getDonationTypes().subscribe({
-    });
+    let failed = false;
+    service.getDonationTypes().subscribe({ error: () => failed = true });
 
-    const req = httpMock.expectOne(`${apiUrl}/donation-types`);
+    const req = httpMock.expectOne(`${apiUrl}/donation-types?pageSize=100`);
     expect(req.request.method).toBe('GET');
-    req.flush(mockDonationTypes);
+    req.flush('Server error', { status: 500, statusText: 'Internal Server Error' });
+    expect(failed).toBeTrue();
   });
 
 });

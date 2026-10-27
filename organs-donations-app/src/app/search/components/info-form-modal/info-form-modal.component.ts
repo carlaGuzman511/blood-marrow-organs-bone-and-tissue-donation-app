@@ -26,8 +26,8 @@ import { CommonModule } from '@angular/common';
     MatInputModule,
     CommonModule,
     MatButtonModule],
-  templateUrl: './request-form-modal.component.html',
-  styleUrl: './request-form-modal.component.css'
+  templateUrl: './info-form-modal.component.html',
+  styleUrl: './info-form-modal.component.css'
 })
 
 export class InfoFormModalComponent implements OnInit {  

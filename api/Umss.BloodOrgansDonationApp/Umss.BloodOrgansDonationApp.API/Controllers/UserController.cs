@@ -36,7 +36,8 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
         /// <summary>One page of users, ordered by name; search by name or email. Network admins only: profiles hold personal data.</summary>
         [Authorize(Policy = AppPolicies.NetworkAdmin)]
         [HttpGet]
-        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest, "application/problem+json")]
         public async Task<ActionResult<PagedResult<UserResponse>>> Get([FromQuery] UserQuery query)
         {
             return Ok(await _userService.GetAll(query));

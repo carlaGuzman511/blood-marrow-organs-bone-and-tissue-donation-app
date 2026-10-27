@@ -1,8 +1,5 @@
-import { api } from "@/api/axios";
+import { getLookup } from "@/api/paging";
 import { BloodType } from "@/models/App.types";
 
-export const getBloodTypes = async () => {
-  const response = await api.get<BloodType[]>('/api/blood-types');
-
-  return response.data;
-}
+/** All blood types (a small catalog: one page of 100). */
+export const getBloodTypes = (): Promise<BloodType[]> => getLookup<BloodType>('/api/blood-types');

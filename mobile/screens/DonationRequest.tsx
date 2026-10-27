@@ -9,11 +9,7 @@ import { DonationPost } from "@/models/App.types";
 import { useDonationPosts } from "@/hooks/useDonationPosts";
 
 const DonationRequest = () => {
-    const {
-      data: donationPosts = [],
-      isLoading,
-      error,
-    } = useDonationPosts();
+    const { items: donationPosts, loadMore } = useDonationPosts();
     
     const renderItem: ListRenderItem<DonationPost> = ({ item }) => (
         <DonationCard 
@@ -29,7 +25,7 @@ const DonationRequest = () => {
               renderItem={renderItem}
               showsVerticalScrollIndicator={false}
               onEndReachedThreshold={0.2}
-              onEndReached={() => {}}
+              onEndReached={loadMore}
             />
         </View>
     );

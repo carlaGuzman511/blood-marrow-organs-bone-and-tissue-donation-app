@@ -6,7 +6,7 @@
     (editItemEvent)="editItem($event)">
 </app-card>
 <app-pagination
-  [totalItems]="donationCenters.length"
+  [totalItems]="totalCount"
   [pageSize]="pageSize"
   [currentPage]="currentPage"
   (pageChange)="onPageChange($event)">

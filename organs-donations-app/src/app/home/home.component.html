@@ -5,3 +5,4 @@
     (removeItemEvent)="removeItem($event)" 
     (editItemEvent)="editItem($event)">
 </app-card>
+<button mat-button *ngIf="hasMore && !isLoading" (click)="loadMore()">Ver mas</button>

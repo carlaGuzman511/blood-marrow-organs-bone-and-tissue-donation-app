@@ -15,6 +15,9 @@ namespace Umss.BloodOrgansDonationApp.Services.Interfaces
         /// <summary>True when the caller holds network_admin (or the legacy admin role).</summary>
         bool IsNetworkAdmin { get; }
 
+        /// <summary>True when the caller holds clinical_staff (hospital or blood bank personnel).</summary>
+        bool IsClinicalStaff { get; }
+
         /// <summary>
         /// The caller's local profile, or null when they have none yet. On the first call for a
         /// Keycloak user it links an existing profile with the same verified email.

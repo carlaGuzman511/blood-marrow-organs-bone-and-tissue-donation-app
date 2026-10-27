@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Umss.BloodOrgansDonationApp.Models;
+using Umss.BloodOrgansDonationApp.Models.Entities;
 using Umss.BloodOrgansDonationApp.Models.Requests.Queries;
 using Umss.BloodOrgansDonationApp.Models.Responses;
 using Umss.BloodOrgansDonationApp.Repository.Extensions;
@@ -109,7 +110,9 @@ namespace Umss.BloodOrgansDonationApp.Repository
             if (query.Priority.HasValue)
             {
                 bool priority = query.Priority.Value;
-                posts = posts.Where(dp => dp.Priority == priority);
+                posts = priority
+                    ? posts.Where(dp => dp.Urgency != Urgency.Standard)
+                    : posts.Where(dp => dp.Urgency == Urgency.Standard);
             }
 
             return posts;
@@ -146,7 +149,15 @@ namespace Umss.BloodOrgansDonationApp.Repository
                 ?? throw new EntityNotFoundException($"Donation Post with ID {donationPost.Id} not found.");
 
             _appContext.Entry(tracked).CurrentValues.SetValues(donationPost);
-            await _appContext.SaveChangesAsync();
+            try
+            {
+                await _appContext.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                // Its phase or unit count changed in the meantime (see DonationRequestRepository).
+                throw new ConflictException("La publicacion cambio mientras se editaba. Recarga e intenta de nuevo.");
+            }
 
             return await QueryWithDetails().FirstAsync(dp => dp.Id == donationPost.Id);
         }

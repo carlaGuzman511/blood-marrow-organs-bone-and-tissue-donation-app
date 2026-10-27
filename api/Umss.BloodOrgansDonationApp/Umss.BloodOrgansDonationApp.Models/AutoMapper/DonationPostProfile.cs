@@ -22,6 +22,7 @@ namespace Umss.BloodOrgansDonationApp.Models.AutoMapper
                 .ForMember(dp => dp.CreatedAt, x => x.Ignore());
 
             CreateMap<DonationPost, DonationPostResponse>()
+                .ForMember(r => r.Priority, x => x.MapFrom(src => src.Urgency != Urgency.Standard))
                 .ForMember(r => r.CommentCount, x => x.MapFrom(src => src.Comments == null ? 0 : src.Comments.Count));
             CreateMap<DonationCenter, DonationCenterResponse>();
             CreateMap<DonationType, DonationTypeResponse>();
