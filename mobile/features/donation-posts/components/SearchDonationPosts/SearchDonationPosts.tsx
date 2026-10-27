@@ -19,10 +19,12 @@ import ActiveFilters from '../../../../components/ui/ActiveFilters';
 import SearchBar from '../../../../components/ui/SearchBar';
 import SearchFilterControls from '../../../../components/ui/SearchFilterControls';
 import SearchResultCount from '../../../../components/ui/SearchResultCount';
+import { useTheme } from '@/theme';
 import styles from './SearchDonationPosts.styles';
 
 export function DonationPostSearchContent() {
   const router = useRouter();
+  const { colors } = useTheme();
   const { filters, setSearch, setFilter, removeFilter } = useSearchFilters();
   const search = useDebouncedValue(filters.search);
   const { data: bloodTypes = [], isSuccess: bloodTypesLoaded } = useBloodTypes();
@@ -72,7 +74,7 @@ export function DonationPostSearchContent() {
           activeOpacity={0.8}
           onPress={() => router.push('/donation-posts/create')}
         >
-          <Ionicons name="add" size={32} color="#FFFFFF" />
+          <Ionicons name="add" size={32} color={colors.onPrimary} />
         </TouchableOpacity>
       </View>
     </View>
@@ -81,6 +83,7 @@ export function DonationPostSearchContent() {
 
 export default function SearchDonationPosts() {
   const router = useRouter();
+  const { colors } = useTheme();
 
   return (
     <SearchLayout title="Search Posts" onBack={() => router.back()}>

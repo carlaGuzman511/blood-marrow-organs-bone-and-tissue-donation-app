@@ -11,5 +11,8 @@ export const environment: Environment = {
     url: 'https://auth-server-b24f.onrender.com',
     realm: 'organ-donation-prod',
     clientId: 'organ-donation-web',
+    googleIdpHint: 'google',
   },
+  // Public page about the DonaVida mobile app; replace with the store link when published.
+  donorAppUrl: '/donantes',
 };

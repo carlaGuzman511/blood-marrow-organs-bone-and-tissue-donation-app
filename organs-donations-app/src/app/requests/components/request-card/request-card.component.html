@@ -1,0 +1,62 @@
+<article class="card" [class]="'card card--' + tone()" [class.card--code-red]="isCodeRed()" [class.card--pending]="pending()"
+         [attr.aria-label]="summary()" [attr.aria-busy]="pending()">
+  <div class="accent" aria-hidden="true"></div>
+
+  <div class="row top">
+    <span class="urgency" [class]="'urgency vd-badge vd-badge--' + tone()" data-testid="urgency">
+      <span class="material-symbols-outlined" aria-hidden="true">{{ urgencyIcon() }}</span>
+      {{ urgencyLabel() }}
+      @if (countdown(); as text) {
+        <span aria-hidden="true">•</span>
+        <span class="countdown" [class.countdown--overdue]="overdue()" data-testid="countdown">{{ text }}</span>
+      }
+    </span>
+    <span class="folio vd-label-sm" data-testid="folio">{{ request().code }}</span>
+  </div>
+
+  <div class="patient">
+    <span class="vd-blood-badge" [attr.aria-label]="'Grupo ' + request().bloodType.name" data-testid="blood-type">{{ request().bloodType.name }}</span>
+    <div class="patient-text">
+      <h3 class="patient-name" data-testid="patient">{{ patientLabel() }}</h3>
+      @if (clinicalLine()) {
+        <p class="vd-label-sm muted">{{ clinicalLine() }}</p>
+      }
+    </div>
+  </div>
+
+  @if (locationLine()) {
+    <p class="location vd-body-sm" data-testid="location">
+      <span class="material-symbols-outlined" aria-hidden="true">domain</span>
+      {{ locationLine() }}
+    </p>
+  }
+
+  <div class="units">
+    <div class="units-head vd-label-sm">
+      <span class="muted" data-testid="component">{{ componentLabel() }}</span>
+      <span class="units-count" data-testid="units">{{ request().unitsCovered }} de {{ request().unitsRequired }} Unidades</span>
+    </div>
+    <div class="bar" role="progressbar" [attr.aria-valuenow]="progress()" aria-valuemin="0" aria-valuemax="100"
+         [attr.aria-label]="'Unidades cubiertas ' + progress() + '%'">
+      <div class="bar-fill" [style.width.%]="progress()"></div>
+    </div>
+  </div>
+
+  @if (moveTargets().length) {
+    <div class="row actions">
+      <span class="vd-label-sm muted">{{ request().statusChangedBy?.fullName ?? '' }}</span>
+      <button type="button" class="move vd-label-sm" [matMenuTriggerFor]="moveMenu" [disabled]="pending()"
+              [attr.aria-label]="'Cambiar fase de ' + request().code">
+        <span class="material-symbols-outlined" aria-hidden="true">swap_horiz</span>
+        Cambiar fase
+      </button>
+      <mat-menu #moveMenu="matMenu" xPosition="before">
+        @for (target of moveTargets(); track target.status) {
+          <button mat-menu-item type="button" (click)="move.emit({ request: request(), to: target.status })">
+            {{ target.status === 'Cancelled' ? 'Cancelar solicitud' : 'Mover a ' + target.label }}
+          </button>
+        }
+      </mat-menu>
+    </div>
+  }
+</article>

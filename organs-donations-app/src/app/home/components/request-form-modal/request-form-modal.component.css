@@ -1,105 +1,98 @@
+/* Request form modal on the Vitalis DonaVida tokens (US-WEB-09). */
 form[formGroup] {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem; /* espacio entre campos */
-  padding: 1.5rem;
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  font-family: 'Roboto', sans-serif;
+  gap: var(--vd-space-lg);
+  padding: var(--vd-space-lg);
+  background-color: var(--vd-color-surface);
+  border-radius: var(--vd-radius-xl);
+  font-family: var(--vd-font-family);
 }
 
 h3 {
-  font-size: 1.75rem;
-  font-weight: 600;
+  font: var(--vd-headline-lg);
+  letter-spacing: var(--vd-headline-lg-tracking);
   text-align: center;
-  color: #2c3e50;
-  margin-bottom: 1rem;
+  color: var(--vd-color-text);
+  margin: 0 0 var(--vd-space-md);
 }
 
 h4 {
-  font-size: 1.1rem;
-  font-weight: 500;
-  margin-bottom: 0.5rem;
-  color: #34495e;
+  font: var(--vd-title-sm);
+  margin: 0 0 var(--vd-space-xs);
+  color: var(--vd-color-text);
 }
 
 mat-form-field {
   width: 100%;
-  background: #fafafa;
-  border-radius: 8px;
   display: block;
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--vd-space-lg);
 }
 
 mat-hint {
-  margin-bottom: 0.5rem; /* separa el hint del siguiente field */
-  font-size: 0.85rem;
-  color: #666;
+  margin-bottom: var(--vd-space-xs);
+  font: var(--vd-body-sm);
+  color: var(--vd-color-text-muted);
 }
 
 textarea[matInput] {
   min-height: 100px;
   resize: vertical;
-  padding: 8px;
-  font-size: 0.95rem;
+  padding: var(--vd-space-xs);
+  font: var(--vd-body-md);
 }
 
 input[type="file"] {
   display: block;
-  margin-top: 0.5rem;
-  padding: 0.4rem 0.6rem;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-size: 0.95rem;
+  margin-top: var(--vd-space-xs);
+  padding: var(--vd-space-xs) var(--vd-space-sm);
+  border: 1px solid var(--vd-color-border-strong);
+  border-radius: var(--vd-radius-md);
+  font: var(--vd-body-sm);
+  color: var(--vd-color-text);
   cursor: pointer;
-  background-color: #fafafa;
+  background-color: var(--vd-color-input);
 }
 
 input[type="file"]:hover {
-  border-color: #1976d2;
+  border-color: var(--vd-color-focus);
 }
 
 div.border {
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  border: 1px dashed var(--vd-color-border-strong);
+  border-radius: var(--vd-radius-lg);
   height: 12rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #888;
+  color: var(--vd-color-text-muted);
   font-style: italic;
 }
 
 [mat-dialog-actions] {
   display: flex;
   justify-content: flex-end;
-  gap: 0.75rem;
-  margin-top: 1rem;
-  padding-top: 0.5rem;
-  border-top: 1px solid #eee;
+  gap: var(--vd-space-sm);
+  margin-top: var(--vd-space-md);
+  padding-top: var(--vd-space-xs);
+  border-top: 1px solid var(--vd-color-border);
 }
 
 button[mat-stroked-button] {
-  border-radius: 6px;
-  padding: 0.5rem 1.2rem;
+  padding: 0 var(--vd-space-lg);
 }
+
 button[mat-raised-button] {
-  border-radius: 6px;
-  padding: 0.5rem 1.5rem;
-  font-weight: 500;
+  padding: 0 var(--vd-space-lg);
+  font: var(--vd-label-md);
 }
 
 button[mat-stroked-button]:hover {
-  background-color: #ffe5e5;
+  background-color: var(--vd-color-primary-soft);
 }
 
-@media (max-width: 600px) {
+@media (max-width: 599px) {
   form[formGroup] {
-    padding: 1rem;
-  }
-
-  h2 {
-    font-size: 1.5rem;
+    padding: var(--vd-space-md);
   }
 }

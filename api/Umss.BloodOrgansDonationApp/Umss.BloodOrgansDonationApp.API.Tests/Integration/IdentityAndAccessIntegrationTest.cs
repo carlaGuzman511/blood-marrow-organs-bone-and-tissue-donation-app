@@ -72,6 +72,17 @@ namespace Umss.BloodOrgansDonationApp.API.Tests.Integration
             Assert.NotEqual(HttpStatusCode.Unauthorized, response.StatusCode);
         }
 
+        [Fact(DisplayName = "The donation center directory is public so the portal login can list hospitals (US-WEB-01)")]
+        public async Task DonationCenterDirectory_IsAnonymous()
+        {
+            HttpResponseMessage list = await Send(TestIdentity.Anonymous, HttpMethod.Get, "/api/donation-centers?pageSize=5");
+            Assert.Equal(HttpStatusCode.OK, list.StatusCode);
+
+            // Writes stay protected.
+            HttpResponseMessage create = await Send(TestIdentity.Anonymous, HttpMethod.Post, "/api/donation-centers", new { });
+            Assert.Equal(HttpStatusCode.Unauthorized, create.StatusCode);
+        }
+
         [Fact(DisplayName = "Swagger stays public and documents the Bearer scheme, /api/me and the deprecated endpoints")]
         public async Task Swagger_DocumentsSecurity()
         {

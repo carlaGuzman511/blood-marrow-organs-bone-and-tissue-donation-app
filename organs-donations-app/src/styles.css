@@ -1,4 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* Vitalis DonaVida design system (US-WEB-09). Order matters: tokens, then Material, then base. */
+@import "./styles/tokens.css";
+@import "./styles/material.css";
+@import "./styles/base.css";

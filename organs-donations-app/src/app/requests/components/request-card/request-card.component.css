@@ -1,0 +1,82 @@
+:host { display: block; }
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--vd-space-sm);
+  padding: var(--vd-space-md);
+  overflow: hidden;
+  border: 1px solid var(--vd-color-border-subtle);
+  border-radius: var(--vd-radius-lg);
+  background: var(--vd-color-surface);
+  box-shadow: var(--vd-elevation-1);
+  transition: box-shadow var(--vd-transition), opacity var(--vd-transition);
+  --card-accent: var(--vd-color-border);
+  --card-fg: var(--vd-tone-neutral-fg);
+}
+.card:hover { box-shadow: var(--vd-elevation-1-hover); }
+.card--urgent { --card-accent: var(--vd-color-primary); --card-fg: var(--vd-tone-urgent-fg); }
+.card--info { --card-accent: var(--vd-color-secondary); --card-fg: var(--vd-tone-info-fg); }
+.card--neutral { --card-accent: var(--vd-color-border-strong); --card-fg: var(--vd-tone-neutral-fg); }
+.card--pending { opacity: 0.6; }
+
+/* Código Rojo: crimson accent and the "active alert" elevation of the design system. */
+.card--code-red { box-shadow: var(--vd-elevation-2); border-color: var(--vd-tone-urgent-bg); }
+
+.accent { position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--card-accent); }
+
+.row { display: flex; align-items: center; justify-content: space-between; gap: var(--vd-space-xs); }
+.top { align-items: flex-start; padding-top: var(--vd-space-2xs); }
+
+.urgency { flex-wrap: wrap; }
+.urgency .material-symbols-outlined { font-size: 0.875rem; }
+.countdown { font-variant-numeric: tabular-nums; }
+.countdown--overdue { text-decoration: underline; }
+.card--code-red .urgency .material-symbols-outlined { animation: vd-blink 1.2s ease-in-out infinite; }
+
+.folio { color: var(--vd-color-text-muted); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; white-space: nowrap; }
+
+.patient { display: flex; align-items: center; gap: var(--vd-space-sm); }
+.patient .vd-blood-badge { min-width: 2.25rem; height: 2.25rem; flex-shrink: 0; }
+.patient-text { min-width: 0; }
+.patient-name { margin: 0; font: var(--vd-label-md); font-size: 0.9375rem; font-weight: 700; color: var(--vd-color-text); }
+.patient-text p { margin: 0; }
+.muted { color: var(--vd-color-text-muted); }
+
+.location { display: flex; align-items: center; gap: var(--vd-space-2xs); margin: 0; color: var(--vd-color-text-muted); }
+.location .material-symbols-outlined { font-size: 0.875rem; }
+
+.units {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vd-space-xs);
+  padding: var(--vd-space-sm);
+  border: 1px solid var(--vd-color-border-subtle);
+  border-radius: var(--vd-radius-md);
+  background: var(--vd-color-background);
+}
+.units-head { display: flex; justify-content: space-between; gap: var(--vd-space-xs); }
+.units-count { color: var(--card-fg); font-weight: 700; white-space: nowrap; }
+.bar { height: 0.5rem; border-radius: var(--vd-radius-full); background: var(--vd-color-border); overflow: hidden; }
+.bar-fill { height: 100%; border-radius: var(--vd-radius-full); background: var(--card-accent); transition: width 400ms ease-out; }
+
+.actions { padding-top: var(--vd-space-2xs); }
+.move {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--vd-space-2xs);
+  min-height: 2.25rem;
+  padding: 0 var(--vd-space-sm);
+  border: 1px solid var(--vd-color-border);
+  border-radius: var(--vd-radius-base);
+  background: var(--vd-color-surface-recessed);
+  color: var(--vd-color-text);
+  cursor: pointer;
+}
+.move:hover:not(:disabled) { background: var(--vd-color-border); }
+.move:disabled { cursor: wait; }
+.move .material-symbols-outlined { font-size: 1rem; }
+
+@keyframes vd-blink { 50% { opacity: 0.35; } }
+@media (prefers-reduced-motion: reduce) { .card--code-red .urgency .material-symbols-outlined { animation: none; } }

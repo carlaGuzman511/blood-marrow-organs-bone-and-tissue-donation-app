@@ -1,41 +1,43 @@
 .card {
-  margin-bottom: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-  transition: transform 0.2s, box-shadow 0.2s;
+  margin-bottom: var(--vd-space-lg);
+  border: 1px solid var(--vd-color-border-subtle);
+  border-radius: var(--vd-radius-card);
+  box-shadow: var(--vd-elevation-1);
+  transition: transform var(--vd-transition), box-shadow var(--vd-transition);
+  background-color: var(--vd-color-surface);
 }
 
 .card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  transform: translateY(-2px);
+  box-shadow: var(--vd-elevation-1-hover);
 }
 
 mat-card-header {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--vd-space-sm);
 }
 
 .avatar-img {
   width: 50px;
   height: 50px;
-  border-radius: 50%;
+  border-radius: var(--vd-radius-full);
   object-fit: cover;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  box-shadow: 0 0 0 1px var(--vd-color-border);
 }
 
 mat-card-title {
-  font-size: 1.1rem;
-  font-weight: 600;
+  font: var(--vd-title-sm);
+  color: var(--vd-color-text);
 }
 
 mat-card-subtitle {
-  font-size: 0.85rem;
-  color: #555;
+  font: var(--vd-body-sm);
+  color: var(--vd-color-text-muted);
 }
 
 mat-card-content p {
-  margin-top: 0.5rem;
-  font-size: 0.95rem;
-  color: #333;
+  margin-top: var(--vd-space-xs);
+  font: var(--vd-body-sm);
+  color: var(--vd-color-text);
 }

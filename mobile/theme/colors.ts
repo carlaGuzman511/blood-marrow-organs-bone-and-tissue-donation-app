@@ -13,6 +13,9 @@ export type ColorScheme = {
   border: string;
   borderSubtle: string; // card perimeter
   scrim: string; // behind modal sheets (level 3)
+  mediaBackdrop: string; // behind photos and carousels
+  mediaScrim: string; // bottom of the gradient laid over a photo, so text on it stays readable
+  onMedia: string; // text and icons drawn on a photo or its scrim
 
   text: string;
   textMuted: string;
@@ -47,6 +50,9 @@ export const lightColors: ColorScheme = {
   border: palette.slate200,
   borderSubtle: withAlpha(palette.slate200, 0.8),
   scrim: withAlpha(palette.slate900, 0.45),
+  mediaBackdrop: palette.slate900,
+  mediaScrim: withAlpha(palette.slate900, 0.8),
+  onMedia: palette.white,
 
   text: palette.slate900,
   textMuted: palette.slate500,
@@ -92,6 +98,9 @@ export const darkColors: ColorScheme = {
   border: palette.slate700,
   borderSubtle: withAlpha(palette.slate700, 0.8),
   scrim: withAlpha(palette.navy950, 0.7),
+  mediaBackdrop: palette.navy950,
+  mediaScrim: withAlpha(palette.navy950, 0.8),
+  onMedia: palette.white,
 
   text: palette.slate100,
   textMuted: palette.slate400,

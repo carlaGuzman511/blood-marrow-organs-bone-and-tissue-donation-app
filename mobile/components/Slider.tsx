@@ -19,7 +19,7 @@ export default function Slider({data}: Props) {
     <View>
       <FlatList
         style={{
-          backgroundColor: 'black',
+          backgroundColor: COLORS.mediaBackdrop,
         }}
         data={data}
         horizontal

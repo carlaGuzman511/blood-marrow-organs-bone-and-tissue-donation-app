@@ -1,0 +1,54 @@
+<section class="panel" aria-label="Registro clínico de solicitudes">
+  <div class="scroll">
+    <table class="table">
+      <thead>
+        <tr class="vd-label-sm">
+          <th scope="col">Folio / Paciente</th>
+          <th scope="col">Prioridad</th>
+          <th scope="col">Tipo / Grupo</th>
+          <th scope="col">Progreso de Cobertura</th>
+          <th scope="col">Sede &amp; Ubicación</th>
+          <th scope="col">Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of rows(); track row.id) {
+          <tr data-testid="table-row">
+            <td>
+              <span class="folio vd-label-sm">{{ row.code }}</span>
+              <span class="vd-label-md">{{ row.patient?.patientCode ? 'Paciente #' + row.patient?.patientCode : row.title }}</span>
+            </td>
+            <td>
+              <vd-status-badge [tone]="urgencyTones[row.urgency]" [label]="urgencyLabels[row.urgency]" />
+              @if (countdown(row); as text) {
+                <span class="vd-label-sm countdown">{{ text }}</span>
+              }
+            </td>
+            <td>
+              <span class="vd-body-sm">{{ componentLabels[row.component] }}</span>
+              <span class="vd-label-sm group">Grupo {{ row.bloodType.name }}</span>
+            </td>
+            <td class="progress-cell">
+              <div class="progress-head vd-label-sm">
+                <span>{{ row.unitsCovered }} de {{ row.unitsRequired }}</span>
+                <span>{{ row.progressPercent }}%</span>
+              </div>
+              <div class="bar" role="progressbar" [attr.aria-valuenow]="row.progressPercent" aria-valuemin="0" aria-valuemax="100">
+                <div class="bar-fill" [style.width.%]="row.progressPercent"></div>
+              </div>
+            </td>
+            <td>
+              <span class="vd-body-sm">{{ row.donationCenter?.name }}</span>
+              @if (row.patient?.bed) {
+                <span class="vd-label-sm muted">Cama {{ row.patient?.bed }}</span>
+              }
+            </td>
+            <td><vd-status-badge [tone]="statusTones[row.status]" [label]="statusLabels[row.status]" /></td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  <mat-paginator [length]="totalCount()" [pageIndex]="page() - 1" [pageSize]="pageSize()" [pageSizeOptions]="pageSizes"
+                 (page)="onPage($event)" aria-label="Páginas del registro clínico"></mat-paginator>
+</section>

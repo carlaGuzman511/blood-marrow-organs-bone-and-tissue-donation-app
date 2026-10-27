@@ -53,7 +53,7 @@ const DonationCenterCardDetails = ({item, modalVisible, setModalVisible}: Props)
                 }}
             />
             <LinearGradient 
-                colors={['transparent', 'rgba(0,0,0,0.8)']}
+                colors={['transparent', COLORS.mediaScrim]}
                 style={{
                 position:'absolute',
                 width:320,
@@ -64,7 +64,7 @@ const DonationCenterCardDetails = ({item, modalVisible, setModalVisible}: Props)
             >
                 <Text
                     style={{
-                        color:"white",
+                        color: COLORS.onMedia,
                         fontSize:20,
                         fontWeight:'bold',
                         letterSpacing:1.5,
@@ -142,7 +142,7 @@ const DonationCenterCardDetails = ({item, modalVisible, setModalVisible}: Props)
                     />
                     <Polyline
                         coordinates={[origin, destination]}
-                        strokeColor="red"
+                        strokeColor={COLORS.primary}
                         strokeWidth={8}
                     />
                 </MapView>
@@ -169,7 +169,7 @@ const DonationCenterCardDetails = ({item, modalVisible, setModalVisible}: Props)
                             style={{
                                 height: SIZES.height * 0.7,
                                 width: SIZES.width,
-                                backgroundColor: '#F5F5FF',
+                                backgroundColor: COLORS.surface,
                                 borderTopLeftRadius: 30,
                                 borderTopRightRadius: 30,
                                 position: 'absolute',
@@ -258,7 +258,7 @@ const DonationCenterCardDetails = ({item, modalVisible, setModalVisible}: Props)
                                     />
                                     <Text
                                         style={{
-                                            color:"white",
+                                            color: COLORS.onMedia,
                                             fontSize:20,
                                             fontWeight:'bold',
                                             letterSpacing:1.5,

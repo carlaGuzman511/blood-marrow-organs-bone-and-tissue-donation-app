@@ -1,14 +1,12 @@
-import { StyleSheet } from 'react-native';
+import { makeStyles } from '@/theme';
 
-const styles = StyleSheet.create({
+export const useStyles = makeStyles((t) => ({
   card: {
-    backgroundColor: 'white',
-    borderRadius: 8,
-    padding: 12,
-    marginVertical: 8,
+    backgroundColor: t.colors.surface,
+    borderRadius: t.radius.base,
+    padding: t.spacing.sm,
+    marginVertical: t.spacing.xs,
   },
-  title: { fontSize: 16, fontWeight: '700', marginBottom: 8 },
+  title: { ...t.typography.titleSm, color: t.colors.text, marginBottom: t.spacing.xs },
   body: {},
-});
-
-export default styles;
+}));

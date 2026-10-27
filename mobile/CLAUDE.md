@@ -55,7 +55,7 @@ Reusable, feature-agnostic building blocks (`AppText`, `AppCard`, `Badge`, `Form
 
 Source: Stitch `vitalis_humanitas/DESIGN.md` and the mobile screens. Everything visual comes from `theme/`:
 
-- `theme/palette.ts` is the only file with color literals. Components use semantic roles from `useTheme().colors` (`text`, `textMuted`, `primary`, `primaryText`, `tones.urgent`...), never palette values or hex.
+- `theme/palette.ts` is the only file (with the WCAG calculator `theme/contrast.ts`) with color literals. Components use semantic roles from `useTheme().colors` (`text`, `textMuted`, `primary`, `primaryText`, `tones.urgent`...), never palette values or hex.
 - Styles: `const useStyles = makeStyles((t) => ({ ... }))` next to the component, `const styles = useStyles()` inside it. Use `t.spacing` (8pt), `t.radius` (inputs/buttons `md` 12, cards `card` 20, pills `full`), `t.elevation[1-3]` and `t.typography.<variant>`.
 - Text: `<AppText variant="headlineLg">`. Plus Jakarta Sans is loaded in `app/_layout.tsx`; with a custom font the weight is the font file (`fontFor(weight)`), never `fontWeight`, or Android falls back to the system font. If the font fails, `ThemeProvider fontsLoaded={false}` switches to the system font.
 - Clinical tones: `urgent` red, `observation` amber, `viable` green, `info` blue, `neutral`. Always icon + text (`StatusBadge`), never color alone. Blood groups: `BloodTypeChip` (read aloud as "Grupo sanguíneo O negativo").
@@ -64,7 +64,13 @@ Source: Stitch `vitalis_humanitas/DESIGN.md` and the mobile screens. Everything 
 - `theme/__tests__/contrast.test.ts` checks WCAG AA for every text/background pair in light and dark: add new pairs there when adding colors. White on `#0284C7` fails AA, so cyan text and fills use `#0369A1`.
 - Dark colors exist (`darkColors`), but the app is pinned to light in `app/_layout.tsx` until navigation and every screen use the theme (US-MOB-08 step 4).
 - `constants/theme.ts` (`COLORS`/`SIZES`/`FONTS`) is a deprecated bridge to the light tokens; don't use it in new code. Move screens to `useTheme` and delete it when nothing imports it.
+- Photos and overlays: `mediaBackdrop` behind images, `mediaScrim` as the end of a gradient over a photo, `onMedia` for text on it. Modal backdrops use `scrim`.
+- `theme/__tests__/noColorLiterals.test.ts` fails on any hex, `rgb()` or named color outside those two files (comments are ignored).
 - Tests: `npm run test:ci`. `jest.setup.ts` stubs `@expo/vector-icons` (icon fonts don't load under Jest) and adds the Testing Library matchers.
+
+### Auth session (US-MOB-09)
+
+`features/auth/services/session.service.ts` owns the tokens (saved with `expo-secure-store`). `AuthContext` mirrors it and `api/axios.ts` reads it. An access token about to expire is renewed with the refresh token before a request (one refresh at a time); a 401 renews once and retries. If Keycloak rejects the refresh token, or the retry is still 401, the session ends and `app/_layout.tsx` shows the login screen with "Your session expired". A network error while refreshing keeps the session. Tests: `features/auth/__tests__/session.test.ts`.
 
 ### Search & filtering pattern
 

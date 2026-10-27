@@ -27,6 +27,8 @@ function pairs(c: ColorScheme): [string, string, string, number, string?][] {
     ["focus ring on surface", c.focus, c.surface, AA_LARGE_OR_UI],
     ["focus ring on input", c.focus, c.inputBackgroundFocused, AA_LARGE_OR_UI],
     ["stepper current node", c.primary, c.surface, AA_LARGE_OR_UI],
+    // Worst case for text on a photo: a white photo behind the scrim.
+    ["text on photo scrim", c.onMedia, c.mediaScrim, AA_TEXT, "#FFFFFF"],
   ];
 }
 

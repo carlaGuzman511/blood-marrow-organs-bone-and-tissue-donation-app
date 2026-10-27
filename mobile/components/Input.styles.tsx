@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     marginVertical: 2,
   },
   errorText:{
-    color: "red",
+    color: COLORS.danger,
     fontSize: 12,
   }
 })

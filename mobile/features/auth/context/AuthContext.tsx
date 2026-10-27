@@ -3,8 +3,7 @@ import * as AuthSession from "expo-auth-session";
 import * as WebBrowser from "expo-web-browser";
 import { jwtDecode } from "jwt-decode";
 import { useKeycloakAuth } from "../hooks/useKeycloakAuth";
-import { loadTokens, saveTokens, clearTokens } from "../services/tokenStorage.service";
-import { setAccessToken } from "../services/authToken.store";
+import { endSession, getSession, onSessionChange, restoreSession, startSession } from "../services/session.service";
 import { KEYCLOAK_CLIENT_ID } from "../config/keycloak.config";
 import { AuthTokens, AuthUser } from "../models/auth.types";
 
@@ -21,6 +20,8 @@ type AuthContextValue = {
 };
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
+
+export const SESSION_EXPIRED_MESSAGE = "Your session expired. Please sign in again.";
 
 function decodeUser(idToken: string): AuthUser {
   const claims = jwtDecode<Record<string, unknown>>(idToken);
@@ -40,26 +41,32 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [error, setError] = useState<string | null>(null);
   const { request, response, promptAsync, discovery, redirectUri } = useKeycloakAuth();
 
-  const applyTokens = useCallback(async (nextTokens: AuthTokens) => {
-    setTokens(nextTokens);
-    setAccessToken(nextTokens.accessToken);
-    await saveTokens(nextTokens);
-    if (nextTokens.idToken) {
-      setUser(decodeUser(nextTokens.idToken));
-    }
+  const showTokens = useCallback((next: AuthTokens | null) => {
+    setTokens(next);
+    setUser(next?.idToken ? decodeUser(next.idToken) : null);
   }, []);
 
+  // The session service owns the tokens; mirror every change (sign-in, refresh, sign-out).
+  // When it ends on its own (refresh token rejected, 401 after a refresh) the login screen
+  // comes back with a message.
+  useEffect(() => {
+    onSessionChange((next, reason) => {
+      showTokens(next);
+      if (!next && reason === "expired") setError(SESSION_EXPIRED_MESSAGE);
+    });
+    return () => onSessionChange(null);
+  }, [showTokens]);
+
+  // On start: reload the saved session, renewing it if it expired while the app was closed.
   useEffect(() => {
     (async () => {
-      const stored = await loadTokens();
-      if (stored) {
-        setTokens(stored);
-        setAccessToken(stored.accessToken);
-        if (stored.idToken) setUser(decodeUser(stored.idToken));
+      try {
+        showTokens(await restoreSession());
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     })();
-  }, []);
+  }, [showTokens]);
 
   useEffect(() => {
     if (!response || !discovery || !request) return;
@@ -77,7 +84,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             discovery
           );
 
-          await applyTokens({
+          await startSession({
             accessToken: result.accessToken,
             refreshToken: result.refreshToken,
             idToken: result.idToken,
@@ -93,7 +100,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setIsAuthenticating(false);
       }
     })();
-  }, [response, discovery, request, redirectUri, applyTokens]);
+  }, [response, discovery, request, redirectUri]);
 
   const login = useCallback(async () => {
     setError(null);
@@ -107,6 +114,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [promptAsync]);
 
   const logout = useCallback(async () => {
+    const tokens = getSession();
     if (discovery?.revocationEndpoint && tokens?.refreshToken) {
       try {
         await fetch(discovery.revocationEndpoint, {
@@ -118,11 +126,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         // best-effort revocation; local sign-out proceeds regardless
       }
     }
-    await clearTokens();
-    setAccessToken(null);
-    setTokens(null);
-    setUser(null);
-  }, [discovery, tokens]);
+    await endSession("logout");
+    setError(null);
+  }, [discovery]);
 
   const value = useMemo<AuthContextValue>(
     () => ({

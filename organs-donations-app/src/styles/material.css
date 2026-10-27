@@ -1,0 +1,123 @@
+/*
+ * Angular Material on the Vitalis DonaVida tokens (US-WEB-09).
+ * The azure-blue prebuilt theme sets --mat-sys-* on `html`; `:root` wins on specificity, so
+ * every Material component (buttons, fields, cards, dialogs, toolbar) follows the tokens.
+ */
+:root {
+  /* Color roles */
+  --mat-sys-primary: var(--vd-color-primary);
+  --mat-sys-on-primary: var(--vd-color-on-primary);
+  --mat-sys-primary-container: var(--vd-crimson-100);
+  --mat-sys-on-primary-container: var(--vd-crimson-950);
+  --mat-sys-primary-fixed: var(--vd-crimson-100);
+  --mat-sys-primary-fixed-dim: var(--vd-crimson-inverse);
+  --mat-sys-on-primary-fixed: var(--vd-crimson-950);
+  --mat-sys-on-primary-fixed-variant: var(--vd-crimson-600);
+  --mat-sys-inverse-primary: var(--vd-crimson-inverse);
+  --mat-sys-surface-tint: var(--vd-color-primary);
+
+  --mat-sys-secondary: var(--vd-color-secondary);
+  --mat-sys-on-secondary: var(--vd-color-on-secondary);
+  --mat-sys-secondary-container: var(--vd-cyan-100);
+  --mat-sys-on-secondary-container: var(--vd-cyan-950);
+  --mat-sys-secondary-fixed: var(--vd-cyan-100);
+  --mat-sys-on-secondary-fixed: var(--vd-cyan-950);
+  --mat-sys-on-secondary-fixed-variant: var(--vd-cyan-700);
+
+  --mat-sys-tertiary: var(--vd-emerald-700);
+  --mat-sys-on-tertiary: var(--vd-white);
+  --mat-sys-tertiary-container: var(--vd-emerald-100);
+  --mat-sys-on-tertiary-container: var(--vd-emerald-950);
+  --mat-sys-tertiary-fixed: var(--vd-emerald-100);
+  --mat-sys-on-tertiary-fixed: var(--vd-emerald-950);
+  --mat-sys-on-tertiary-fixed-variant: var(--vd-emerald-700);
+
+  --mat-sys-error: var(--vd-color-error);
+  --mat-sys-on-error: var(--vd-white);
+  --mat-sys-error-container: var(--vd-error-100);
+  --mat-sys-on-error-container: var(--vd-error-900);
+
+  --mat-sys-background: var(--vd-color-background);
+  --mat-sys-on-background: var(--vd-color-text);
+  --mat-sys-surface: var(--vd-color-surface);
+  --mat-sys-surface-bright: var(--vd-color-surface);
+  --mat-sys-surface-dim: var(--vd-slate-100);
+  --mat-sys-surface-variant: var(--vd-slate-100);
+  --mat-sys-surface-container-lowest: var(--vd-color-surface);
+  --mat-sys-surface-container-low: var(--vd-color-surface); /* cards */
+  --mat-sys-surface-container: var(--vd-color-surface); /* menus, selects */
+  --mat-sys-surface-container-high: var(--vd-color-surface); /* dialogs: white sheet */
+  --mat-sys-surface-container-highest: var(--vd-color-input); /* filled fields */
+  --mat-sys-on-surface: var(--vd-color-text);
+  --mat-sys-on-surface-variant: var(--vd-color-text-muted);
+  --mat-sys-outline: var(--vd-color-border-strong);
+  --mat-sys-outline-variant: var(--vd-color-border);
+  --mat-sys-inverse-surface: var(--vd-slate-800);
+  --mat-sys-inverse-on-surface: var(--vd-slate-100);
+  --mat-sys-scrim: var(--vd-slate-900);
+  --mat-sys-shadow: var(--vd-slate-900);
+
+  /* Type: Plus Jakarta Sans everywhere */
+  --mat-sys-display-large-font: var(--vd-font-family);
+  --mat-sys-display-medium-font: var(--vd-font-family);
+  --mat-sys-display-small-font: var(--vd-font-family);
+  --mat-sys-headline-large-font: var(--vd-font-family);
+  --mat-sys-headline-medium-font: var(--vd-font-family);
+  --mat-sys-headline-small-font: var(--vd-font-family);
+  --mat-sys-title-large-font: var(--vd-font-family);
+  --mat-sys-title-medium-font: var(--vd-font-family);
+  --mat-sys-title-small-font: var(--vd-font-family);
+  --mat-sys-body-large-font: var(--vd-font-family);
+  --mat-sys-body-medium-font: var(--vd-font-family);
+  --mat-sys-body-small-font: var(--vd-font-family);
+  --mat-sys-label-large-font: var(--vd-font-family);
+  --mat-sys-label-medium-font: var(--vd-font-family);
+  --mat-sys-label-small-font: var(--vd-font-family);
+
+  /* Shapes */
+  --mat-sys-corner-extra-small: var(--vd-radius-sm);
+  --mat-sys-corner-small: var(--vd-radius-base);
+  --mat-sys-corner-medium: var(--vd-radius-md);
+  --mat-sys-corner-large: var(--vd-radius-lg);
+  --mat-sys-corner-extra-large: var(--vd-radius-xl);
+
+  /* Buttons: 12px radius, 48px tall; red label text uses the AA shade */
+  --mdc-filled-button-container-shape: var(--vd-radius-md);
+  --mdc-protected-button-container-shape: var(--vd-radius-md);
+  --mdc-outlined-button-container-shape: var(--vd-radius-md);
+  --mdc-text-button-container-shape: var(--vd-radius-md);
+  --mdc-filled-button-container-height: var(--vd-touch-target);
+  --mdc-protected-button-container-height: var(--vd-touch-target);
+  --mdc-outlined-button-container-height: var(--vd-touch-target);
+  --mdc-text-button-container-height: var(--vd-touch-target);
+  --mdc-text-button-label-text-color: var(--vd-color-primary-text);
+  --mdc-outlined-button-label-text-color: var(--vd-color-primary-text);
+  --mdc-outlined-button-outline-color: var(--vd-color-border);
+  --mdc-protected-button-label-text-color: var(--vd-color-primary-text);
+
+  /* Inputs: 52px, 12px radius, blue focus */
+  --mat-form-field-container-height: var(--vd-input-height);
+  --mdc-outlined-text-field-container-shape: var(--vd-radius-md);
+  --mdc-filled-text-field-container-shape: var(--vd-radius-md);
+  --mdc-filled-text-field-container-color: var(--vd-color-input);
+  --mdc-outlined-text-field-outline-color: var(--vd-color-border-strong);
+  --mdc-outlined-text-field-focus-outline-color: var(--vd-color-focus);
+  --mdc-filled-text-field-focus-active-indicator-color: var(--vd-color-focus);
+  --mdc-outlined-text-field-focus-label-text-color: var(--vd-color-secondary-text);
+  --mdc-filled-text-field-focus-label-text-color: var(--vd-color-secondary-text);
+  --mdc-outlined-text-field-caret-color: var(--vd-color-focus);
+  --mdc-filled-text-field-caret-color: var(--vd-color-focus);
+
+  /* Cards, dialogs, toolbar */
+  --mdc-elevated-card-container-shape: var(--vd-radius-card);
+  --mdc-outlined-card-container-shape: var(--vd-radius-card);
+  --mdc-elevated-card-container-elevation: var(--vd-elevation-1);
+  --mdc-dialog-container-shape: var(--vd-radius-xl);
+  --mat-toolbar-container-background-color: var(--vd-color-surface);
+  --mat-toolbar-container-text-color: var(--vd-color-text);
+}
+
+/* Dialog backdrop: the warm charcoal scrim of level 3 */
+.cdk-overlay-dark-backdrop {
+  background: var(--vd-color-scrim);
+}

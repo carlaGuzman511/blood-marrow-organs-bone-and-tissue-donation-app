@@ -253,7 +253,7 @@ const UserProfile = () => {
                     />
                     <Polyline
                         coordinates={[origin, destination]}
-                        strokeColor="red"
+                        strokeColor={COLORS.primary}
                         strokeWidth={8}
                     />
                 </MapView>

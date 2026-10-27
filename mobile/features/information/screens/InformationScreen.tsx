@@ -4,9 +4,10 @@ import { useDonationTypes } from '@/features/information/hooks/useDonationTypes'
 import { Donation } from '@/models/App.types';
 import { HeroCard } from '@/features/information/components';
 import SearchBar from '@/components/ui/SearchBar';
-import { styles } from '../styles';
+import { useStyles } from '../styles';
 
 export default function InformationScreen() {
+  const styles = useStyles();
   const { data, isLoading, isError } = useDonationTypes();
   const [search, setSearch] = useState('');
   const sections = useMemo(() => {

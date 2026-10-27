@@ -1,0 +1,171 @@
+/*
+ * Vitalis DonaVida design tokens for the clinical portal (US-WEB-09).
+ * Source: Stitch design system (vitalis_humanitas DESIGN.md, same brand tokens as the mobile app
+ * in mobile/theme/palette.ts). This is the only file allowed to contain color literals:
+ * components use the semantic --vd-* roles below, never raw values (checked by
+ * `npm run lint:tokens`).
+ */
+:root {
+  /* ---- Palette (raw values; don't use outside this file) ---- */
+  --vd-white: #ffffff;
+  --vd-crimson-50: #fff1f2;
+  --vd-crimson-100: #fee2e2;
+  --vd-crimson-500: #e11d48; /* primary fill */
+  --vd-crimson-600: #be123c; /* hover / pressed, red text */
+  --vd-crimson-950: #4c0519;
+  --vd-crimson-inverse: #ffb3b6;
+  --vd-cyan-100: #e0f2fe;
+  --vd-cyan-500: #0284c7; /* focus ring (white on it fails AA, so not for text) */
+  --vd-cyan-700: #0369a1; /* secondary text and fills */
+  --vd-cyan-950: #082f49;
+  --vd-emerald-100: #d1fae5;
+  --vd-emerald-500: #10b981; /* live indicator, decorative only */
+  --vd-emerald-700: #047857;
+  --vd-emerald-950: #022c22;
+  --vd-amber-100: #fef3c7; /* "observation": not in DESIGN.md, same default as mobile */
+  --vd-amber-700: #b45309;
+  --vd-slate-50: #f8fafc;
+  --vd-slate-100: #f1f5f9;
+  --vd-slate-200: #e2e8f0;
+  --vd-slate-400: #94a3b8;
+  --vd-slate-500: #64748b;
+  --vd-slate-600: #475569;
+  --vd-slate-800: #1e293b;
+  --vd-slate-900: #0f172a;
+  --vd-error: #ba1a1a;
+  --vd-error-100: #ffdad6;
+  --vd-error-900: #93000a;
+
+  /* Google sign-in logo (brand guidelines: the mark keeps its own colors) */
+  --vd-google-blue: #4285f4;
+  --vd-google-green: #34a853;
+  --vd-google-yellow: #fbbc05;
+  --vd-google-red: #ea4335;
+
+  /* ---- Semantic color roles ---- */
+  --vd-color-background: var(--vd-slate-50); /* level 0 canvas */
+  --vd-color-surface: var(--vd-white); /* level 1 cards, level 3 sheets */
+  --vd-color-surface-recessed: var(--vd-slate-100); /* wells, chips (no muted text on it) */
+  --vd-color-border: var(--vd-slate-200);
+  --vd-color-border-subtle: rgba(226, 232, 240, 0.8);
+  --vd-color-border-strong: var(--vd-slate-500); /* input outlines: 3:1 against white */
+  --vd-color-scrim: rgba(15, 23, 42, 0.45);
+
+  --vd-color-text: var(--vd-slate-900);
+  --vd-color-text-muted: var(--vd-slate-500);
+  --vd-color-text-disabled: var(--vd-slate-400);
+
+  --vd-color-primary: var(--vd-crimson-500);
+  --vd-color-primary-hover: var(--vd-crimson-600);
+  --vd-color-on-primary: var(--vd-white);
+  --vd-color-primary-text: var(--vd-crimson-600);
+  --vd-color-primary-soft: rgba(225, 29, 72, 0.1);
+
+  --vd-color-secondary: var(--vd-cyan-700);
+  --vd-color-on-secondary: var(--vd-white);
+  --vd-color-secondary-text: var(--vd-cyan-700);
+  --vd-color-secondary-soft: rgba(2, 132, 199, 0.08);
+
+  --vd-color-success: var(--vd-emerald-500);
+  --vd-color-error: var(--vd-error);
+  --vd-color-error-soft: var(--vd-error-100);
+  --vd-color-focus: var(--vd-cyan-500);
+  --vd-color-input: var(--vd-slate-50);
+  --vd-color-input-focused: var(--vd-white);
+
+  /* Clinical badges: viable/confirmed green, urgent red, observation amber. */
+  --vd-tone-urgent-bg: var(--vd-crimson-100);
+  --vd-tone-urgent-fg: var(--vd-crimson-600);
+  --vd-tone-observation-bg: var(--vd-amber-100);
+  --vd-tone-observation-fg: var(--vd-amber-700);
+  --vd-tone-viable-bg: var(--vd-emerald-100);
+  --vd-tone-viable-fg: var(--vd-emerald-700);
+  --vd-tone-info-bg: var(--vd-cyan-100);
+  --vd-tone-info-fg: var(--vd-cyan-700);
+  --vd-tone-neutral-bg: var(--vd-slate-100);
+  --vd-tone-neutral-fg: var(--vd-slate-600);
+  --vd-blood-badge-bg: var(--vd-crimson-100);
+  --vd-blood-badge-fg: var(--vd-crimson-600);
+
+  /* ---- Typography (Plus Jakarta Sans) ---- */
+  --vd-font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  /* font shorthand: weight size/line-height family. Tracking goes in --*-tracking. */
+  --vd-display-lg: 800 3rem/3.5rem var(--vd-font-family);
+  --vd-display-lg-tracking: -0.03em;
+  --vd-headline-xl: 700 2.25rem/2.75rem var(--vd-font-family);
+  --vd-headline-xl-tracking: -0.02em;
+  --vd-headline-lg: 700 1.5rem/2rem var(--vd-font-family);
+  --vd-headline-lg-tracking: -0.015em;
+  --vd-headline-md: 600 1.25rem/1.75rem var(--vd-font-family);
+  --vd-headline-md-tracking: -0.01em;
+  --vd-title-sm: 600 1.125rem/1.5rem var(--vd-font-family);
+  --vd-title-sm-tracking: 0;
+  --vd-body-lg: 400 1.125rem/1.75rem var(--vd-font-family);
+  --vd-body-lg-tracking: 0;
+  --vd-body-md: 400 1rem/1.5rem var(--vd-font-family);
+  --vd-body-md-tracking: 0;
+  --vd-body-sm: 400 0.875rem/1.25rem var(--vd-font-family);
+  --vd-body-sm-tracking: 0.005em;
+  --vd-label-md: 600 0.875rem/1.25rem var(--vd-font-family);
+  --vd-label-md-tracking: 0.01em;
+  --vd-label-sm: 600 0.75rem/1rem var(--vd-font-family);
+  --vd-label-sm-tracking: 0.02em;
+  --vd-badge: 700 0.6875rem/0.875rem var(--vd-font-family);
+  --vd-badge-tracking: 0.04em;
+
+  /* ---- Radii ---- */
+  --vd-radius-sm: 0.25rem;
+  --vd-radius-base: 0.5rem;
+  --vd-radius-md: 0.75rem; /* buttons, inputs, badges */
+  --vd-radius-lg: 1rem;
+  --vd-radius-card: 1.25rem; /* donation and alert cards */
+  --vd-radius-xl: 1.5rem; /* sheets, dialogs */
+  --vd-radius-full: 9999px; /* pills, blood-type tags */
+
+  /* ---- Spacing (8pt rhythm, 4pt half-steps) ---- */
+  --vd-space-2xs: 0.25rem;
+  --vd-space-xs: 0.5rem;
+  --vd-space-sm: 0.75rem;
+  --vd-space-md: 1rem;
+  --vd-space-lg: 1.5rem;
+  --vd-space-xl: 2rem;
+  --vd-space-2xl: 3rem;
+
+  /* ---- Layout grid: 4 cols phone, 8 tablet, 12 desktop (max 1120px) ---- */
+  --vd-grid-columns: 4;
+  --vd-grid-gutter: 1rem;
+  --vd-grid-margin: 1rem;
+  --vd-grid-max-width: 1120px;
+
+  /* ---- Controls ---- */
+  --vd-touch-target: 48px;
+  --vd-input-height: 52px;
+  --vd-focus-ring: 0 0 0 2px var(--vd-color-focus);
+  --vd-focus-glow: 0 0 0 4px rgba(2, 132, 199, 0.18);
+
+  /* ---- Elevation ---- */
+  --vd-elevation-0: none;
+  --vd-elevation-1: 0 4px 20px -2px rgba(15, 23, 42, 0.04), 0 2px 6px -1px rgba(15, 23, 42, 0.02);
+  --vd-elevation-1-hover: 0 8px 28px -4px rgba(15, 23, 42, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+  --vd-elevation-2: 0 12px 28px -4px rgba(225, 29, 72, 0.12), 0 4px 10px -2px rgba(15, 23, 42, 0.04);
+  --vd-elevation-3: 0 24px 48px -12px rgba(15, 23, 42, 0.18);
+  --vd-glass: rgba(255, 255, 255, 0.88);
+
+  --vd-transition: 150ms ease-out;
+}
+
+@media (min-width: 600px) {
+  :root {
+    --vd-grid-columns: 8;
+    --vd-grid-gutter: 1.5rem;
+    --vd-grid-margin: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --vd-grid-columns: 12;
+    --vd-grid-gutter: 2rem;
+    --vd-grid-margin: 3rem;
+  }
+}

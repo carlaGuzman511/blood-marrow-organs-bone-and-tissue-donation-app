@@ -1,103 +1,104 @@
+/* Feed card on the Vitalis DonaVida tokens (US-WEB-09). */
 .card {
   width: 100%;
   max-width: 600px;
-  margin: 1.5rem auto;
-  border-radius: 12px;
-  background-color: #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  margin: var(--vd-space-lg) auto;
+  border: 1px solid var(--vd-color-border-subtle);
+  border-radius: var(--vd-radius-card);
+  background-color: var(--vd-color-surface);
+  box-shadow: var(--vd-elevation-1);
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: box-shadow 0.2s ease-in-out;
+  transition: box-shadow var(--vd-transition);
 }
 
 .card:hover {
-  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  box-shadow: var(--vd-elevation-1-hover);
 }
 
 mat-card-header {
   display: flex;
   align-items: center;
-  padding: 12px 16px;
+  padding: var(--vd-space-sm) var(--vd-space-md);
 }
 
 .avatar {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
+  width: var(--vd-touch-target);
+  height: var(--vd-touch-target);
+  border-radius: var(--vd-radius-full);
   object-fit: cover;
-  margin-right: 12px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  margin-right: var(--vd-space-sm);
+  box-shadow: 0 0 0 1px var(--vd-color-border);
 }
 
 mat-card-title {
-  font-size: 15px;
-  font-weight: 600;
-  margin-bottom: 2px;
+  font: var(--vd-title-sm);
+  letter-spacing: var(--vd-title-sm-tracking);
+  color: var(--vd-color-text);
+  margin-bottom: var(--vd-space-2xs);
 }
 
 mat-card-subtitle {
-  font-size: 13px;
-  color: #65676b;
+  font: var(--vd-body-sm);
+  color: var(--vd-color-text-muted);
   margin: 0;
-  line-height: 1.4;
 }
 
 mat-card-content {
-  padding: 8px 16px;
-  font-size: 15px;
-  line-height: 1.6;
-  color: #212121;
+  padding: var(--vd-space-xs) var(--vd-space-md);
+  font: var(--vd-body-md);
+  color: var(--vd-color-text);
 }
 
 mat-card img[mat-card-image] {
   width: 100%;
   max-height: 450px;
   object-fit: cover;
-  border-top: 1px solid #eee;
-  border-bottom: 1px solid #eee;
+  border-top: 1px solid var(--vd-color-border);
+  border-bottom: 1px solid var(--vd-color-border);
 }
 
 .card-stats {
   display: flex;
   justify-content: space-between;
-  padding: 6px 16px;
-  font-size: 14px;
-  color: #65676b;
+  padding: var(--vd-space-xs) var(--vd-space-md);
+  font: var(--vd-body-sm);
+  color: var(--vd-color-text-muted);
 }
 
 mat-card-actions {
   display: flex;
   justify-content: space-around;
-  border-top: 1px solid #e0e0e0;
-  padding: 4px 0;
+  border-top: 1px solid var(--vd-color-border);
+  padding: var(--vd-space-2xs) 0;
 }
 
 mat-card-actions button {
   flex: 1;
-  font-weight: 600;
-  color: #555;
+  font: var(--vd-label-md);
+  color: var(--vd-color-text-muted);
   text-transform: none;
-  border-radius: 8px;
+  border-radius: var(--vd-radius-md);
 }
 
 mat-card-actions button:hover {
-  background-color: #f0f2f5;
-  transition: background 0.2s ease-in-out;
+  background-color: var(--vd-color-background);
+  color: var(--vd-color-text);
 }
 
 .comments {
-  padding: 8px 16px;
-  border-top: 1px solid #e0e0e0;
-  background: #fafafa;
+  padding: var(--vd-space-xs) var(--vd-space-md);
+  border-top: 1px solid var(--vd-color-border);
+  background: var(--vd-color-background);
 }
 
 .comment {
-  font-size: 14px;
-  margin: 6px 0;
+  font: var(--vd-body-sm);
+  margin: var(--vd-space-xs) 0;
 }
 
 .comment strong {
-  color: #1976d2;
-  margin-right: 4px;
+  color: var(--vd-color-secondary-text);
+  margin-right: var(--vd-space-2xs);
 }

@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(17, 24, 39, 0.35)',
+    backgroundColor: COLORS.scrim,
   },
   sheet: {
     backgroundColor: COLORS.white,

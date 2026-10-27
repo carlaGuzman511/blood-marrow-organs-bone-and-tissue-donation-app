@@ -1,5 +1,135 @@
-<div class="login-container">
-  <h1>Bienvenido</h1>
-  <p>Inicia sesión para continuar</p>
-  <button mat-raised-button color="primary" (click)="login()">Iniciar sesión</button>
-</div>
+<main class="login-page">
+  <div class="glow glow--crimson" aria-hidden="true"></div>
+  <div class="glow glow--cyan" aria-hidden="true"></div>
+
+  <!-- Live network capsule -->
+  <div class="pulse-capsule">
+    <span class="pulse-dot" aria-hidden="true"></span>
+    <span class="vd-label-sm pulse-label">Red activa CENATRA</span>
+    @if (centerCount() !== null) {
+      <span class="pulse-sep" aria-hidden="true">/</span>
+      <span class="vd-body-sm pulse-count">
+        <span class="material-symbols-outlined" aria-hidden="true">local_hospital</span>
+        {{ centerCount() }} centros conectados
+      </span>
+    }
+  </div>
+
+  <section class="login-card" aria-labelledby="login-title">
+    <header class="brand">
+      <div class="brand-mark" aria-hidden="true">
+        <span class="material-symbols-outlined">water_drop</span>
+      </div>
+      <span class="vd-badge-text brand-tag">Plataforma Clínica Nacional</span>
+      <h1 id="login-title" class="vd-headline-lg">Vitalis DonaVida</h1>
+      <p class="vd-body-sm vd-text-muted brand-sub">Red Nacional de Donación Humanitaria de Sangre, Órganos y Tejidos</p>
+    </header>
+
+    @if (!pickSedeOnly()) {
+      <!-- Role tabs -->
+      <div class="role-tabs" role="tablist" aria-label="Tipo de acceso">
+        <button type="button" role="tab" class="role-tab" [class.role-tab--active]="access() === 'clinical'"
+                [attr.aria-selected]="access() === 'clinical'" (click)="selectAccess('clinical')">
+          <span class="material-symbols-outlined" aria-hidden="true">bloodtype</span>
+          <span>Banco / Hospital</span>
+        </button>
+        <button type="button" role="tab" class="role-tab" [class.role-tab--active]="access() === 'admin'"
+                [attr.aria-selected]="access() === 'admin'" (click)="selectAccess('admin')">
+          <span class="material-symbols-outlined" aria-hidden="true">admin_panel_settings</span>
+          <span>Admin / CENATRA</span>
+        </button>
+      </div>
+
+      <!-- Volunteer donors go to the app, not to the clinical portal -->
+      <div class="donor-banner">
+        <div class="donor-banner__text">
+          <span class="donor-banner__icon" aria-hidden="true"><span class="material-symbols-outlined">favorite</span></span>
+          <div>
+            <p class="vd-label-sm donor-banner__title">¿Eres Donador Voluntario?</p>
+            <p class="vd-body-sm vd-text-muted">Agenda cita o revisa tu carnet de donación</p>
+          </div>
+        </div>
+        <a class="vd-label-sm donor-banner__link" [href]="donorAppUrl" [attr.target]="donorAppIsExternal ? '_blank' : null"
+           [attr.rel]="donorAppIsExternal ? 'noopener' : null" data-testid="donor-link">
+          Ir a DonaVida App <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+        </a>
+      </div>
+    } @else {
+      <p class="vd-body-sm pick-sede-note" role="status">
+        Sesión iniciada. Selecciona la sede desde la que trabajarás en esta sesión.
+      </p>
+    }
+
+    <form class="login-form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <!-- Sede -->
+      <div class="field">
+        <label class="vd-label-md" for="sede-select">Sede Hospitalaria o Centro de Transfusión</label>
+        <div class="control">
+          <span class="material-symbols-outlined control__icon" aria-hidden="true">domain</span>
+          <select id="sede-select" class="vd-input control__input" formControlName="sedeId" required
+                  [attr.aria-invalid]="sedeInvalid" aria-describedby="sede-error">
+            <option value="" disabled>{{ loadingCenters() ? 'Cargando sedes…' : 'Selecciona tu sede' }}</option>
+            @for (center of centers(); track center.id) {
+              <option [value]="center.id">{{ center.name }}</option>
+            }
+          </select>
+          <span class="material-symbols-outlined control__chevron" aria-hidden="true">expand_more</span>
+        </div>
+        @if (centersError()) {
+          <p class="vd-body-sm field-error" id="sede-error" role="alert">
+            No se pudieron cargar las sedes.
+            <button type="button" class="link-button" (click)="loadCenters()">Reintentar</button>
+          </p>
+        } @else if (form.controls.sedeId.invalid && !loadingCenters()) {
+          <p class="vd-body-sm" id="sede-error" [class.field-error]="sedeInvalid" [class.vd-text-muted]="!sedeInvalid"
+             [attr.role]="sedeInvalid ? 'alert' : null" data-testid="sede-required">
+            Campo requerido: selecciona tu sede hospitalaria para continuar.
+          </p>
+        }
+      </div>
+
+      @if (!pickSedeOnly()) {
+        <!-- Google -->
+        <button type="button" class="google-button" (click)="continueWithGoogle()" [disabled]="form.controls.sedeId.invalid">
+          <svg class="google-logo" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="var(--vd-google-blue)"></path>
+            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="var(--vd-google-green)"></path>
+            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="var(--vd-google-yellow)"></path>
+            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="var(--vd-google-red)"></path>
+          </svg>
+          <span class="vd-label-md">Continuar con Google Workspace / Gmail</span>
+        </button>
+
+        <div class="separator"><span class="vd-label-sm">O con credenciales institucionales</span></div>
+
+        <!-- Email: sent to Keycloak as login hint; the password is typed on the Keycloak page -->
+        <div class="field">
+          <label class="vd-label-md" for="email">Correo electrónico institucional</label>
+          <div class="control">
+            <span class="material-symbols-outlined control__icon" aria-hidden="true">alternate_email</span>
+            <input id="email" class="vd-input control__input" type="email" formControlName="email" autocomplete="username"
+                   [placeholder]="copy().emailPlaceholder" [attr.aria-invalid]="emailInvalid" aria-describedby="email-hint" />
+          </div>
+          @if (emailInvalid) {
+            <p class="vd-body-sm field-error" id="email-hint" role="alert">Escribe un correo válido.</p>
+          } @else {
+            <p class="vd-body-sm vd-text-muted" id="email-hint">La contraseña se ingresa en la página segura de Keycloak.</p>
+          }
+        </div>
+      }
+
+      <button type="submit" class="vd-btn vd-btn--primary submit" [disabled]="form.controls.sedeId.invalid" data-testid="submit">
+        <span class="material-symbols-outlined" aria-hidden="true">vpn_key</span>
+        <span>{{ pickSedeOnly() ? 'Continuar al Portal Clínico' : copy().submit }}</span>
+      </button>
+    </form>
+
+    <footer class="compliance">
+      <span class="material-symbols-outlined" aria-hidden="true">verified_user</span>
+      <div>
+        <p class="vd-label-sm">Cumplimiento NOM-253-SSA1-2012</p>
+        <p class="vd-body-sm vd-text-muted">Acceso con Keycloak (OAuth 2.0 + PKCE) para registros clínicos confidenciales.</p>
+      </div>
+    </footer>
+  </section>
+</main>

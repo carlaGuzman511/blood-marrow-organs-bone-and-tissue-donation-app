@@ -1,0 +1,181 @@
+/*
+ * Vitalis DonaVida base styles and components (US-WEB-09). Only --vd-* tokens here.
+ * Components: .vd-btn (primary / secondary / subtle), .vd-input, .vd-card, .vd-badge (clinical
+ * tones), .vd-blood-badge; type classes .vd-display-lg ... .vd-badge-text; grid .vd-container,
+ * .vd-grid and .vd-col-*. Angular Material components get the same look from material.css.
+ */
+
+/* ---- Page ---- */
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font: var(--vd-body-md);
+  letter-spacing: var(--vd-body-md-tracking);
+  color: var(--vd-color-text);
+  background: var(--vd-color-background);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Keyboard focus is always visible (mouse clicks don't show it). */
+:focus-visible {
+  outline: 2px solid var(--vd-color-focus);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* ---- Type scale ---- */
+.vd-display-lg { font: var(--vd-display-lg); letter-spacing: var(--vd-display-lg-tracking); }
+.vd-headline-xl { font: var(--vd-headline-xl); letter-spacing: var(--vd-headline-xl-tracking); }
+.vd-headline-lg { font: var(--vd-headline-lg); letter-spacing: var(--vd-headline-lg-tracking); }
+.vd-headline-md { font: var(--vd-headline-md); letter-spacing: var(--vd-headline-md-tracking); }
+.vd-title-sm { font: var(--vd-title-sm); letter-spacing: var(--vd-title-sm-tracking); }
+.vd-body-lg { font: var(--vd-body-lg); letter-spacing: var(--vd-body-lg-tracking); }
+.vd-body-md { font: var(--vd-body-md); letter-spacing: var(--vd-body-md-tracking); }
+.vd-body-sm { font: var(--vd-body-sm); letter-spacing: var(--vd-body-sm-tracking); }
+.vd-label-md { font: var(--vd-label-md); letter-spacing: var(--vd-label-md-tracking); }
+.vd-label-sm { font: var(--vd-label-sm); letter-spacing: var(--vd-label-sm-tracking); }
+.vd-badge-text { font: var(--vd-badge); letter-spacing: var(--vd-badge-tracking); text-transform: uppercase; }
+.vd-text-muted { color: var(--vd-color-text-muted); }
+
+/* ---- Layout grid: 4 / 8 / 12 columns, gutters and margins from tokens.css ---- */
+.vd-container {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: calc(var(--vd-grid-max-width) + 2 * var(--vd-grid-margin));
+  margin-inline: auto;
+  padding-inline: var(--vd-grid-margin);
+}
+
+.vd-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--vd-grid-columns), minmax(0, 1fr));
+  gap: var(--vd-grid-gutter);
+}
+
+/*
+ * .vd-col-N spans N of 12 columns on desktop. On tablet (8 columns) spans are halved up to
+ * a half/full row, and on phones every cell is full width.
+ */
+.vd-grid > * { grid-column: 1 / -1; }
+
+@media (min-width: 600px) {
+  .vd-grid > .vd-col-1 { grid-column: span 1; }
+  .vd-grid > .vd-col-2 { grid-column: span 2; }
+  .vd-grid > .vd-col-3,
+  .vd-grid > .vd-col-4,
+  .vd-grid > .vd-col-6 { grid-column: span 4; }
+  .vd-grid > .vd-col-8 { grid-column: 1 / -1; }
+}
+
+@media (min-width: 1024px) {
+  .vd-grid > .vd-col-3 { grid-column: span 3; }
+  .vd-grid > .vd-col-4 { grid-column: span 4; }
+  .vd-grid > .vd-col-6 { grid-column: span 6; }
+  .vd-grid > .vd-col-8 { grid-column: span 8; }
+}
+
+/* ---- Buttons ---- */
+.vd-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--vd-space-xs);
+  min-height: var(--vd-touch-target);
+  min-width: var(--vd-touch-target);
+  padding: 0 var(--vd-space-lg);
+  border: 1px solid transparent;
+  border-radius: var(--vd-radius-md);
+  font: var(--vd-label-md);
+  letter-spacing: var(--vd-label-md-tracking);
+  cursor: pointer;
+  transition: background-color var(--vd-transition), color var(--vd-transition), transform var(--vd-transition);
+}
+.vd-btn:active { transform: scale(0.98); }
+.vd-btn:disabled { cursor: not-allowed; opacity: 0.5; transform: none; }
+
+.vd-btn--primary { background: var(--vd-color-primary); color: var(--vd-color-on-primary); }
+.vd-btn--primary:hover:not(:disabled) { background: var(--vd-color-primary-hover); }
+
+.vd-btn--secondary { background: var(--vd-color-secondary-soft); color: var(--vd-color-secondary-text); }
+.vd-btn--secondary:hover:not(:disabled) { background: var(--vd-color-secondary); color: var(--vd-color-on-secondary); }
+
+.vd-btn--subtle { background: transparent; color: var(--vd-color-text-muted); border-color: var(--vd-color-border); }
+.vd-btn--subtle:hover:not(:disabled) { background: var(--vd-color-background); color: var(--vd-color-text); }
+
+/* ---- Inputs ---- */
+.vd-input {
+  box-sizing: border-box;
+  width: 100%;
+  height: var(--vd-input-height);
+  padding: 0 var(--vd-space-md);
+  border: 1px solid var(--vd-color-border-strong);
+  border-radius: var(--vd-radius-md);
+  background: var(--vd-color-input);
+  color: var(--vd-color-text);
+  font: var(--vd-body-md);
+  transition: background-color var(--vd-transition), box-shadow var(--vd-transition);
+}
+.vd-input::placeholder { color: var(--vd-color-text-muted); }
+.vd-input:focus,
+.vd-input:focus-visible {
+  outline: none;
+  background: var(--vd-color-input-focused);
+  border-color: var(--vd-color-focus);
+  box-shadow: var(--vd-focus-ring), var(--vd-focus-glow);
+}
+.vd-input[aria-invalid="true"] { border-color: var(--vd-color-error); }
+
+/* ---- Cards ---- */
+.vd-card {
+  background: var(--vd-color-surface);
+  border: 1px solid var(--vd-color-border-subtle);
+  border-radius: var(--vd-radius-card);
+  box-shadow: var(--vd-elevation-1);
+  padding: var(--vd-space-lg);
+}
+.vd-card--alert { background: var(--vd-glass); backdrop-filter: blur(16px); box-shadow: var(--vd-elevation-2); }
+
+/* ---- Clinical badges: always icon or text, never color alone ---- */
+.vd-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--vd-space-2xs);
+  padding: var(--vd-space-2xs) var(--vd-space-xs);
+  border-radius: var(--vd-radius-full);
+  font: var(--vd-badge);
+  letter-spacing: var(--vd-badge-tracking);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.vd-badge--urgent { background: var(--vd-tone-urgent-bg); color: var(--vd-tone-urgent-fg); }
+.vd-badge--observation { background: var(--vd-tone-observation-bg); color: var(--vd-tone-observation-fg); }
+.vd-badge--viable { background: var(--vd-tone-viable-bg); color: var(--vd-tone-viable-fg); }
+.vd-badge--info { background: var(--vd-tone-info-bg); color: var(--vd-tone-info-fg); }
+.vd-badge--neutral { background: var(--vd-tone-neutral-bg); color: var(--vd-tone-neutral-fg); }
+
+.vd-blood-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  height: 2rem;
+  padding: 0 var(--vd-space-xs);
+  box-sizing: border-box;
+  border-radius: var(--vd-radius-base);
+  background: var(--vd-blood-badge-bg);
+  color: var(--vd-blood-badge-fg);
+  font: var(--vd-label-md);
+  font-weight: 700;
+}

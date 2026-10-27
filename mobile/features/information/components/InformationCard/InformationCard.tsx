@@ -5,6 +5,7 @@ import AppText from '@/components/ui/AppText';
 import styles from './InformationCard.styles';
 import { useRouter } from 'expo-router';
 import { Donation } from '@/models/App.types';
+import { useTheme } from '@/theme';
 
 type Props = {
   item: Donation;
@@ -12,6 +13,7 @@ type Props = {
 
 export default function InformationCard({ item }: Props) {
   const router = useRouter();
+  const { colors } = useTheme();
 
   const onPress = () => {
     router.push({
@@ -33,7 +35,7 @@ export default function InformationCard({ item }: Props) {
         style={styles.imageBackground}
         imageStyle={styles.image}
       >
-        <LinearGradient colors={["transparent", "rgba(0,0,0,0.7)"]} style={styles.gradient}>
+        <LinearGradient colors={["transparent", colors.mediaScrim]} style={styles.gradient}>
           <View style={styles.textContainer}>
             <AppText preset="h3" style={styles.title} numberOfLines={2}>
               {item.name}

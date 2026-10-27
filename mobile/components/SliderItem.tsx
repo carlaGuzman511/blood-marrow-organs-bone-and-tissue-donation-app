@@ -19,7 +19,7 @@ export default function SliderItem({item}: Props) {
   return (
     <View style={styles.container}>
       <Image source={item.image} style={styles.image} />
-      <LinearGradient colors={["transparent", "rgba(0,0,0,0.8)"]} style={styles.gradient}>
+      <LinearGradient colors={["transparent", COLORS.mediaScrim]} style={styles.gradient}>
         <View style={styles.inner}>
           <Text style={styles.title}>{item.name}</Text>
           <Text style={styles.description}>{item.description.replace(/\\n/g, '\n')}</Text>

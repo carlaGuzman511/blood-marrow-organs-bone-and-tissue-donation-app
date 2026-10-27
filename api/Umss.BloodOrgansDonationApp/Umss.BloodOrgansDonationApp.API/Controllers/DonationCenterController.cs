@@ -31,8 +31,12 @@ namespace Umss.BloodOrgansDonationApp.API.Controllers
             return Ok(response);
         }
 
-        /// <summary>One page of donation centers, ordered by name; search by name or address, filter by city or donation type.</summary>
-        [Authorize]
+        /// <summary>
+        /// One page of donation centers, ordered by name; search by name or address, filter by city or donation type.
+        /// Public: it is the network's directory, and the portal login lists it so staff can pick their
+        /// hospital before signing in (US-WEB-01). Only public contact data is returned.
+        /// </summary>
+        [AllowAnonymous]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest, "application/problem+json")]

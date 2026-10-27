@@ -1,0 +1,75 @@
+<section class="panel" aria-labelledby="filters-title">
+  <div class="panel-head">
+    <h2 id="filters-title" class="vd-title-sm">
+      <span class="material-symbols-outlined icon-primary" aria-hidden="true">tune</span>
+      Filtros Operativos Clínicos
+    </h2>
+    <div class="panel-actions">
+      <button type="button" class="reset vd-label-sm" (click)="reset.emit()" [disabled]="activeCount() === 0" data-testid="reset-filters">
+        <span class="material-symbols-outlined" aria-hidden="true">restart_alt</span>
+        Restablecer
+      </button>
+      <span class="vd-badge vd-badge--neutral" data-testid="active-filters" aria-live="polite">
+        {{ activeCount() }} {{ activeCount() === 1 ? 'Filtro activo' : 'Filtros activos' }}
+      </span>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="field">
+      <label class="vd-label-sm" for="filter-urgency">
+        <span class="material-symbols-outlined icon-primary" aria-hidden="true">crisis_alert</span>
+        Prioridad Médica
+      </label>
+      <select id="filter-urgency" class="select" [value]="filters().urgency ?? ''" (change)="setUrgency($any($event.target).value)">
+        <option value="">Todas las prioridades</option>
+        @for (option of urgencyOptions; track option.value) {
+          <option [value]="option.value" [selected]="filters().urgency === option.value">{{ option.label }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="field">
+      <label class="vd-label-sm" for="filter-component">
+        <span class="material-symbols-outlined icon-secondary" aria-hidden="true">bloodtype</span>
+        Componente Biológico
+      </label>
+      <select id="filter-component" class="select" [value]="filters().component ?? ''" (change)="setComponent($any($event.target).value)">
+        <option value="">Todos los componentes</option>
+        @for (option of componentOptions; track option.value) {
+          <option [value]="option.value" [selected]="filters().component === option.value">{{ option.label }}</option>
+        }
+      </select>
+    </div>
+
+    <fieldset class="field">
+      <legend class="vd-label-sm">
+        <span class="material-symbols-outlined icon-primary" aria-hidden="true">colorize</span>
+        Grupo AB0 / Factor Rh
+      </legend>
+      <div class="chips">
+        @for (type of bloodTypes(); track type.id) {
+          <button type="button" class="chip" [class.chip--on]="isSelected(type.id)" [attr.aria-pressed]="isSelected(type.id)"
+                  (click)="toggleBloodType(type.id)" [attr.aria-label]="'Grupo ' + type.name">
+            {{ type.name }}
+          </button>
+        } @empty {
+          <span class="vd-body-sm vd-text-muted">Cargando grupos…</span>
+        }
+      </div>
+    </fieldset>
+
+    <div class="field">
+      <label class="vd-label-sm" for="filter-status">
+        <span class="material-symbols-outlined icon-viable" aria-hidden="true">swap_horizontal_circle</span>
+        Fase de Proceso
+      </label>
+      <select id="filter-status" class="select" [value]="filters().status ?? ''" (change)="setStatus($any($event.target).value)">
+        <option value="">Todas las fases</option>
+        @for (option of statusOptions; track option.value) {
+          <option [value]="option.value" [selected]="filters().status === option.value">{{ option.label }}</option>
+        }
+      </select>
+    </div>
+  </div>
+</section>

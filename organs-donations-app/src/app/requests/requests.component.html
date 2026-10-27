@@ -1,0 +1,112 @@
+<!-- Network banner: active Código Rojo (US-WEB-02) -->
+@if (codeRed(); as alert) {
+  <div class="ticker" role="status" aria-live="polite" data-testid="code-red-banner">
+    <span class="ticker-dot" aria-hidden="true"></span>
+    <span class="ticker-tag vd-badge-text">Red CENATRA activa</span>
+    <p class="ticker-text vd-body-sm">
+      <span class="material-symbols-outlined" aria-hidden="true">notifications_active</span>
+      Protocolo Código Rojo activado en <strong>{{ alert.centerName }}</strong>.
+      <strong class="ticker-count">{{ alert.count }} {{ alert.count === 1 ? 'solicitud' : 'solicitudes' }}</strong>
+      de soporte transfusional en curso{{ alert.otherCenters ? ' · ' + alert.otherCenters + (alert.otherCenters === 1 ? ' sede más' : ' sedes más') + ' en alerta' : '' }}.
+    </p>
+  </div>
+}
+
+<div class="page">
+  <!-- Header -->
+  <header class="page-head">
+    <div>
+      <div class="eyebrow">
+        <span class="vd-label-sm eyebrow-main">Centro de Despacho Hemoterápico</span>
+        <span aria-hidden="true">•</span>
+        <span class="vd-label-sm vd-text-muted">{{ networkScope() ? 'Toda la red' : sede()?.name }}</span>
+      </div>
+      <h1 class="vd-headline-xl page-title">
+        Solicitudes Clínicas &amp; Triaje
+        <span class="vd-badge vd-badge--urgent" data-testid="active-count">{{ activeCount() }} Activas</span>
+      </h1>
+      <p class="vd-body-md vd-text-muted page-sub">
+        Monitoreo en tiempo real de las solicitudes de soporte transfusional y trasplante, por fase clínica.
+      </p>
+    </div>
+
+    <div class="head-actions">
+      <div class="view-switch" role="tablist" aria-label="Vista">
+        <button type="button" role="tab" class="view-tab vd-label-sm" [class.view-tab--on]="view() === 'board'"
+                [attr.aria-selected]="view() === 'board'" (click)="setView('board')" data-testid="view-board">
+          <span class="material-symbols-outlined" aria-hidden="true">view_kanban</span> Tablero Táctico
+        </button>
+        <button type="button" role="tab" class="view-tab vd-label-sm" [class.view-tab--on]="view() === 'table'"
+                [attr.aria-selected]="view() === 'table'" (click)="setView('table')" data-testid="view-table">
+          <span class="material-symbols-outlined" aria-hidden="true">table_rows</span> Registro Clínico
+        </button>
+      </div>
+      <button type="button" class="vd-btn vd-btn--primary publish" (click)="openPublish()" data-testid="open-publish">
+        <span class="material-symbols-outlined" aria-hidden="true">add_circle</span>
+        Publicar Solicitud Hospitalaria
+      </button>
+    </div>
+  </header>
+
+  <app-request-filters [filters]="filters()" [bloodTypes]="bloodTypes()" (filtersChange)="onFiltersChange($event)" (reset)="resetFilters()" />
+
+  <div class="status-line" aria-live="polite">
+    @if (loading()) {
+      <span class="vd-label-sm vd-text-muted loading" data-testid="loading">
+        <span class="spinner" aria-hidden="true"></span> Actualizando…
+      </span>
+    }
+  </div>
+
+  @if (loadError(); as message) {
+    <div class="state state--error" role="alert">
+      <span class="material-symbols-outlined" aria-hidden="true">cloud_off</span>
+      <p class="vd-body-md">{{ message }}</p>
+      <button type="button" class="vd-btn vd-btn--secondary" (click)="refresh()">Reintentar</button>
+    </div>
+  } @else if (!loading() && isEmpty()) {
+    <div class="state" role="status" data-testid="empty-state">
+      <span class="material-symbols-outlined" aria-hidden="true">{{ activeFilters() ? 'filter_alt_off' : 'inbox' }}</span>
+      @if (activeFilters()) {
+        <p class="vd-title-sm">Ninguna solicitud coincide con los filtros</p>
+        <p class="vd-body-sm vd-text-muted">Prueba con otra prioridad, componente, grupo o fase.</p>
+        <button type="button" class="vd-btn vd-btn--secondary" (click)="resetFilters()" data-testid="empty-clear">Limpiar filtros</button>
+      } @else {
+        <p class="vd-title-sm">No hay solicitudes activas</p>
+        <p class="vd-body-sm vd-text-muted">Publica una solicitud hospitalaria para empezar la búsqueda de donantes.</p>
+      }
+    </div>
+  }
+
+  @if (!loadError()) {
+    @if (view() === 'board') {
+      <div class="board" cdkDropListGroup [class.board--hidden]="!loading() && isEmpty()">
+        @for (column of columns(); track column.status) {
+          <section class="column" [class]="'column column--' + column.status" [attr.aria-label]="column.label + ': ' + column.total + ' solicitudes'"
+                   data-testid="column">
+            <div class="column-head">
+              <span class="column-dot" aria-hidden="true"></span>
+              <h2 class="vd-label-md column-title">{{ column.label }}</h2>
+              <span class="column-count vd-label-sm" data-testid="column-count">{{ column.total }}</span>
+            </div>
+            <div class="column-list" cdkDropList [cdkDropListData]="column.status" [cdkDropListEnterPredicate]="canDrop"
+                 (cdkDropListDropped)="onDrop($event)">
+              @for (card of column.items; track card.id) {
+                <app-request-card cdkDrag [cdkDragData]="card" [cdkDragDisabled]="!card.allowedNextStatuses.length || pendingMoves().has(card.id)"
+                                  [request]="card" [now]="now()" [pending]="pendingMoves().has(card.id)" (move)="requestMove($event)" />
+              } @empty {
+                <p class="column-empty vd-body-sm">{{ column.outOfFilter ? 'Fuera del filtro de fase' : 'Sin solicitudes' }}</p>
+              }
+              @if (column.total > column.items.length) {
+                <p class="column-more vd-label-sm">+{{ column.total - column.items.length }} más en el Registro Clínico</p>
+              }
+            </div>
+          </section>
+        }
+      </div>
+    } @else if (tableTotal() > 0) {
+      <app-request-table [rows]="tableRows()" [totalCount]="tableTotal()" [page]="tablePage()" [pageSize]="tablePageSize()"
+                         [now]="now()" (pageChange)="onTablePage($event)" />
+    }
+  }
+</div>

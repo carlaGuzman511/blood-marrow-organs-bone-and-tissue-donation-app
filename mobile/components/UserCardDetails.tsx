@@ -33,7 +33,7 @@ const UserCardDetails = ({item, modalVisible, setModalVisible}: Props) => {
                             style={{
                                 height: SIZES.height * 0.7,
                                 width: SIZES.width,
-                                backgroundColor: '#F5F5FF',
+                                backgroundColor: COLORS.surface,
                                 borderTopLeftRadius: 30,
                                 borderTopRightRadius: 30,
                                 position: 'absolute',

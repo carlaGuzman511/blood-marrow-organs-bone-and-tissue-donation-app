@@ -1,32 +1,34 @@
-import { StyleSheet } from 'react-native';
+import { makeStyles } from '@/theme';
 
-export const styles = StyleSheet.create({
+export const useStyles = makeStyles((t) => ({
   container: {
     flex: 1,
-    padding: 16,
-    backgroundColor: '#f2f3f5'
+    padding: t.spacing.md,
+    backgroundColor: t.colors.background,
   },
   searchContainer: {
-    marginBottom: 16,
+    marginBottom: t.spacing.md,
   },
   sectionHeader: {
-    backgroundColor: '#f7f7f7',
-    padding: 8,
+    backgroundColor: t.colors.surfaceRecessed,
+    padding: t.spacing.xs,
   },
   sectionHeaderText: {
-    fontWeight: '600'
+    ...t.typography.labelMd,
+    color: t.colors.text,
   },
   listItem: {
-    padding: 16,
-    backgroundColor: 'white',
-    borderRadius: 8,
-    marginVertical: 8,
+    padding: t.spacing.md,
+    backgroundColor: t.colors.surface,
+    borderRadius: t.radius.base,
+    marginVertical: t.spacing.xs,
   },
-  title: { fontSize: 20, fontWeight: 'bold' },
-  description: { marginTop: 8, color: '#444' },
+  title: { ...t.typography.headlineMd, color: t.colors.text },
+  description: { ...t.typography.bodySm, marginTop: t.spacing.xs, color: t.colors.textMuted },
   emptyText: {
-    padding: 24,
+    ...t.typography.bodyMd,
+    padding: t.spacing.lg,
     textAlign: 'center',
-    color: '#444',
+    color: t.colors.textMuted,
   },
-});
+}));

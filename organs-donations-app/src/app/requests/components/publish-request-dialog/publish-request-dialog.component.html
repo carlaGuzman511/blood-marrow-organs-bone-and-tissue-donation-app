@@ -1,0 +1,169 @@
+<div class="head">
+  <span class="head-icon" aria-hidden="true"><span class="material-symbols-outlined">add_circle</span></span>
+  <h2 mat-dialog-title class="vd-headline-md title">Crear Nueva Solicitud Médica</h2>
+  <button type="button" class="icon-button" (click)="close()" aria-label="Cerrar">
+    <span class="material-symbols-outlined" aria-hidden="true">close</span>
+  </button>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="publish()" novalidate>
+  <mat-dialog-content class="body">
+    @if (serverError(); as message) {
+      <div class="server-error vd-body-sm" role="alert" data-testid="server-error">
+        <span class="material-symbols-outlined" aria-hidden="true">error</span>
+        {{ message }}
+      </div>
+    }
+
+    <!-- 1 -->
+    <fieldset class="section">
+      <legend class="vd-label-md">1. Paciente &amp; Datos Hospitalarios</legend>
+      <div class="grid">
+        <div class="field">
+          <label for="patientCode" class="vd-label-sm">ID Paciente Anonimizado *</label>
+          <input id="patientCode" class="vd-input" formControlName="patientCode" placeholder="Ej. PX-5819-HGM"
+                 [attr.aria-invalid]="!!error('patientCode')" aria-describedby="patientCode-error" />
+          @if (error('patientCode'); as e) { <p class="error" id="patientCode-error">{{ e }}</p> }
+        </div>
+        <div class="field">
+          <label for="medicalRecord" class="vd-label-sm">Expediente Clínico / Folio SIS *</label>
+          <input id="medicalRecord" class="vd-input" formControlName="medicalRecord" placeholder="Ej. EXP-2024-8841-A"
+                 [attr.aria-invalid]="!!error('medicalRecord')" aria-describedby="medicalRecord-error" />
+          @if (error('medicalRecord'); as e) { <p class="error" id="medicalRecord-error">{{ e }}</p> }
+        </div>
+        <div class="field">
+          <label for="diagnosis" class="vd-label-sm">Diagnóstico</label>
+          <input id="diagnosis" class="vd-input" formControlName="diagnosis" placeholder="Ej. Trauma Shock"
+                 [attr.aria-invalid]="!!error('diagnosis')" aria-describedby="diagnosis-error" />
+          @if (error('diagnosis'); as e) { <p class="error" id="diagnosis-error">{{ e }}</p> }
+        </div>
+        <div class="field field--split">
+          <div>
+            <label for="service" class="vd-label-sm">Servicio</label>
+            <input id="service" class="vd-input" formControlName="service" placeholder="Ej. Quirófano 3"
+                   [attr.aria-invalid]="!!error('service')" aria-describedby="service-error" />
+            @if (error('service'); as e) { <p class="error" id="service-error">{{ e }}</p> }
+          </div>
+          <div>
+            <label for="patientAge" class="vd-label-sm">Edad</label>
+            <input id="patientAge" class="vd-input" type="number" min="0" max="120" formControlName="patientAge"
+                   [attr.aria-invalid]="!!error('patientAge')" aria-describedby="patientAge-error" />
+            @if (error('patientAge'); as e) { <p class="error" id="patientAge-error">{{ e }}</p> }
+          </div>
+        </div>
+      </div>
+    </fieldset>
+
+    <!-- 2 -->
+    <fieldset class="section">
+      <legend class="vd-label-md">2. Nivel de Gravedad &amp; Tiempo Límite</legend>
+      <div class="grid">
+        <div class="field">
+          <label for="urgency" class="vd-label-sm">Nivel de Prioridad *</label>
+          <select id="urgency" class="vd-input" formControlName="urgency" [attr.aria-invalid]="!!error('urgency')" aria-describedby="urgency-error">
+            <option [ngValue]="null" disabled>Selecciona la prioridad</option>
+            @for (option of urgencyOptions; track option.value) {
+              <option [ngValue]="option.value">{{ option.label }}</option>
+            }
+          </select>
+          @if (error('urgency'); as e) { <p class="error" id="urgency-error">{{ e }}</p> }
+        </div>
+        <div class="field">
+          <label for="deadline" class="vd-label-sm">Límite Quirúrgico / Transfusional *</label>
+          <input id="deadline" class="vd-input" type="datetime-local" formControlName="deadline"
+                 [attr.aria-invalid]="!!error('deadline')" aria-describedby="deadline-error" />
+          @if (error('deadline'); as e) { <p class="error" id="deadline-error">{{ e }}</p> }
+        </div>
+      </div>
+    </fieldset>
+
+    <!-- 3 -->
+    <fieldset class="section">
+      <legend class="vd-label-md">3. Componente Biológico &amp; Grupo Sanguíneo</legend>
+      <div class="grid grid--3">
+        <div class="field">
+          <label for="component" class="vd-label-sm">Tipo de Componente *</label>
+          <select id="component" class="vd-input" formControlName="component" [attr.aria-invalid]="!!error('component')" aria-describedby="component-error">
+            <option [ngValue]="null" disabled>Selecciona el componente</option>
+            @for (option of componentOptions; track option.value) {
+              <option [ngValue]="option.value">{{ option.label }}</option>
+            }
+          </select>
+          @if (error('component'); as e) { <p class="error" id="component-error">{{ e }}</p> }
+        </div>
+        <div class="field">
+          <label for="unitsRequired" class="vd-label-sm">Unidades Solicitadas *</label>
+          <input id="unitsRequired" class="vd-input" type="number" min="1" [max]="100" step="1" formControlName="unitsRequired"
+                 [attr.aria-invalid]="!!error('unitsRequired')" aria-describedby="unitsRequired-error" />
+          @if (error('unitsRequired'); as e) { <p class="error" id="unitsRequired-error">{{ e }}</p> }
+        </div>
+        <div class="field">
+          <label for="bloodTypeId" class="vd-label-sm">Grupo y Factor Rh *</label>
+          <select id="bloodTypeId" class="vd-input blood" formControlName="bloodTypeId" [attr.aria-invalid]="!!error('bloodTypeId')" aria-describedby="bloodTypeId-error">
+            <option value="" disabled>Selecciona el grupo</option>
+            @for (type of data.bloodTypes; track type.id) {
+              <option [value]="type.id">{{ type.name }}</option>
+            }
+          </select>
+          @if (error('bloodTypeId'); as e) { <p class="error" id="bloodTypeId-error">{{ e }}</p> }
+        </div>
+      </div>
+      @if (needsTypePick()) {
+        <div class="field">
+          <label for="donationTypeId" class="vd-label-sm">Órgano o Tejido *</label>
+          <select id="donationTypeId" class="vd-input" formControlName="donationTypeId" [attr.aria-invalid]="!!error('donationTypeId')" aria-describedby="donationTypeId-error">
+            <option value="" disabled>Selecciona el órgano o tejido</option>
+            @for (type of organTypes(); track type.id) {
+              <option [value]="type.id">{{ type.name }}</option>
+            }
+          </select>
+          @if (error('donationTypeId'); as e) { <p class="error" id="donationTypeId-error">{{ e }}</p> }
+        </div>
+      }
+    </fieldset>
+
+    <!-- 4 -->
+    <fieldset class="section">
+      <legend class="vd-label-md">4. Hospital, Sede y Contacto</legend>
+      <div class="grid grid--3">
+        <div class="field">
+          <label for="sede" class="vd-label-sm">Hospital / Sede *</label>
+          <input id="sede" class="vd-input" [value]="data.sede.name" readonly aria-readonly="true" data-testid="sede" />
+          <p class="hint">Sede de tu sesión</p>
+        </div>
+        <div class="field">
+          <label for="bed" class="vd-label-sm">Piso / Pabellón / Cama *</label>
+          <input id="bed" class="vd-input" formControlName="bed" placeholder="Ej. Piso 3, UCI Cama 08"
+                 [attr.aria-invalid]="!!error('bed')" aria-describedby="bed-error" />
+          @if (error('bed'); as e) { <p class="error" id="bed-error">{{ e }}</p> }
+        </div>
+        <div class="field">
+          <label for="coordinationPhone" class="vd-label-sm">Teléfono de Coordinación *</label>
+          <input id="coordinationPhone" class="vd-input" type="tel" formControlName="coordinationPhone" placeholder="Ej. +591 4 4250000"
+                 [attr.aria-invalid]="!!error('coordinationPhone')" aria-describedby="coordinationPhone-error" />
+          @if (error('coordinationPhone'); as e) { <p class="error" id="coordinationPhone-error">{{ e }}</p> }
+        </div>
+      </div>
+    </fieldset>
+
+    <!-- 5 -->
+    <fieldset class="section">
+      <legend class="vd-label-md">5. Indicación Clínica</legend>
+      <div class="field">
+        <label for="description" class="vd-label-sm">Descripción para el equipo y los donantes *</label>
+        <textarea id="description" class="vd-input textarea" rows="3" formControlName="description"
+                  placeholder="Ej. Paciente politraumatizado, requiere reposición inmediata en quirófano."
+                  [attr.aria-invalid]="!!error('description')" aria-describedby="description-error"></textarea>
+        @if (error('description'); as e) { <p class="error" id="description-error">{{ e }}</p> }
+      </div>
+    </fieldset>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end" class="actions">
+    <button type="button" class="vd-btn vd-btn--subtle" (click)="close()">Cancelar</button>
+    <button type="submit" class="vd-btn vd-btn--primary" [disabled]="saving()" data-testid="publish">
+      <span class="material-symbols-outlined" aria-hidden="true">campaign</span>
+      {{ saving() ? 'Publicando…' : 'Publicar Solicitud' }}
+    </button>
+  </mat-dialog-actions>
+</form>

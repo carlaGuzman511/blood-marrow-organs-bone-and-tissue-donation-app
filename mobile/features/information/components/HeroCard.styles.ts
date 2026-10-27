@@ -1,18 +1,16 @@
-import { StyleSheet } from 'react-native';
+import { makeStyles } from '@/theme';
 
-const styles = StyleSheet.create({
+export const useStyles = makeStyles((t) => ({
   container: {
     flexDirection: 'row',
-    padding: 12,
-    backgroundColor: 'white',
-    borderRadius: 8,
-    marginVertical: 8,
+    padding: t.spacing.sm,
+    backgroundColor: t.colors.surface,
+    borderRadius: t.radius.base,
+    marginVertical: t.spacing.xs,
     alignItems: 'center',
   },
-  image: { width: 80, height: 80, borderRadius: 8, marginRight: 12 },
+  image: { width: 80, height: 80, borderRadius: t.radius.base, marginRight: t.spacing.sm },
   content: { flex: 1 },
-  title: { fontSize: 18, fontWeight: '700' },
-  summary: { marginTop: 6, color: '#444' },
-});
-
-export default styles;
+  title: { ...t.typography.titleSm, color: t.colors.text },
+  summary: { ...t.typography.bodySm, marginTop: 6, color: t.colors.textMuted },
+}));

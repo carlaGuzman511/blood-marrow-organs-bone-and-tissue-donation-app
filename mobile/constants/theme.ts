@@ -36,6 +36,10 @@ export const COLORS = {
     lightGreen: c.tones.viable.background,
     lightRed: c.tones.urgent.background,
     red: c.primaryText,
+    scrim: c.scrim,
+    mediaBackdrop: c.mediaBackdrop,
+    mediaScrim: c.mediaScrim,
+    onMedia: c.onMedia,
 };
 
 /** @deprecated Use `useTheme().spacing`, `.radius` and `.typography`. */
